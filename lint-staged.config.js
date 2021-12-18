@@ -6,5 +6,11 @@ module.exports = {
   '**/*.(ts|tsx|js|jsx)': filenames => [
     `yarn eslint ${filenames.join(' ')}`,
     `yarn prettier --write ${filenames.join(' ')}`
+  ],
+
+  // Lint and format css and scss files
+  '**/*.(css|scss)': filenames => [
+    `yarn stylelint ${filenames.join(' ')}`,
+    `yarn prettier --write ${filenames.join(' ')}`
   ]
 };
