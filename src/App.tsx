@@ -1,22 +1,15 @@
 import React from 'react';
-import { Button } from '@chakra-ui/react';
-import logo from './logo.svg';
 import './App.scss';
+import { Icon, Text } from '@chakra-ui/react';
+import { WarningTwoIcon } from '@chakra-ui/icons';
 
 function App(): JSX.Element {
   return (
     <div className='App'>
-      <header className='App-header'>
-        <img alt='logo' className='App-logo' src={logo} />
-        <p>Test circle-ci</p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          rel='noopener noreferrer'
-          target='_blank'>
-          <Button>Learn React</Button>
-        </a>
-      </header>
+      <main>
+        <Icon as={WarningTwoIcon} color='yellow.500' h={20} w={20} />
+        <Text fontSize='6xl'>Work in Progress</Text>
+      </main>
     </div>
   );
 }
