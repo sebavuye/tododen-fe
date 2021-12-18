@@ -1,0 +1,42 @@
+{
+  "env": {
+    "browser": true, // browser global variables
+    "es2021": true // adds all ECMAScript 2021 globals and automatically sets the ecmaVersion parser option to 12
+  },
+  "extends": ["plugin:react/recommended", "airbnb", "plugin:@typescript-eslint/recommended", "prettier"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": { "jsx": true },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint", "sort-destructure-keys", "typescript-sort-keys" ,"react-hooks"],
+  "rules": {
+    // general
+    "no-use-before-define": "off",
+    "import/extensions": ["error", "ignorePackages", { "ts": "never", "tsx": "never" }],
+    "import/prefer-default-export": "off",
+
+    // sort-destructure-keys
+    "sort-destructure-keys/sort-destructure-keys": ["error", {"caseSensitive": false}],
+
+    // react
+    "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
+    "react/prop-types": "off",
+    "react/jsx-sort-props": ["warn", { "callbacksLast": true, "shorthandFirst": true, "shorthandLast": false, "ignoreCase": false, "noSortAlphabetically": false, "reservedFirst": true }],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/function-component-definition": ["error", {"namedComponents": "function-declaration"}],
+
+    // typescript
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "@typescript-eslint/no-shadow": ["error"],
+    "@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true }],
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-unused-vars": "error",
+    "typescript-sort-keys/interface": ["error", "asc", { "caseSensitive": false, "natural": true, "requiredFirst": false }]
+  },
+  "settings": {
+    "import/resolver": { "typescript": {} } // adds TypeScript support to eslint-plugin-import.
+  }
+}
