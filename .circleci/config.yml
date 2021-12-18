@@ -1,0 +1,56 @@
+version: 2.1
+jobs:
+  build:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:12.22.0
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Lint TypeScript
+          command: yarn tsc --noEmit --pretty
+      - run:
+          name: Lint Eslint
+          command: yarn eslint ./src/**/* --ext js,jsx,ts,tsx
+      - run:
+          name: Lint Stylelint
+          command: yarn stylelint **/*.{css,scss}
+  deploy:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:12.22.0
+    steps:
+      - run:
+          name: Deploy To Netlify
+          command: |
+            if [[ ${CIRCLE_BRANCH} = develop ]]; then
+              curl -X POST -d {} ${NETLIFY_DEVELOP_BRANCH_BUILD_HOOK}
+            elif [[ ${CIRCLE_BRANCH} = main ]]; then
+              curl -X POST -d {} ${NETLIFY_MAIN_BRANCH_BUILD_HOOK}
+            fi
+
+workflows:
+  version: 2
+  build & deploy website:
+    jobs:
+      - build
+      - deploy:
+          filters:
+            branches:
+              only:
+                - main
+                - develop
+          requires:
+            - build
