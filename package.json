@@ -28,7 +28,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint '*/**/*.{js,jsx,ts,tsx,md,mdx}'"
+    "lint": "eslint '*/**/*.{js,jsx,ts,tsx,md,mdx}'",
+    "prepare": "husky install"
   },
   "browserslist": {
     "production": [
@@ -53,6 +54,11 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-sort-destructure-keys": "^1.4.0",
     "eslint-plugin-typescript-sort-keys": "^2.1.0",
+    "husky": ">=6",
+    "lint-staged": ">=10",
     "prettier": "^2.5.1"
+  },
+  "lint-staged": {
+    "*.{js,css,md}": "prettier --write"
   }
 }
