@@ -23,7 +23,7 @@ jobs:
           command: yarn tsc --noEmit --pretty
       - run:
           name: Lint Eslint
-          command: yarn eslint ./src/**/* --ext js,jsx,ts,tsx
+          command: yarn eslint src/ --ext js,jsx,ts,tsx
       - run:
           name: Lint Stylelint
           command: yarn stylelint **/*.{css,scss}
