@@ -5,7 +5,6 @@ import {
   Flex,
   Grid,
   GridItem,
-  Heading,
   Icon,
   Input,
   InputGroup,
@@ -18,6 +17,7 @@ import {
   IoEllipseOutline,
   IoPencilOutline
 } from 'react-icons/io5';
+import { Header } from './components';
 
 function App(): JSX.Element {
   return (
@@ -25,9 +25,7 @@ function App(): JSX.Element {
       <Grid bg='teal.900' h='100vh'>
         <Grid mx='auto' templateRows='auto 1fr auto' w='90%'>
           <GridItem bg='teal.900' p={4} textAlign='center'>
-            <Heading as='h1' color='white' size='2xl'>
-              TodoDen
-            </Heading>
+            <Header />
           </GridItem>
 
           <GridItem>
