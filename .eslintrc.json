@@ -26,7 +26,7 @@
     "react/jsx-sort-props": ["warn", { "callbacksLast": true, "shorthandFirst": true, "shorthandLast": false, "ignoreCase": false, "noSortAlphabetically": false, "reservedFirst": true }],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "react/function-component-definition": ["error", {"namedComponents": "function-declaration"}],
+    "react/function-component-definition": "off",
 
     // typescript
     "@typescript-eslint/no-use-before-define": ["error"],
