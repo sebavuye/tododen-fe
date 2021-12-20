@@ -1,16 +1,31 @@
 import React from 'react';
-import './App.scss';
-import { Icon, Text } from '@chakra-ui/react';
-import { WarningTwoIcon } from '@chakra-ui/icons';
+import { Grid, GridItem, Heading } from '@chakra-ui/react';
 
 function App(): JSX.Element {
   return (
-    <div className='App'>
-      <main>
-        <Icon as={WarningTwoIcon} color='yellow.500' h={20} w={20} />
-        <Text fontSize='6xl'>Work in Progress</Text>
-      </main>
-    </div>
+    <main>
+      <Grid h='100vh' templateColumns='4'>
+        <Grid mx='auto' templateRows='auto 1fr auto' w='90%'>
+          <GridItem p={4} textAlign='center'>
+            <Heading as='h1' size='2xl'>
+              TodoDen
+            </Heading>
+          </GridItem>
+
+          <GridItem bg='green.500'>
+            <Heading as='h1' size='2xl'>
+              Content
+            </Heading>
+          </GridItem>
+
+          <GridItem p={4} textAlign='center'>
+            <Heading as='h1' size='2xl'>
+              Footer
+            </Heading>
+          </GridItem>
+        </Grid>
+      </Grid>
+    </main>
   );
 }
 
