@@ -1,10 +1,19 @@
+/* eslint-disable */
 import React from 'react';
-import { Badge, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
+import {
+  Badge,
+  Button,
+  Grid,
+  GridItem,
+  Heading,
+  Input,
+  InputGroup
+} from '@chakra-ui/react';
 
 function App(): JSX.Element {
   return (
     <main>
-      <Grid bg='teal.900' h='100vh' templateColumns='4'>
+      <Grid bg='teal.900' h='100vh'>
         <Grid mx='auto' templateRows='auto 1fr auto' w='90%'>
           <GridItem bg='teal.900' p={4} textAlign='center'>
             <Heading as='h1' color='white' size='2xl'>
@@ -27,8 +36,19 @@ function App(): JSX.Element {
                   Done: 0
                 </Badge>
               </GridItem>
-              <GridItem bg='teal.50'>
-                <Text as='p'>To Do List</Text>
+
+              <GridItem bg='teal.50' p={6}>
+                <Grid h='100%' mx='auto' templateRows='1fr auto' w='90%'>
+                  <GridItem>Test</GridItem>
+                  <GridItem display='flex'>
+                    <InputGroup size='lg'>
+                      <Input placeholder='What needs to be done?' />
+                      <Button colorScheme='teal' size='lg' ml={2}>
+                        Add
+                      </Button>
+                    </InputGroup>
+                  </GridItem>
+                </Grid>
               </GridItem>
             </Grid>
           </GridItem>
