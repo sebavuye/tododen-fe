@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  Button,
-  Grid,
-  GridItem,
-  Input,
-  InputGroup,
-  List
-} from '@chakra-ui/react';
+import { Grid, GridItem, List } from '@chakra-ui/react';
 import ToDoListStats from './toDoListStats/toDoListStats';
 import ToDoListItem from './toDoListItem/toDoListItem';
+import ToDoListInput from './toDoListInput/ToDoListInput';
 
 const ToDoList = (): JSX.Element => (
   <Grid h='100%' templateRows='auto 1fr'>
@@ -29,12 +23,7 @@ const ToDoList = (): JSX.Element => (
           </List>
         </GridItem>
         <GridItem display='flex'>
-          <InputGroup size='lg'>
-            <Input placeholder='What needs to be done?' />
-            <Button colorScheme='teal' ml={2} size='lg'>
-              Add
-            </Button>
-          </InputGroup>
+          <ToDoListInput />
         </GridItem>
       </Grid>
     </GridItem>
