@@ -54,29 +54,29 @@ function App(): JSX.Element {
                         <Flex justifyContent='space-between'>
                           <Flex flex={1}>
                             <Icon
-                              w={6}
-                              h={6}
                               as={IoEllipseOutline}
                               color='gray.400'
+                              h={6}
+                              w={6}
                             />
-                            <Text pl={2} as='span'>
+                            <Text as='span' pl={2}>
                               To Do 1
                             </Text>
                           </Flex>
                           <Flex justifyContent='end'>
                             <Icon
-                              w={6}
-                              h={6}
                               as={IoPencilOutline}
                               color='gray.400'
+                              h={6}
                               mx={1}
+                              w={6}
                             />
                             <Icon
-                              w={6}
-                              h={6}
                               as={IoCloseCircleOutline}
                               color='gray.400'
+                              h={6}
                               ml={1}
+                              w={6}
                             />
                           </Flex>
                         </Flex>
@@ -86,7 +86,7 @@ function App(): JSX.Element {
                   <GridItem display='flex'>
                     <InputGroup size='lg'>
                       <Input placeholder='What needs to be done?' />
-                      <Button colorScheme='teal' size='lg' ml={2}>
+                      <Button colorScheme='teal' ml={2} size='lg'>
                         Add
                       </Button>
                     </InputGroup>
@@ -96,10 +96,10 @@ function App(): JSX.Element {
             </Grid>
           </GridItem>
 
-          <GridItem p={4} textAlign='center'>
-            <Heading as='h1' size='2xl' color='white'>
-              Footer
-            </Heading>
+          <GridItem p={6} textAlign='center'>
+            <Text color='white' size='2xl'>
+              &copy; Sebastian Vuye 2022
+            </Text>
           </GridItem>
         </Grid>
       </Grid>
