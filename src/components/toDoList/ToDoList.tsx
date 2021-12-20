@@ -1,8 +1,8 @@
 import React from 'react';
 import { Grid, GridItem, List } from '@chakra-ui/react';
-import ToDoListStats from './toDoListStats/toDoListStats';
-import ToDoListItem from './toDoListItem/toDoListItem';
-import ToDoListInput from './toDoListInput/ToDoListInput';
+import ToDoListStats from './ToDoListStats';
+import ToDoListItem from './ToDoListItem';
+import ToDoListInput from './ToDoListInput';
 
 const ToDoList = (): JSX.Element => (
   <Grid h='100%' templateRows='auto 1fr'>
