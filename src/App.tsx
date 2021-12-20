@@ -1,6 +1,6 @@
 import React from 'react';
-import { Grid, GridItem, Text } from '@chakra-ui/react';
-import { Header, ToDoList } from './components';
+import { Grid, GridItem } from '@chakra-ui/react';
+import { Footer, Header, ToDoList } from './components';
 
 function App(): JSX.Element {
   return (
@@ -14,9 +14,7 @@ function App(): JSX.Element {
             <ToDoList />
           </GridItem>
           <GridItem p={6} textAlign='center'>
-            <Text color='white' size='2xl'>
-              &copy; Sebastian Vuye 2022
-            </Text>
+            <Footer />
           </GridItem>
         </Grid>
       </Grid>
