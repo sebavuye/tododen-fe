@@ -1,7 +1,7 @@
 import { all } from 'redux-saga/effects';
-import { watchPostToDo } from './todo';
+import { watchGetToDoList, watchPostToDo } from './todo';
 
 export default function* rootSaga() {
   // eslint-disable-next-line redux-saga/no-unhandled-errors
-  yield all([watchPostToDo()]);
+  yield all([watchPostToDo(), watchGetToDoList()]);
 }

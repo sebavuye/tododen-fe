@@ -20,6 +20,17 @@ const ToDoReducer = (state = initialState, { payload, type }: AnyAction) => {
     case ACTIONS.POST_TODO_ITEM_FAILURE: {
       return { ...state, error: payload };
     }
+
+    // GET TO DO LIST
+    case ACTIONS.GET_TODO_LIST_REQUEST: {
+      return { ...state, loading: true };
+    }
+    case ACTIONS.GET_TODO_LIST_SUCCESS: {
+      return { ...state, list: payload, loading: false, error: null };
+    }
+    case ACTIONS.GET_TODO_LIST_FAILURE: {
+      return { ...state, error: payload };
+    }
     default:
       return state;
   }
