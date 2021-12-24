@@ -3,19 +3,20 @@
     "browser": true, // browser global variables
     "es2021": true // adds all ECMAScript 2021 globals and automatically sets the ecmaVersion parser option to 12
   },
-  "extends": ["plugin:react/recommended", "airbnb", "plugin:@typescript-eslint/recommended", "prettier"],
+  "extends": ["plugin:react/recommended", "airbnb", "plugin:react-redux/recommended", "plugin:redux-saga/recommended", "plugin:@typescript-eslint/recommended", "prettier"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": { "jsx": true },
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "sort-destructure-keys", "typescript-sort-keys" ,"react-hooks"],
+  "plugins": ["react", "@typescript-eslint", "react-redux", "redux-saga", "sort-destructure-keys", "typescript-sort-keys" ,"react-hooks"],
   "rules": {
     // general
     "no-use-before-define": "off",
     "import/extensions": ["error", "ignorePackages", { "ts": "never", "tsx": "never" }],
     "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": "off",
 
     // sort-destructure-keys
     "sort-destructure-keys/sort-destructure-keys": ["error", {"caseSensitive": false}],
@@ -31,12 +32,19 @@
     // typescript
     "@typescript-eslint/no-use-before-define": ["error"],
     "@typescript-eslint/no-shadow": ["error"],
-    "@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true }],
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-unused-vars": "error",
     "typescript-sort-keys/interface": ["error", "asc", { "caseSensitive": false, "natural": true, "requiredFirst": false }]
   },
   "settings": {
     "import/resolver": { "typescript": {} } // adds TypeScript support to eslint-plugin-import.
-  }
+  },
+  "overrides": [
+    {
+      "files": "./src/store/reducers/*.ts",
+      "rules": {
+        "default-param-last": "off"
+      }
+    }
+  ]
 }
