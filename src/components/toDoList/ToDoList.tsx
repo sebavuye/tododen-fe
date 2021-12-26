@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, GridItem, List } from '@chakra-ui/react';
+import { useErrorHandler } from 'react-error-boundary';
 import ToDoListStats from './ToDoListStats';
 import ToDoListItem from './ToDoListItem';
 import ToDoListInput from './ToDoListInput';
@@ -8,7 +9,9 @@ import { getToDoList } from '../../store/actions';
 
 const ToDoList = (): JSX.Element => {
   const dispatch = useAppDispatch();
-  const { list: toDoList } = useAppSelector(state => state);
+  const { error, list: toDoList } = useAppSelector(state => state);
+
+  useErrorHandler(error);
 
   React.useEffect(() => {
     dispatch(getToDoList());
@@ -29,12 +32,11 @@ const ToDoList = (): JSX.Element => {
         <Grid h='100%' mx='auto' templateRows='1fr auto' w='90%'>
           <GridItem>
             <List spacing={4}>
-              {toDoList &&
-                toDoList.map(toDoListItem => (
-                  <ToDoListItem key={toDoListItem.id}>
-                    {toDoListItem.todo}
-                  </ToDoListItem>
-                ))}
+              {toDoList.map(toDoListItem => (
+                <ToDoListItem key={toDoListItem.id}>
+                  {toDoListItem.todo}
+                </ToDoListItem>
+              ))}
             </List>
           </GridItem>
           <GridItem display='flex'>

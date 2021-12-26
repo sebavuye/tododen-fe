@@ -29,7 +29,7 @@ const ToDoReducer = (state = initialState, { payload, type }: AnyAction) => {
       return { ...state, list: payload, loading: false, error: null };
     }
     case ACTIONS.GET_TODO_LIST_FAILURE: {
-      return { ...state, error: payload };
+      return { ...state, error: payload, loading: false };
     }
     default:
       return state;
