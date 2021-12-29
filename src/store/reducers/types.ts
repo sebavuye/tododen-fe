@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios';
+
 export interface ToDoItem {
   completed: boolean;
   id: string;
@@ -5,7 +7,7 @@ export interface ToDoItem {
 }
 
 export interface ToDoInitialState {
-  error: Error | null;
+  error: AxiosError | null;
   list: ToDoItem[];
   loading: boolean;
 }

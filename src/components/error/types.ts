@@ -1,5 +1,7 @@
+import { AxiosError } from 'axios';
+
 export interface ErrorProps {
-  error: Error;
+  error: AxiosError;
   loading: boolean;
-  resetErrorBoundary: () => void;
+  onReset?: () => void;
 }

@@ -5,15 +5,12 @@ import {
   AlertIcon,
   AlertTitle,
   Button,
-  Flex
+  Flex,
+  Text
 } from '@chakra-ui/react';
 import { ErrorProps } from './types';
 
-const Error = ({
-  error,
-  loading,
-  resetErrorBoundary
-}: ErrorProps): JSX.Element => (
+const Error = ({ error, loading, onReset }: ErrorProps): JSX.Element => (
   <Flex
     alignItems='center'
     h='100%'
@@ -31,9 +28,14 @@ const Error = ({
       <AlertIcon boxSize='2em' mb={4} />
       <AlertTitle fontSize='xl'>Something went wrong</AlertTitle>
       <AlertDescription maxWidth='sm' my={4}>
-        <pre>{error.message}</pre>
+        <Text fontSize='md'>
+          {error.response?.data.message || error.request?.responseText}
+        </Text>
+        <Text as='pre' fontSize='xs' mb={2} mt={8}>
+          {error.message}
+        </Text>
       </AlertDescription>
-      <Button isLoading={loading} onClick={resetErrorBoundary}>
+      <Button isLoading={loading} onClick={onReset}>
         Try Again
       </Button>
     </Alert>

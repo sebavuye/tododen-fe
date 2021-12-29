@@ -1,21 +1,12 @@
 import React from 'react';
 import { Grid, GridItem, List } from '@chakra-ui/react';
-import { useErrorHandler } from 'react-error-boundary';
 import ToDoListStats from './ToDoListStats';
 import ToDoListItem from './ToDoListItem';
 import ToDoListInput from './ToDoListInput';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { getToDoList } from '../../store/actions';
+import { useAppSelector } from '../../store/hooks';
 
 const ToDoList = (): JSX.Element => {
-  const dispatch = useAppDispatch();
-  const { error, list: toDoList } = useAppSelector(state => state);
-
-  useErrorHandler(error);
-
-  React.useEffect(() => {
-    dispatch(getToDoList());
-  }, [dispatch]);
+  const { list: toDoList } = useAppSelector(state => state);
 
   return (
     <Grid h='100%' templateRows='auto 1fr'>

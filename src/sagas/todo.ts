@@ -5,6 +5,7 @@ import {
   SagaReturnType,
   takeLatest
 } from 'redux-saga/effects';
+import axios from 'axios';
 import { getToDoList, postToDoItem } from '../api/services';
 import * as ACTIONS from '../store/actions';
 
@@ -29,7 +30,9 @@ function* handleGetToDoList() {
 
     yield put({ type: ACTIONS.GET_TODO_LIST_SUCCESS, payload: response.data });
   } catch (error) {
-    yield put({ type: ACTIONS.GET_TODO_LIST_FAILURE, payload: error });
+    if (axios.isAxiosError(error)) {
+      yield put({ type: ACTIONS.GET_TODO_LIST_FAILURE, payload: error });
+    }
   }
 }
 

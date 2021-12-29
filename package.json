@@ -57,6 +57,7 @@
     "@types/json-server": "^0.14.4",
     "@types/react-redux": "^7.1.21",
     "@typescript-eslint/parser": "^5.7.0",
+    "connect-pause": "^0.1.0",
     "eslint-config-airbnb": "^19.0.2",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-typescript": "^2.5.0",

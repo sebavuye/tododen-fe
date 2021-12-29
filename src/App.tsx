@@ -1,13 +1,17 @@
 import React from 'react';
 import { Grid, GridItem } from '@chakra-ui/react';
-import { ErrorBoundary } from 'react-error-boundary';
+import axios from 'axios';
 import { Error, Footer, Header, ToDoList } from './components';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { getToDoList } from './store/actions';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
-  const { loading } = useAppSelector(state => state);
+  const { error, loading } = useAppSelector(state => state);
+
+  React.useEffect(() => {
+    dispatch(getToDoList());
+  }, [dispatch]);
 
   return (
     <main>
@@ -16,18 +20,21 @@ function App(): JSX.Element {
           <GridItem bg='teal.900' p={4} textAlign='center'>
             <Header />
           </GridItem>
+
           <GridItem>
-            <ErrorBoundary
-              fallbackRender={({ error }) =>
-                Error({
-                  error,
-                  loading,
-                  resetErrorBoundary: () => dispatch(getToDoList())
-                })
-              }>
+            {error &&
+            axios.isAxiosError(error) &&
+            error.response?.data.code === 'GET_LIST' ? (
+              <Error
+                error={error}
+                loading={loading}
+                onReset={() => dispatch(getToDoList())}
+              />
+            ) : (
               <ToDoList />
-            </ErrorBoundary>
+            )}
           </GridItem>
+
           <GridItem p={6} textAlign='center'>
             <Footer />
           </GridItem>
