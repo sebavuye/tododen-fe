@@ -10,7 +10,7 @@ const port = 3001;
 
 server.use(middlewares);
 
-let i = 0;
+/* let i = 0;
 
 // Every other request to this endpoint sends a 500 error, else continue as normal by calling next()
 server.get('/todos', (req, res, next) => {
@@ -34,7 +34,7 @@ server.post('/todos', (req, res, next) => {
     next();
   }
   i += 1;
-});
+}); */
 
 server.use(pause(3000));
 server.use(router);

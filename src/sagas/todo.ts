@@ -18,7 +18,9 @@ function* handlePostToDo(action: Effect) {
 
     yield put({ type: ACTIONS.POST_TODO_ITEM_SUCCESS, payload: response.data });
   } catch (error) {
-    yield put({ type: ACTIONS.POST_TODO_ITEM_FAILURE, payload: error });
+    if (axios.isAxiosError(error)) {
+      yield put({ type: ACTIONS.POST_TODO_ITEM_FAILURE, payload: error });
+    }
   }
 }
 

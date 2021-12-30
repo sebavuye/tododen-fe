@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, GridItem } from '@chakra-ui/react';
+import { Grid, GridItem, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { Error, Footer, Header, ToDoList } from './components';
 import { useAppDispatch, useAppSelector } from './store/hooks';
@@ -8,10 +8,35 @@ import { getToDoList } from './store/actions';
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
   const { error, loading } = useAppSelector(state => state);
+  const notificationToast = useToast();
+
+  const isGetToDoListError =
+    error &&
+    axios.isAxiosError(error) &&
+    error.response?.data.code === 'GET_LIST';
 
   React.useEffect(() => {
     dispatch(getToDoList());
   }, [dispatch]);
+
+  React.useEffect(() => {
+    if (!error) return;
+
+    if (axios.isAxiosError(error)) {
+      if (error.response?.data.code === 'GET_LIST') return;
+
+      notificationToast({
+        title: 'Oops!',
+        description: `${
+          error.response?.data.message || error.request?.responseText
+        }. Please try again!`,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        variant: 'top-accent'
+      });
+    }
+  }, [error, notificationToast]);
 
   return (
     <main>
@@ -22,9 +47,7 @@ function App(): JSX.Element {
           </GridItem>
 
           <GridItem>
-            {error &&
-            axios.isAxiosError(error) &&
-            error.response?.data.code === 'GET_LIST' ? (
+            {isGetToDoListError ? (
               <Error
                 error={error}
                 loading={loading}
