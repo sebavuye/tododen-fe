@@ -14,3 +14,10 @@ interface GetToDoList {
 }
 
 export const getToDoList: GetToDoList = () => ApiClient.get('/todos');
+
+interface DeleteToDoItem {
+  (toDoItemId: ToDoItem['id']): Promise<AxiosResponse<ToDoItem>>;
+}
+
+export const deleteToDoItem: DeleteToDoItem = toDoItemId =>
+  ApiClient.delete<ToDoItem>(`todos/${toDoItemId}`);
