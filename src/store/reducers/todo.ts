@@ -9,8 +9,8 @@ const initialState: ToDoInitialState = {
 };
 
 const ToDoReducer = (state = initialState, { payload, type }: AnyAction) => {
-  // POST TO DO ITEM
   switch (type) {
+    // POST TO DO ITEM
     case ACTIONS.POST_TODO_ITEM_REQUEST: {
       return { ...state, loading: true };
     }
@@ -36,6 +36,18 @@ const ToDoReducer = (state = initialState, { payload, type }: AnyAction) => {
     case ACTIONS.GET_TODO_LIST_FAILURE: {
       return { ...state, error: payload, loading: false };
     }
+
+    // DELETE TO DO ITEM
+    case ACTIONS.DELETE_TODO_ITEM_REQUEST: {
+      return { ...state, loading: true };
+    }
+    case ACTIONS.DELETE_TODO_ITEM_SUCCESS: {
+      return { ...state, list: payload, loading: false, error: null };
+    }
+    case ACTIONS.DELETE_TODO_ITEM_FAILURE: {
+      return { ...state, error: payload, loading: false };
+    }
+
     default:
       return state;
   }
