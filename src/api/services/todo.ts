@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import ApiClient from '../client';
-import { ToDoItem } from '../../store/reducers/types';
+import { ToDoInitialState, ToDoItem } from '../../store/reducers/types';
 
 interface PostToDoItem {
   (toDoItem: ToDoItem): Promise<AxiosResponse<ToDoItem>>;
@@ -8,3 +8,9 @@ interface PostToDoItem {
 
 export const postToDoItem: PostToDoItem = toDoItem =>
   ApiClient.post<ToDoItem>('/todos', toDoItem);
+
+interface GetToDoList {
+  (): Promise<AxiosResponse<ToDoInitialState>>;
+}
+
+export const getToDoList: GetToDoList = () => ApiClient.get('/todos');

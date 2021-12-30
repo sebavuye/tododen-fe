@@ -5,14 +5,15 @@ import {
   IoEllipseOutline,
   IoPencilOutline
 } from 'react-icons/io5';
+import { ToDoListItemProps } from './types';
 
-const ToDoListItem = (): JSX.Element => (
+const ToDoListItem = ({ children }: ToDoListItemProps): JSX.Element => (
   <ListItem>
     <Flex justifyContent='space-between'>
       <Flex flex={1}>
         <Icon as={IoEllipseOutline} color='gray.400' h={6} w={6} />
         <Text as='span' pl={2}>
-          To Do 1
+          {children}
         </Text>
       </Flex>
       <Flex justifyContent='end'>
