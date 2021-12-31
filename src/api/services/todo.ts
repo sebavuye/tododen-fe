@@ -21,3 +21,10 @@ interface DeleteToDoItem {
 
 export const deleteToDoItem: DeleteToDoItem = toDoItemId =>
   ApiClient.delete<ToDoItem>(`todos/${toDoItemId}`);
+
+interface UpdateToDoItem {
+  (toDoItem: ToDoItem): Promise<AxiosResponse<ToDoItem>>;
+}
+
+export const updateToDoItem: UpdateToDoItem = toDoItem =>
+  ApiClient.patch<ToDoItem>(`todos/${toDoItem.id}`, toDoItem);

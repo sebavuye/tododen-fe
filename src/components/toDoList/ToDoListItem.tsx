@@ -1,6 +1,7 @@
 import React from 'react';
 import { Flex, Icon, ListItem, Text } from '@chakra-ui/react';
 import {
+  IoCheckmarkCircleSharp,
   IoCloseCircleOutline,
   IoEllipseOutline,
   IoPencilOutline
@@ -9,14 +10,35 @@ import { ToDoListItemProps } from './types';
 
 const ToDoListItem = ({
   children,
-  onDelete
+  completed,
+  onDelete,
+  onUpdate
 }: ToDoListItemProps): JSX.Element => (
   <ListItem>
     <Flex justifyContent='space-between'>
       <Flex flex={1}>
-        <Icon as={IoEllipseOutline} color='gray.400' h={6} w={6} />
+        {completed ? (
+          <Icon
+            as={IoCheckmarkCircleSharp}
+            color='teal.400'
+            cursor='pointer'
+            h={6}
+            w={6}
+            onClick={onUpdate}
+          />
+        ) : (
+          <Icon
+            as={IoEllipseOutline}
+            color='gray.400'
+            cursor='pointer'
+            h={6}
+            w={6}
+            onClick={onUpdate}
+          />
+        )}
+
         <Text as='span' pl={2}>
-          {children}
+          {completed ? <Text as='s'>{children}</Text> : children}
         </Text>
       </Flex>
       <Flex justifyContent='end'>

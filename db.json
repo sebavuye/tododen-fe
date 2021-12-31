@@ -1,3 +1,19 @@
 {
-  "todos": []
+  "todos": [
+    {
+      "id": "t7BBhRRqGZ7mLgMOFbzaF",
+      "todo": "test",
+      "completed": true
+    },
+    {
+      "id": "f4wa06rNi7Yx-chETH2Tw",
+      "todo": "sebastian",
+      "completed": true
+    },
+    {
+      "id": "S17p8pwWe3nWHJDhawhMd",
+      "todo": "christian",
+      "completed": false
+    }
+  ]
 }

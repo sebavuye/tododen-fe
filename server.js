@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const jsonServer = require('json-server');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const pause = require('connect-pause');
+// const pause = require('connect-pause');
 
 const server = jsonServer.create();
 const router = jsonServer.router('./db.json');
@@ -36,7 +36,7 @@ server.use(middlewares);
   i += 1;
 }); */
 
-// server.delete('/todos/:id', (req, res, next) => {
+// server.patch('/todos/:id', (req, res, next) => {
 //   if (i % 2 === 0) {
 //     res.status(403).jsonp({
 //       message: "We couldn't post your to do",
@@ -48,7 +48,7 @@ server.use(middlewares);
 //   i += 1;
 // });
 
-server.use(pause(3000));
+// server.use(pause(3000));
 server.use(router);
 server.listen(port, () => {
   // eslint-disable-next-line no-console
