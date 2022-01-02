@@ -22,6 +22,15 @@ const ToDoList = (): JSX.Element => {
     dispatch(updateToDo(updatedToDoItem));
   };
 
+  const handleEditToDoItem = (toDoListItem: ToDoItem, newValue: string) => {
+    const updatedToDoItem = {
+      ...toDoListItem,
+      todo: newValue,
+      editMode: !toDoListItem.editMode
+    };
+    dispatch(updateToDo(updatedToDoItem));
+  };
+
   return (
     <Grid h='100%' templateRows='auto 1fr'>
       <GridItem
@@ -41,7 +50,11 @@ const ToDoList = (): JSX.Element => {
                 <ToDoListItem
                   key={toDoListItem.id}
                   completed={toDoListItem.completed}
+                  editMode={toDoListItem.editMode}
                   onDelete={() => handleDeleteToDoItem(toDoListItem.id)}
+                  onEdit={newValue =>
+                    handleEditToDoItem(toDoListItem, newValue)
+                  }
                   onUpdate={() => handleStatusUpdateToDoItem(toDoListItem)}>
                   {toDoListItem.todo}
                 </ToDoListItem>
