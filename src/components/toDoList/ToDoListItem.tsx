@@ -26,6 +26,17 @@ const ToDoListItem = ({
     }
   }, [editMode]);
 
+  const handleInputKeyPress = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (event.key === 'Enter' && inputRef.current) {
+      inputRef.current.blur();
+    }
+    if (event.key === 'Escape') {
+      onEdit(children as string);
+    }
+  };
+
   return (
     <ListItem
       onMouseEnter={() => setShowOptions(true)}
@@ -60,6 +71,9 @@ const ToDoListItem = ({
               onBlur={event => {
                 onEdit(event.target.value);
               }}
+              onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) =>
+                handleInputKeyPress(event)
+              }
             />
           ) : (
             <Text
