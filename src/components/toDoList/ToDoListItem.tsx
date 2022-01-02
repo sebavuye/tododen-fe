@@ -16,6 +16,7 @@ const ToDoListItem = ({
   onEdit,
   onUpdate
 }: ToDoListItemProps): JSX.Element => {
+  const [showOptions, setShowOptions] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
@@ -26,7 +27,9 @@ const ToDoListItem = ({
   }, [editMode]);
 
   return (
-    <ListItem>
+    <ListItem
+      onMouseEnter={() => setShowOptions(true)}
+      onMouseLeave={() => setShowOptions(false)}>
       <Flex justifyContent='space-between'>
         <Flex alignItems='center' flex={1}>
           {completed ? (
@@ -69,28 +72,30 @@ const ToDoListItem = ({
             </Text>
           )}
         </Flex>
-        <Flex alignItems='center' justifyContent='end'>
-          <Icon
-            as={IoPencilOutline}
-            color='gray.400'
-            cursor='pointer'
-            h={6}
-            mx={1}
-            w={6}
-            onClick={() => {
-              onEdit(children as string);
-            }}
-          />
-          <Icon
-            as={IoCloseCircleOutline}
-            color='gray.400'
-            cursor='pointer'
-            h={6}
-            ml={1}
-            w={6}
-            onClick={onDelete}
-          />
-        </Flex>
+        {showOptions && (
+          <Flex alignItems='center' justifyContent='end'>
+            <Icon
+              as={IoPencilOutline}
+              color='gray.400'
+              cursor='pointer'
+              h={6}
+              mx={1}
+              w={6}
+              onClick={() => {
+                onEdit(children as string);
+              }}
+            />
+            <Icon
+              as={IoCloseCircleOutline}
+              color='gray.400'
+              cursor='pointer'
+              h={6}
+              ml={1}
+              w={6}
+              onClick={onDelete}
+            />
+          </Flex>
+        )}
       </Flex>
     </ListItem>
   );
