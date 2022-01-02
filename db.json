@@ -1,3 +1,10 @@
 {
-  "todos": []
+  "todos": [
+    {
+      "id": "zy6lKo5f5UBd6GvhwCGYo",
+      "editMode": false,
+      "todo": "sebastian",
+      "completed": false
+    }
+  ]
 }

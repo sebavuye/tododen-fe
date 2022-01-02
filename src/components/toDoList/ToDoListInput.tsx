@@ -62,6 +62,9 @@ const ToDoListInput = (): JSX.Element => {
         placeholder='What needs to be done?'
         value={userInput}
         onChange={event => handleUserInput(event)}
+        onKeyDown={event => {
+          if (event.key === 'Enter') handleAddToDo();
+        }}
       />
       <Button
         colorScheme='teal'
