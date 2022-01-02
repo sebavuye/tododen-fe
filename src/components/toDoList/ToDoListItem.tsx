@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Icon, ListItem, Text } from '@chakra-ui/react';
+import { Flex, Icon, Input, ListItem, Text } from '@chakra-ui/react';
 import {
   IoCheckmarkCircleSharp,
   IoCloseCircleOutline,
@@ -11,12 +11,14 @@ import { ToDoListItemProps } from './types';
 const ToDoListItem = ({
   children,
   completed,
+  editMode,
   onDelete,
+  onEdit,
   onUpdate
 }: ToDoListItemProps): JSX.Element => (
   <ListItem>
     <Flex justifyContent='space-between'>
-      <Flex flex={1}>
+      <Flex alignItems='center' flex={1}>
         {completed ? (
           <Icon
             as={IoCheckmarkCircleSharp}
@@ -36,10 +38,20 @@ const ToDoListItem = ({
             onClick={onUpdate}
           />
         )}
-
-        <Text as='span' pl={2}>
-          {completed ? <Text as='s'>{children}</Text> : children}
-        </Text>
+        {editMode ? (
+          <Input
+            defaultValue={children as string}
+            size='sm'
+            type='text'
+            onBlur={event => {
+              onEdit(event.target.value);
+            }}
+          />
+        ) : (
+          <Text as='span' pl={2} onClick={() => onEdit(children as string)}>
+            {completed ? <Text as='s'>{children}</Text> : children}
+          </Text>
+        )}
       </Flex>
       <Flex justifyContent='end'>
         <Icon as={IoPencilOutline} color='gray.400' h={6} mx={1} w={6} />

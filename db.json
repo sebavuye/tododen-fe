@@ -1,18 +1,9 @@
 {
   "todos": [
     {
-      "id": "t7BBhRRqGZ7mLgMOFbzaF",
-      "todo": "test",
-      "completed": true
-    },
-    {
-      "id": "f4wa06rNi7Yx-chETH2Tw",
+      "id": "1b2sOv9lOd7hpd-WbN0u4",
+      "editMode": false,
       "todo": "sebastian",
-      "completed": true
-    },
-    {
-      "id": "S17p8pwWe3nWHJDhawhMd",
-      "todo": "christian",
       "completed": false
     }
   ]

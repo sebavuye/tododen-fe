@@ -46,6 +46,7 @@ const ToDoListInput = (): JSX.Element => {
       dispatch(
         addToDo({
           id: nanoid(),
+          editMode: false,
           todo: userInput,
           completed: false
         })
