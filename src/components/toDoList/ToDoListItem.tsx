@@ -72,7 +72,7 @@ const ToDoListItem = ({
             </Text>
           )}
         </Flex>
-        {showOptions && (
+        {showOptions && !editMode && (
           <Flex alignItems='center' justifyContent='end'>
             <Icon
               as={IoPencilOutline}
