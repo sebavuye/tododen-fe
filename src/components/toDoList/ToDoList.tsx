@@ -5,7 +5,7 @@ import ToDoListItem from './ToDoListItem';
 import ToDoListInput from './ToDoListInput';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { ToDoItem } from '../../store/reducers/types';
-import { deleteToDo } from '../../store/actions';
+import { deleteToDo, updateToDo } from '../../store/actions';
 
 const ToDoList = (): JSX.Element => {
   const { list: toDoList } = useAppSelector(state => state);
@@ -13,6 +13,23 @@ const ToDoList = (): JSX.Element => {
 
   const handleDeleteToDoItem = (toDoListItemId: ToDoItem['id']) =>
     dispatch(deleteToDo(toDoListItemId));
+
+  const handleStatusUpdateToDoItem = (toDoListItem: ToDoItem) => {
+    const updatedToDoItem = {
+      ...toDoListItem,
+      completed: !toDoListItem.completed
+    };
+    dispatch(updateToDo(updatedToDoItem));
+  };
+
+  const handleEditToDoItem = (toDoListItem: ToDoItem, newValue: string) => {
+    const updatedToDoItem = {
+      ...toDoListItem,
+      todo: newValue,
+      editMode: !toDoListItem.editMode
+    };
+    dispatch(updateToDo(updatedToDoItem));
+  };
 
   return (
     <Grid h='100%' templateRows='auto 1fr'>
@@ -32,7 +49,13 @@ const ToDoList = (): JSX.Element => {
               {toDoList.map(toDoListItem => (
                 <ToDoListItem
                   key={toDoListItem.id}
-                  onDelete={() => handleDeleteToDoItem(toDoListItem.id)}>
+                  completed={toDoListItem.completed}
+                  editMode={toDoListItem.editMode}
+                  onDelete={() => handleDeleteToDoItem(toDoListItem.id)}
+                  onEdit={newValue =>
+                    handleEditToDoItem(toDoListItem, newValue)
+                  }
+                  onUpdate={() => handleStatusUpdateToDoItem(toDoListItem)}>
                   {toDoListItem.todo}
                 </ToDoListItem>
               ))}

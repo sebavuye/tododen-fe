@@ -46,6 +46,7 @@ const ToDoListInput = (): JSX.Element => {
       dispatch(
         addToDo({
           id: nanoid(),
+          editMode: false,
           todo: userInput,
           completed: false
         })
@@ -61,6 +62,9 @@ const ToDoListInput = (): JSX.Element => {
         placeholder='What needs to be done?'
         value={userInput}
         onChange={event => handleUserInput(event)}
+        onKeyDown={event => {
+          if (event.key === 'Enter') handleAddToDo();
+        }}
       />
       <Button
         colorScheme='teal'

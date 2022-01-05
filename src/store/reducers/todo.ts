@@ -48,6 +48,17 @@ const ToDoReducer = (state = initialState, { payload, type }: AnyAction) => {
       return { ...state, error: payload, loading: false };
     }
 
+    // UPDATE TO DO ITEM
+    case ACTIONS.UPDATE_TODO_ITEM_REQUEST: {
+      return { ...state, loading: true };
+    }
+    case ACTIONS.UPDATE_TODO_ITEM_SUCCESS: {
+      return { ...state, list: payload, loading: false, error: null };
+    }
+    case ACTIONS.UPDATE_TODO_ITEM_FAILURE: {
+      return { ...state, error: payload, loading: false };
+    }
+
     default:
       return state;
   }

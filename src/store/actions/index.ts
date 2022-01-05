@@ -11,7 +11,12 @@ export { DELETE_TODO_ITEM_REQUEST } from './todo';
 export { DELETE_TODO_ITEM_SUCCESS } from './todo';
 export { DELETE_TODO_ITEM_FAILURE } from './todo';
 
+export { UPDATE_TODO_ITEM_REQUEST } from './todo';
+export { UPDATE_TODO_ITEM_SUCCESS } from './todo';
+export { UPDATE_TODO_ITEM_FAILURE } from './todo';
+
 // action creators
 export { addToDo } from './todo';
 export { getToDoList } from './todo';
 export { deleteToDo } from './todo';
+export { updateToDo } from './todo';
