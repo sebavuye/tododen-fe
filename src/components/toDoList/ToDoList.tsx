@@ -8,8 +8,10 @@ import { ToDoItem } from '../../store/reducers/types';
 import { deleteToDo, updateToDo } from '../../store/actions';
 
 const ToDoList = (): JSX.Element => {
-  const { list: toDoList } = useAppSelector(state => state);
+  const toDoList = useAppSelector(state => state.toDoList);
   const dispatch = useAppDispatch();
+
+  console.log(toDoList);
 
   const handleDeleteToDoItem = (toDoListItemId: ToDoItem['id']) =>
     dispatch(deleteToDo(toDoListItemId));
@@ -46,7 +48,7 @@ const ToDoList = (): JSX.Element => {
         <Grid h='100%' mx='auto' templateRows='1fr auto' w='90%'>
           <GridItem>
             <List spacing={4}>
-              {toDoList.map(toDoListItem => (
+              {toDoList.map((toDoListItem: ToDoItem) => (
                 <ToDoListItem
                   key={toDoListItem.id}
                   completed={toDoListItem.completed}

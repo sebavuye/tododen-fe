@@ -75,6 +75,22 @@ function* handleUpdateToDo(action: Effect) {
   }
 }
 
+// REFACTOR
+type getToDoListResponse2 = SagaReturnType<typeof getToDoList>;
+
+function* handleGetToDoList2() {
+  try {
+    const response: getToDoListResponse2 = yield call(getToDoList);
+    const toDoList = response.data;
+
+    yield put(ACTIONS.setToDoList(toDoList));
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      yield put({ type: ACTIONS.GET_TODO_LIST_FAILURE, payload: error });
+    }
+  }
+}
+
 // WATCHERS
 export function* watchPostToDo() {
   yield takeLatest(ACTIONS.POST_TODO_ITEM_REQUEST, handlePostToDo);
@@ -90,4 +106,9 @@ export function* watchDeleteToDo() {
 
 export function* watchUpdateToDo() {
   yield takeLatest(ACTIONS.UPDATE_TODO_ITEM_REQUEST, handleUpdateToDo);
+}
+
+// REFACTOR
+export function* watchGetToDoList2() {
+  yield takeLatest(ACTIONS.fetchToDoList, handleGetToDoList2);
 }

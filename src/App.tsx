@@ -4,10 +4,11 @@ import axios from 'axios';
 import { Error, Footer, Header, ToDoList } from './components';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { getToDoList } from './store/actions';
+import * as ACTIONS from './store/actions';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
-  const { error, loading } = useAppSelector(state => state);
+  const { error, loading } = useAppSelector(state => state.ToDoReducer);
   const notificationToast = useToast();
 
   const isGetToDoListError =
@@ -16,7 +17,7 @@ function App(): JSX.Element {
     error.response?.data.code === 'GET_LIST';
 
   React.useEffect(() => {
-    dispatch(getToDoList());
+    dispatch(ACTIONS.fetchToDoList());
   }, [dispatch]);
 
   React.useEffect(() => {

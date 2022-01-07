@@ -2,6 +2,7 @@ import { all } from 'redux-saga/effects';
 import {
   watchDeleteToDo,
   watchGetToDoList,
+  watchGetToDoList2,
   watchPostToDo,
   watchUpdateToDo
 } from './todo';
@@ -12,6 +13,7 @@ export default function* rootSaga() {
     watchPostToDo(),
     watchGetToDoList(),
     watchDeleteToDo(),
-    watchUpdateToDo()
+    watchUpdateToDo(),
+    watchGetToDoList2()
   ]);
 }

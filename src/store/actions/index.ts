@@ -20,3 +20,7 @@ export { addToDo } from './todo';
 export { getToDoList } from './todo';
 export { deleteToDo } from './todo';
 export { updateToDo } from './todo';
+
+// refactor
+export { fetchToDoList } from './todo';
+export { setToDoList } from './todo';

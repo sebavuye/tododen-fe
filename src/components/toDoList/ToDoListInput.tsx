@@ -7,7 +7,7 @@ import { addToDo } from '../../store/actions';
 const ToDoListInput = (): JSX.Element => {
   const [userInput, setUserInput] = React.useState<string>('');
   const dispatch = useAppDispatch();
-  const { loading } = useAppSelector(state => state);
+  const { loading } = useAppSelector(state => state.ToDoReducer);
 
   const notificationToast = useToast();
   const notificationToastRef = React.useRef<ToastId | undefined>();

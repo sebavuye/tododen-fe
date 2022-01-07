@@ -1,12 +1,18 @@
-import { AnyAction } from '@reduxjs/toolkit';
+import { AnyAction, createReducer, PayloadAction } from '@reduxjs/toolkit';
 import * as ACTIONS from '../actions';
-import { ToDoInitialState } from './types';
+import { IToDoListDTO } from '../../types';
+import { ToDoItem } from './types';
 
-const initialState: ToDoInitialState = {
+const initialState: IToDoListDTO = {
   list: [],
   loading: false,
   error: null
 };
+
+export const toDoList = createReducer<ToDoItem[]>([], {
+  [ACTIONS.setToDoList.type]: (state, { payload }: PayloadAction<ToDoItem[]>) =>
+    payload
+});
 
 const ToDoReducer = (state = initialState, { payload, type }: AnyAction) => {
   switch (type) {

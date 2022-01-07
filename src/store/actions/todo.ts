@@ -1,3 +1,4 @@
+import { createAction } from '@reduxjs/toolkit';
 import { ToDoItem } from '../reducers/types';
 
 // actions constants
@@ -8,6 +9,9 @@ export const POST_TODO_ITEM_FAILURE = 'todo/post-todo-item-failure';
 export const GET_TODO_LIST_REQUEST = 'todo/get-todo-list-request';
 export const GET_TODO_LIST_SUCCESS = 'todo/get-todo-list-success';
 export const GET_TODO_LIST_FAILURE = 'todo/get-todo-list-failure';
+
+export const fetchToDoList = createAction('TODO/fetchToDoList');
+export const setToDoList = createAction<ToDoItem[]>('TODO/setToDoList');
 
 export const DELETE_TODO_ITEM_REQUEST = 'todo/delete-todo-item-request';
 export const DELETE_TODO_ITEM_SUCCESS = 'todo/delete-todo-item-success';
