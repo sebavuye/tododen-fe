@@ -13,6 +13,7 @@ import {
   updateToDoItem
 } from '../api/services';
 import * as ACTIONS from '../store/actions';
+import { EToDoListLoadingKeys } from '../types';
 
 type postToDoResponse = SagaReturnType<typeof postToDoItem>;
 
@@ -80,10 +81,22 @@ type getToDoListResponse2 = SagaReturnType<typeof getToDoList>;
 
 function* handleGetToDoList2() {
   try {
+    yield put(
+      ACTIONS.setLoading({
+        key: EToDoListLoadingKeys.GET_TODO_LIST,
+        loading: true
+      })
+    );
     const response: getToDoListResponse2 = yield call(getToDoList);
     const toDoList = response.data;
 
     yield put(ACTIONS.setToDoList(toDoList));
+    yield put(
+      ACTIONS.setLoading({
+        key: EToDoListLoadingKeys.GET_TODO_LIST,
+        loading: false
+      })
+    );
   } catch (error) {
     if (axios.isAxiosError(error)) {
       yield put({ type: ACTIONS.GET_TODO_LIST_FAILURE, payload: error });

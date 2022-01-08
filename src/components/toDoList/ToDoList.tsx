@@ -1,17 +1,23 @@
 import React from 'react';
-import { Grid, GridItem, List } from '@chakra-ui/react';
+import { Grid, GridItem, List, Text } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 import ToDoListStats from './ToDoListStats';
 import ToDoListItem from './ToDoListItem';
 import ToDoListInput from './ToDoListInput';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { ToDoItem } from '../../store/reducers/types';
 import { deleteToDo, updateToDo } from '../../store/actions';
+import { getLoadingStateByKey } from '../../store/selectors';
+import { EToDoListLoadingKeys } from '../../types';
 
 const ToDoList = (): JSX.Element => {
   const toDoList = useAppSelector(state => state.toDoList);
   const dispatch = useAppDispatch();
+  const isLoading = useSelector(
+    getLoadingStateByKey(EToDoListLoadingKeys.GET_TODO_LIST)
+  );
 
-  console.log(toDoList);
+  console.log(isLoading);
 
   const handleDeleteToDoItem = (toDoListItemId: ToDoItem['id']) =>
     dispatch(deleteToDo(toDoListItemId));
@@ -48,19 +54,23 @@ const ToDoList = (): JSX.Element => {
         <Grid h='100%' mx='auto' templateRows='1fr auto' w='90%'>
           <GridItem>
             <List spacing={4}>
-              {toDoList.map((toDoListItem: ToDoItem) => (
-                <ToDoListItem
-                  key={toDoListItem.id}
-                  completed={toDoListItem.completed}
-                  editMode={toDoListItem.editMode}
-                  onDelete={() => handleDeleteToDoItem(toDoListItem.id)}
-                  onEdit={newValue =>
-                    handleEditToDoItem(toDoListItem, newValue)
-                  }
-                  onUpdate={() => handleStatusUpdateToDoItem(toDoListItem)}>
-                  {toDoListItem.todo}
-                </ToDoListItem>
-              ))}
+              {isLoading ? (
+                <Text>Loading</Text>
+              ) : (
+                toDoList.map((toDoListItem: ToDoItem) => (
+                  <ToDoListItem
+                    key={toDoListItem.id}
+                    completed={toDoListItem.completed}
+                    editMode={toDoListItem.editMode}
+                    onDelete={() => handleDeleteToDoItem(toDoListItem.id)}
+                    onEdit={newValue =>
+                      handleEditToDoItem(toDoListItem, newValue)
+                    }
+                    onUpdate={() => handleStatusUpdateToDoItem(toDoListItem)}>
+                    {toDoListItem.todo}
+                  </ToDoListItem>
+                ))
+              )}
             </List>
           </GridItem>
           <GridItem display='flex'>

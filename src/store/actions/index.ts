@@ -24,3 +24,5 @@ export { updateToDo } from './todo';
 // refactor
 export { fetchToDoList } from './todo';
 export { setToDoList } from './todo';
+
+export { setLoading } from './loading';

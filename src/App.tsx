@@ -3,8 +3,8 @@ import { Grid, GridItem, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { Error, Footer, Header, ToDoList } from './components';
 import { useAppDispatch, useAppSelector } from './store/hooks';
-import { getToDoList } from './store/actions';
 import * as ACTIONS from './store/actions';
+import { getToDoList } from './store/actions';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
