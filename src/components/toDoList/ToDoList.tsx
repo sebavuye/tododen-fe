@@ -4,23 +4,19 @@ import { useSelector } from 'react-redux';
 import ToDoListStats from './ToDoListStats';
 import ToDoListItem from './ToDoListItem';
 import ToDoListInput from './ToDoListInput';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch } from '../../store/hooks';
 import { ToDoItem } from '../../store/reducers/types';
 import { deleteToDo, updateToDo } from '../../store/actions';
-import { getLoadingStateByKey } from '../../store/selectors';
+import { getLoadingStateByKey, toDoStateSelector } from '../../store/selectors';
 import { EToDoListLoadingKeys } from '../../types';
 
 const ToDoList = (): JSX.Element => {
-  const toDoList = useAppSelector(state => state.toDoList);
   const dispatch = useAppDispatch();
-  const isLoading = useSelector(
-    getLoadingStateByKey(EToDoListLoadingKeys.GET_TODO_LIST)
-  );
 
-  console.log(isLoading);
+  const toDoList = useSelector(toDoStateSelector);
+  const isLoading = useSelector(getLoadingStateByKey(EToDoListLoadingKeys.GET_TODO_LIST));
 
-  const handleDeleteToDoItem = (toDoListItemId: ToDoItem['id']) =>
-    dispatch(deleteToDo(toDoListItemId));
+  const handleDeleteToDoItem = (toDoListItemId: ToDoItem['id']) => dispatch(deleteToDo(toDoListItemId));
 
   const handleStatusUpdateToDoItem = (toDoListItem: ToDoItem) => {
     const updatedToDoItem = {
@@ -41,12 +37,7 @@ const ToDoList = (): JSX.Element => {
 
   return (
     <Grid h='100%' templateRows='auto 1fr'>
-      <GridItem
-        alignItems='end'
-        bg='teal.100'
-        display='flex'
-        justifyContent='end'
-        p={4}>
+      <GridItem alignItems='end' bg='teal.100' display='flex' justifyContent='end' p={4}>
         <ToDoListStats />
       </GridItem>
 
@@ -55,7 +46,7 @@ const ToDoList = (): JSX.Element => {
           <GridItem>
             <List spacing={4}>
               {isLoading ? (
-                <Text>Loading</Text>
+                <Text>Loading...</Text>
               ) : (
                 toDoList.map((toDoListItem: ToDoItem) => (
                   <ToDoListItem
@@ -63,9 +54,7 @@ const ToDoList = (): JSX.Element => {
                     completed={toDoListItem.completed}
                     editMode={toDoListItem.editMode}
                     onDelete={() => handleDeleteToDoItem(toDoListItem.id)}
-                    onEdit={newValue =>
-                      handleEditToDoItem(toDoListItem, newValue)
-                    }
+                    onEdit={newValue => handleEditToDoItem(toDoListItem, newValue)}
                     onUpdate={() => handleStatusUpdateToDoItem(toDoListItem)}>
                     {toDoListItem.todo}
                   </ToDoListItem>

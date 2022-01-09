@@ -1,19 +1,10 @@
-import {
-  call,
-  Effect,
-  put,
-  SagaReturnType,
-  takeLatest
-} from 'redux-saga/effects';
+import { call, Effect, put, SagaReturnType, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
-import {
-  deleteToDoItem,
-  getToDoList,
-  postToDoItem,
-  updateToDoItem
-} from '../api/services';
+import { deleteToDoItem, getToDoList, postToDoItem, updateToDoItem } from '../api/services';
 import * as ACTIONS from '../store/actions';
 import { EToDoListLoadingKeys } from '../types';
+import { ERROR_NOTIFICATIONS } from '../constants';
+import { SUCCESS_NOTIFICATIONS } from '../constants/notifications';
 
 type postToDoResponse = SagaReturnType<typeof postToDoItem>;
 
@@ -65,10 +56,7 @@ function* handleUpdateToDo(action: Effect) {
     yield call(updateToDoItem, action.payload);
     const response: getToDoListResponse = yield call(getToDoList);
 
-    yield put({
-      type: ACTIONS.UPDATE_TODO_ITEM_SUCCESS,
-      payload: response.data
-    });
+    yield put({ type: ACTIONS.UPDATE_TODO_ITEM_SUCCESS, payload: response.data });
   } catch (error) {
     if (axios.isAxiosError(error)) {
       yield put({ type: ACTIONS.UPDATE_TODO_ITEM_FAILURE, payload: error });
@@ -81,26 +69,30 @@ type getToDoListResponse2 = SagaReturnType<typeof getToDoList>;
 
 function* handleGetToDoList2() {
   try {
-    yield put(
-      ACTIONS.setLoading({
-        key: EToDoListLoadingKeys.GET_TODO_LIST,
-        loading: true
-      })
-    );
+    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.GET_TODO_LIST, loading: true }));
+
     const response: getToDoListResponse2 = yield call(getToDoList);
     const toDoList = response.data;
 
     yield put(ACTIONS.setToDoList(toDoList));
+    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.GET_TODO_LIST, loading: false }));
+
     yield put(
-      ACTIONS.setLoading({
-        key: EToDoListLoadingKeys.GET_TODO_LIST,
-        loading: false
+      ACTIONS.showSuccess({
+        title: SUCCESS_NOTIFICATIONS.defaultSuccessTitle,
+        message: SUCCESS_NOTIFICATIONS.getToDoListSuccessMessage
       })
     );
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      yield put({ type: ACTIONS.GET_TODO_LIST_FAILURE, payload: error });
-    }
+    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.GET_TODO_LIST, loading: false }));
+    console.error(error); // TODO: add error logging service
+
+    yield put(
+      ACTIONS.showError({
+        title: ERROR_NOTIFICATIONS.getToDoListErrorTitle,
+        message: ERROR_NOTIFICATIONS.defaultErrorMessage
+      })
+    );
   }
 }
 

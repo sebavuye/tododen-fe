@@ -3,7 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { combineReducers } from '@reduxjs/toolkit';
 import rootSaga from '../sagas';
-import { ToDoReducer, loadingReducer } from './reducers';
+import { ToDoReducer, loadingReducer, notificationsReducer } from './reducers';
 import { toDoList } from './reducers/todo';
 
 // create redux-saga middleware
@@ -13,7 +13,8 @@ export const store = createStore(
   combineReducers({
     ToDoReducer,
     toDoList,
-    loading: loadingReducer
+    loading: loadingReducer,
+    notifications: notificationsReducer
   }),
 
   composeWithDevTools(applyMiddleware(sagaMiddleware))

@@ -26,3 +26,7 @@ export { fetchToDoList } from './todo';
 export { setToDoList } from './todo';
 
 export { setLoading } from './loading';
+
+export { showError } from './notifications';
+export { setError } from './notifications';
+export { showSuccess } from './notifications';
