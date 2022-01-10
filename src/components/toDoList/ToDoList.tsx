@@ -1,38 +1,36 @@
 import React from 'react';
 import { Grid, GridItem, List, Text } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ToDoListStats from './ToDoListStats';
 import ToDoListItem from './ToDoListItem';
 import ToDoListInput from './ToDoListInput';
-import { useAppDispatch } from '../../store/hooks';
-import { ToDoItem } from '../../store/reducers/types';
-import { deleteToDo, updateToDo } from '../../store/actions';
+import * as ACTIONS from '../../store/actions';
 import { getLoadingStateByKey, toDoStateSelector } from '../../store/selectors';
-import { EToDoListLoadingKeys } from '../../types';
+import { EToDoListLoadingKeys, IToDoItem } from '../../types';
 
 const ToDoList = (): JSX.Element => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   const toDoList = useSelector(toDoStateSelector);
   const isLoading = useSelector(getLoadingStateByKey(EToDoListLoadingKeys.GET_TODO_LIST));
 
-  const handleDeleteToDoItem = (toDoListItemId: ToDoItem['id']) => dispatch(deleteToDo(toDoListItemId));
+  const handleDeleteToDoItem = (toDoItemId: IToDoItem['id']) => dispatch(ACTIONS.removeToDoItem(toDoItemId));
 
-  const handleStatusUpdateToDoItem = (toDoListItem: ToDoItem) => {
-    const updatedToDoItem = {
+  const handleStatusUpdateToDoItem = (toDoListItem: IToDoItem) => {
+    const updatedToDoItem: IToDoItem = {
       ...toDoListItem,
       completed: !toDoListItem.completed
     };
-    dispatch(updateToDo(updatedToDoItem));
+    dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
   };
 
-  const handleEditToDoItem = (toDoListItem: ToDoItem, newValue: string) => {
+  const handleEditToDoItem = (toDoListItem: IToDoItem, newValue: string) => {
     const updatedToDoItem = {
       ...toDoListItem,
       todo: newValue,
       editMode: !toDoListItem.editMode
     };
-    dispatch(updateToDo(updatedToDoItem));
+    dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
   };
 
   return (
@@ -48,7 +46,7 @@ const ToDoList = (): JSX.Element => {
               {isLoading ? (
                 <Text>Loading...</Text>
               ) : (
-                toDoList.map((toDoListItem: ToDoItem) => (
+                toDoList.map((toDoListItem: IToDoItem) => (
                   <ToDoListItem
                     key={toDoListItem.id}
                     completed={toDoListItem.completed}

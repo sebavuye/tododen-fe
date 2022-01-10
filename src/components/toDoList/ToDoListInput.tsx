@@ -1,27 +1,21 @@
 import React from 'react';
 import { Button, Input, InputGroup, ToastId, useToast } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { addToDo } from '../../store/actions';
+import { useDispatch } from 'react-redux';
+import * as ACTIONS from '../../store/actions';
 
 const ToDoListInput = (): JSX.Element => {
   const [userInput, setUserInput] = React.useState<string>('');
-  const dispatch = useAppDispatch();
-  const { loading } = useAppSelector(state => state.ToDoReducer);
+  const dispatch = useDispatch();
 
   const notificationToast = useToast();
   const notificationToastRef = React.useRef<ToastId | undefined>();
 
-  const handleUserInput = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setUserInput(event.currentTarget.value);
+  const handleUserInput = (event: React.ChangeEvent<HTMLInputElement>) => setUserInput(event.currentTarget.value);
 
   const handleAddToDo = () => {
     if (!userInput) {
-      if (
-        notificationToastRef.current &&
-        notificationToast.isActive(notificationToastRef.current)
-      )
-        return;
+      if (notificationToastRef.current && notificationToast.isActive(notificationToastRef.current)) return;
 
       notificationToastRef.current = notificationToast({
         title: 'Oops!',
@@ -43,15 +37,7 @@ const ToDoListInput = (): JSX.Element => {
         });
       }
 
-      dispatch(
-        addToDo({
-          id: nanoid(),
-          editMode: false,
-          todo: userInput,
-          completed: false
-        })
-      );
-
+      dispatch(ACTIONS.createToDoItem({ id: nanoid(), editMode: false, todo: userInput, completed: false }));
       setUserInput('');
     }
   };
@@ -66,12 +52,7 @@ const ToDoListInput = (): JSX.Element => {
           if (event.key === 'Enter') handleAddToDo();
         }}
       />
-      <Button
-        colorScheme='teal'
-        isLoading={loading}
-        ml={2}
-        size='lg'
-        onClick={handleAddToDo}>
+      <Button colorScheme='teal' ml={2} size='lg' onClick={handleAddToDo}>
         Add
       </Button>
     </InputGroup>

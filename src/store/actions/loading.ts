@@ -3,6 +3,4 @@ import { ILoading } from '../../types';
 
 const prefix = 'LOADING';
 
-const setLoading = createAction<ILoading>(`${prefix}/setLoading`);
-
-export { setLoading };
+export const setLoading = createAction<ILoading>(`${prefix}/setLoading`);

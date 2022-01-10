@@ -1,14 +1,13 @@
 import React from 'react';
 import { Badge, Flex } from '@chakra-ui/react';
-import { useAppSelector } from '../../store/hooks';
-import { ToDoItem } from '../../store/reducers/types';
+import { useSelector } from 'react-redux';
+import { toDoStateSelector } from '../../store/selectors';
+import { IToDoItem } from '../../types';
 
 const ToDoListStats = (): JSX.Element => {
-  const { list: toDoList } = useAppSelector(state => state.ToDoReducer);
+  const toDoList = useSelector(toDoStateSelector);
 
-  const uncompletedToDos = toDoList.filter(
-    (todo: ToDoItem) => !todo.completed
-  ).length;
+  const uncompletedToDos = toDoList.filter((todo: IToDoItem) => !todo.completed).length;
   const completedToDos = toDoList.length - uncompletedToDos;
 
   return (

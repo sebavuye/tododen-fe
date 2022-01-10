@@ -1,39 +1,9 @@
 {
   "todos": [
     {
-      "id": "VYlFKM4XsEr_YnP_jBrDR",
-      "editMode": false,
-      "todo": "d",
-      "completed": true
-    },
-    {
-      "id": "-AEmfTSIX32NbNTI_NxLM",
-      "editMode": false,
-      "todo": "test",
-      "completed": true
-    },
-    {
-      "id": "NtsmefbrYlKV4pYGt8V30",
+      "id": "uzXZ8ANGqLI_IZMPDVrH9",
       "editMode": false,
       "todo": "se",
-      "completed": true
-    },
-    {
-      "id": "gl5U_LyH-_5_C92ksnec0",
-      "editMode": false,
-      "todo": "se",
-      "completed": false
-    },
-    {
-      "id": "TnF5aSxQc-LBWU5WhJV-b",
-      "editMode": false,
-      "todo": "s",
-      "completed": false
-    },
-    {
-      "id": "HveypdNgZde7Z7Ux3s1CF",
-      "editMode": false,
-      "todo": "s",
       "completed": false
     }
   ]

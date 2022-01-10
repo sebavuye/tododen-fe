@@ -1,1 +1,1 @@
-export { ERROR_NOTIFICATIONS } from './notifications';
+export { ERROR_NOTIFICATIONS, SUCCESS_NOTIFICATIONS } from './notifications';

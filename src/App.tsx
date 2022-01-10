@@ -1,11 +1,11 @@
 import React from 'react';
 import { Grid, GridItem } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
 import { ErrorToast, Footer, Header, SuccessToast, ToDoList } from './components';
-import { useAppDispatch } from './store/hooks';
 import * as ACTIONS from './store/actions';
 
 function App(): JSX.Element {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     dispatch(ACTIONS.fetchToDoList());
