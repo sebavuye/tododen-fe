@@ -3,5 +3,6 @@ export const SUCCESS_NOTIFICATIONS = {
   defaultSuccessMessage: 'Action completed successfully',
 
   getToDoListSuccessMessage: 'To do list loaded correctly.',
-  createToDoItemSuccessMessage: 'To do item added'
+  createToDoItemSuccessMessage: 'To do item added',
+  removeToDoItemSuccessMessage: 'To do item removed'
 };
