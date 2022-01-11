@@ -4,3 +4,7 @@ export interface IToDoItem {
   id: string;
   todo: string;
 }
+
+export interface IInitializationState {
+  initialization: boolean;
+}

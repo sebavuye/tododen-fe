@@ -8,7 +8,7 @@ function App(): JSX.Element {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    dispatch(ACTIONS.fetchToDoList());
+    dispatch(ACTIONS.fetchToDoList({ initialization: true }));
   }, [dispatch]);
 
   return (
