@@ -105,18 +105,9 @@ function* fetchToDoList({ payload }: PayloadAction<IInitializationState>) {
   }
 }
 
-export function* watchPostToDo() {
+export function* toDoListSagas() {
   yield takeLatest(ACTIONS.createToDoItem, createToDoItem);
-}
-
-export function* watchDeleteToDo() {
   yield takeLatest(ACTIONS.removeToDoItem, removeToDoItem);
-}
-
-export function* watchUpdateToDo() {
   yield takeLatest(ACTIONS.updateToDoItem, updateToDoItem);
-}
-
-export function* watchGetToDoList() {
   yield takeLatest(ACTIONS.fetchToDoList, fetchToDoList);
 }
