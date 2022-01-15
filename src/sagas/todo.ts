@@ -10,9 +10,10 @@ function* createToDoItem({ payload }: PayloadAction<IToDoItem>) {
     yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.CREATE_TO_DO_ITEM, loading: true }));
 
     yield call(postToDoItem, payload);
+    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.CREATE_TO_DO_ITEM, loading: false }));
+
     yield put(ACTIONS.fetchToDoList({ initialization: false }));
 
-    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.CREATE_TO_DO_ITEM, loading: false }));
     yield put(
       ACTIONS.showSuccess({
         title: SUCCESS_NOTIFICATIONS.defaultSuccessTitle,

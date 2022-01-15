@@ -19,6 +19,8 @@ export const LoadingText = ({
     component => TO_DO_LOADING_MESSAGES[component.key as keyof IToDoListLoadingMessages]
   );
 
+  console.log(loadingComponents);
+
   if (!loadingKeys) return <span>{children}</span>;
   if (loadingComponentsKeys && loadingComponentsKeys.length === 1) return <span>{loadingComponentsKeys[0]}</span>;
   return <span>{children}</span>;

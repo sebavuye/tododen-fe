@@ -20,5 +20,7 @@ export enum EToDoListLoadingKeys {
 export interface IToDoListLoadingMessages {
   [EToDoListLoadingKeys.GET_TODO_LIST]: string;
   [EToDoListLoadingKeys.REMOVE_TO_DO_ITEM]: string;
+  [EToDoListLoadingKeys.CREATE_TO_DO_ITEM]: string;
+  [EToDoListLoadingKeys.UPDATE_TO_DO_ITEM]: string;
   DEFAULT: string;
 }

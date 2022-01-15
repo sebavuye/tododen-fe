@@ -16,8 +16,11 @@ const ToDoList = (): JSX.Element => {
   const toDoList = useSelector(toDoStateSelector);
   const isGetToDoListLoading = useSelector(getLoadingStateByKey(EToDoListLoadingKeys.GET_TODO_LIST));
   const isRemoveToDoItemLoading = useSelector(getLoadingStateByKey(EToDoListLoadingKeys.REMOVE_TO_DO_ITEM));
+  const isCreateToDoItemLoading = useSelector(getLoadingStateByKey(EToDoListLoadingKeys.CREATE_TO_DO_ITEM));
+  const isUpdateToDoItemLoading = useSelector(getLoadingStateByKey(EToDoListLoadingKeys.UPDATE_TO_DO_ITEM));
 
-  const isLoading = isGetToDoListLoading || isRemoveToDoItemLoading;
+  const isLoading =
+    isGetToDoListLoading || isRemoveToDoItemLoading || isCreateToDoItemLoading || isUpdateToDoItemLoading;
 
   const handleDeleteToDoItem = (toDoItemId: IToDoItem['id']) => dispatch(ACTIONS.removeToDoItem(toDoItemId));
 
@@ -44,7 +47,14 @@ const ToDoList = (): JSX.Element => {
         <Flex alignItems='center' width='50%'>
           {isLoading && (
             <Loading>
-              <LoadingText loadingKeys={[EToDoListLoadingKeys.GET_TODO_LIST, EToDoListLoadingKeys.REMOVE_TO_DO_ITEM]} />
+              <LoadingText
+                loadingKeys={[
+                  EToDoListLoadingKeys.GET_TODO_LIST,
+                  EToDoListLoadingKeys.REMOVE_TO_DO_ITEM,
+                  EToDoListLoadingKeys.CREATE_TO_DO_ITEM,
+                  EToDoListLoadingKeys.UPDATE_TO_DO_ITEM
+                ]}
+              />
             </Loading>
           )}
         </Flex>
