@@ -1,30 +1,27 @@
 import { AxiosResponse } from 'axios';
-import ApiClient from '../client';
-import { ToDoInitialState, ToDoItem } from '../../store/reducers/types';
+import client from '../client';
+import { IToDoItem } from '../../types';
 
 interface PostToDoItem {
-  (toDoItem: ToDoItem): Promise<AxiosResponse<ToDoItem>>;
+  (toDoItem: IToDoItem): Promise<AxiosResponse<IToDoItem>>;
 }
 
-export const postToDoItem: PostToDoItem = toDoItem =>
-  ApiClient.post<ToDoItem>('/todos', toDoItem);
+export const postToDoItem: PostToDoItem = toDoItem => client.post<IToDoItem>('/todos', toDoItem);
 
 interface GetToDoList {
-  (): Promise<AxiosResponse<ToDoInitialState>>;
+  (): Promise<AxiosResponse<IToDoItem[]>>;
 }
 
-export const getToDoList: GetToDoList = () => ApiClient.get('/todos');
+export const getToDoList: GetToDoList = () => client.get('/todos');
 
 interface DeleteToDoItem {
-  (toDoItemId: ToDoItem['id']): Promise<AxiosResponse<ToDoItem>>;
+  (toDoItemId: IToDoItem['id']): Promise<AxiosResponse<IToDoItem>>;
 }
 
-export const deleteToDoItem: DeleteToDoItem = toDoItemId =>
-  ApiClient.delete<ToDoItem>(`todos/${toDoItemId}`);
+export const deleteToDoItem: DeleteToDoItem = toDoItemId => client.delete<IToDoItem>(`todos/${toDoItemId}`);
 
-interface UpdateToDoItem {
-  (toDoItem: ToDoItem): Promise<AxiosResponse<ToDoItem>>;
+interface PatchToDoItem {
+  (toDoItem: IToDoItem): Promise<AxiosResponse<IToDoItem>>;
 }
 
-export const updateToDoItem: UpdateToDoItem = toDoItem =>
-  ApiClient.patch<ToDoItem>(`todos/${toDoItem.id}`, toDoItem);
+export const patchToDoItem: PatchToDoItem = toDoItem => client.patch<IToDoItem>(`todos/${toDoItem.id}`, toDoItem);

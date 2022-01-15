@@ -17,6 +17,7 @@
     "import/extensions": ["error", "ignorePackages", { "ts": "never", "tsx": "never" }],
     "import/prefer-default-export": "off",
     "import/no-extraneous-dependencies": "off",
+    "no-shadow": "off",
 
     // sort-destructure-keys
     "sort-destructure-keys/sort-destructure-keys": ["error", {"caseSensitive": false}],
@@ -28,6 +29,7 @@
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/function-component-definition": "off",
+    "react/require-default-props": "off",
 
     // typescript
     "@typescript-eslint/no-use-before-define": ["error"],

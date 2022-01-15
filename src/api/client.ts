@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { BACKEND_URL } from '../config';
 
-const ApiClient = axios.create({
-  baseURL: 'http://localhost:3001',
+const client = axios.create({
+  baseURL: BACKEND_URL,
   withCredentials: false,
   headers: { 'Content-Type': 'application/json' }
 });
 
-export default ApiClient;
+export default client;

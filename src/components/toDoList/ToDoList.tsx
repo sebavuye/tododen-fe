@@ -1,60 +1,79 @@
 import React from 'react';
-import { Grid, GridItem, List } from '@chakra-ui/react';
+import { Flex, Grid, GridItem, List } from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
 import ToDoListStats from './ToDoListStats';
 import ToDoListItem from './ToDoListItem';
 import ToDoListInput from './ToDoListInput';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { ToDoItem } from '../../store/reducers/types';
-import { deleteToDo, updateToDo } from '../../store/actions';
+import Loading from '../loading/Loading';
+import { LoadingText } from '../loadingText/LoadingText';
+import * as ACTIONS from '../../store/actions';
+import { getLoadingStateByKey, toDoStateSelector } from '../../store/selectors';
+import { EToDoListLoadingKeys, IToDoItem } from '../../types';
 
 const ToDoList = (): JSX.Element => {
-  const { list: toDoList } = useAppSelector(state => state);
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
-  const handleDeleteToDoItem = (toDoListItemId: ToDoItem['id']) =>
-    dispatch(deleteToDo(toDoListItemId));
+  const toDoList = useSelector(toDoStateSelector);
+  const isGetToDoListLoading = useSelector(getLoadingStateByKey(EToDoListLoadingKeys.GET_TODO_LIST));
+  const isRemoveToDoItemLoading = useSelector(getLoadingStateByKey(EToDoListLoadingKeys.REMOVE_TO_DO_ITEM));
+  const isCreateToDoItemLoading = useSelector(getLoadingStateByKey(EToDoListLoadingKeys.CREATE_TO_DO_ITEM));
+  const isUpdateToDoItemLoading = useSelector(getLoadingStateByKey(EToDoListLoadingKeys.UPDATE_TO_DO_ITEM));
 
-  const handleStatusUpdateToDoItem = (toDoListItem: ToDoItem) => {
-    const updatedToDoItem = {
+  const isLoading =
+    isGetToDoListLoading || isRemoveToDoItemLoading || isCreateToDoItemLoading || isUpdateToDoItemLoading;
+
+  const handleDeleteToDoItem = (toDoItemId: IToDoItem['id']) => dispatch(ACTIONS.removeToDoItem(toDoItemId));
+
+  const handleStatusUpdateToDoItem = (toDoListItem: IToDoItem) => {
+    const updatedToDoItem: IToDoItem = {
       ...toDoListItem,
       completed: !toDoListItem.completed
     };
-    dispatch(updateToDo(updatedToDoItem));
+    dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
   };
 
-  const handleEditToDoItem = (toDoListItem: ToDoItem, newValue: string) => {
+  const handleEditToDoItem = (toDoListItem: IToDoItem, newValue: string) => {
     const updatedToDoItem = {
       ...toDoListItem,
       todo: newValue,
       editMode: !toDoListItem.editMode
     };
-    dispatch(updateToDo(updatedToDoItem));
+    dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
   };
 
   return (
     <Grid h='100%' templateRows='auto 1fr'>
-      <GridItem
-        alignItems='end'
-        bg='teal.100'
-        display='flex'
-        justifyContent='end'
-        p={4}>
-        <ToDoListStats />
+      <GridItem bg='teal.100' display='flex' p={4}>
+        <Flex alignItems='center' width='50%'>
+          {isLoading && (
+            <Loading>
+              <LoadingText
+                loadingKeys={[
+                  EToDoListLoadingKeys.GET_TODO_LIST,
+                  EToDoListLoadingKeys.REMOVE_TO_DO_ITEM,
+                  EToDoListLoadingKeys.CREATE_TO_DO_ITEM,
+                  EToDoListLoadingKeys.UPDATE_TO_DO_ITEM
+                ]}
+              />
+            </Loading>
+          )}
+        </Flex>
+        <Flex justifyContent='end' width='50%'>
+          <ToDoListStats />
+        </Flex>
       </GridItem>
 
       <GridItem bg='teal.50' p={6}>
         <Grid h='100%' mx='auto' templateRows='1fr auto' w='90%'>
           <GridItem>
             <List spacing={4}>
-              {toDoList.map(toDoListItem => (
+              {toDoList.map((toDoListItem: IToDoItem) => (
                 <ToDoListItem
                   key={toDoListItem.id}
                   completed={toDoListItem.completed}
                   editMode={toDoListItem.editMode}
                   onDelete={() => handleDeleteToDoItem(toDoListItem.id)}
-                  onEdit={newValue =>
-                    handleEditToDoItem(toDoListItem, newValue)
-                  }
+                  onEdit={newValue => handleEditToDoItem(toDoListItem, newValue)}
                   onUpdate={() => handleStatusUpdateToDoItem(toDoListItem)}>
                   {toDoListItem.todo}
                 </ToDoListItem>

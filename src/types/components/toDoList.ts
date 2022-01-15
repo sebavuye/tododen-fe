@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export interface ToDoListItemProps {
+export interface IToDoListItemProps {
   children: ReactNode;
   completed: boolean;
   editMode: boolean;

@@ -1,93 +1,113 @@
-import {
-  call,
-  Effect,
-  put,
-  SagaReturnType,
-  takeLatest
-} from 'redux-saga/effects';
-import axios from 'axios';
-import {
-  deleteToDoItem,
-  getToDoList,
-  postToDoItem,
-  updateToDoItem
-} from '../api/services';
+import { call, put, SagaReturnType, takeLatest } from 'redux-saga/effects';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { deleteToDoItem, getToDoList, patchToDoItem, postToDoItem } from '../api/services';
 import * as ACTIONS from '../store/actions';
+import { EToDoListLoadingKeys, IInitializationState, IToDoItem } from '../types';
+import { ERROR_NOTIFICATIONS, SUCCESS_NOTIFICATIONS } from '../constants';
 
-type postToDoResponse = SagaReturnType<typeof postToDoItem>;
-
-// HANDLERS
-function* handlePostToDo(action: Effect) {
+function* createToDoItem({ payload }: PayloadAction<IToDoItem>) {
   try {
-    const response: postToDoResponse = yield call(postToDoItem, action.payload);
+    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.CREATE_TO_DO_ITEM, loading: true }));
 
-    yield put({ type: ACTIONS.POST_TODO_ITEM_SUCCESS, payload: response.data });
+    yield call(postToDoItem, payload);
+    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.CREATE_TO_DO_ITEM, loading: false }));
+
+    yield put(ACTIONS.fetchToDoList({ initialization: false }));
+
+    yield put(
+      ACTIONS.showSuccess({
+        title: SUCCESS_NOTIFICATIONS.defaultSuccessTitle,
+        message: SUCCESS_NOTIFICATIONS.createToDoItemSuccessMessage
+      })
+    );
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      yield put({ type: ACTIONS.POST_TODO_ITEM_FAILURE, payload: error });
-    }
+    yield put(
+      ACTIONS.showError({
+        title: ERROR_NOTIFICATIONS.createToDoListItemErrorTitle,
+        message: ERROR_NOTIFICATIONS.defaultErrorMessage
+      })
+    );
   }
 }
 
-type getToDoListResponse = SagaReturnType<typeof getToDoList>;
-
-function* handleGetToDoList() {
+function* removeToDoItem({ payload }: PayloadAction<IToDoItem['id']>) {
   try {
-    const response: getToDoListResponse = yield call(getToDoList);
+    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.REMOVE_TO_DO_ITEM, loading: true }));
 
-    yield put({ type: ACTIONS.GET_TODO_LIST_SUCCESS, payload: response.data });
+    yield call(deleteToDoItem, payload);
+    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.REMOVE_TO_DO_ITEM, loading: false }));
+
+    yield put(ACTIONS.fetchToDoList({ initialization: false }));
+    yield put(
+      ACTIONS.showSuccess({
+        title: SUCCESS_NOTIFICATIONS.defaultSuccessTitle,
+        message: SUCCESS_NOTIFICATIONS.removeToDoItemSuccessMessage
+      })
+    );
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      yield put({ type: ACTIONS.GET_TODO_LIST_FAILURE, payload: error });
-    }
+    yield put(
+      ACTIONS.showError({
+        title: ERROR_NOTIFICATIONS.removeToDoListItemErrorTitle,
+        message: ERROR_NOTIFICATIONS.defaultErrorMessage
+      })
+    );
   }
 }
 
-function* handleDeleteToDo(action: Effect) {
+function* updateToDoItem({ payload }: PayloadAction<IToDoItem>) {
   try {
-    yield call(deleteToDoItem, action.payload);
-    const response: getToDoListResponse = yield call(getToDoList);
+    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.UPDATE_TO_DO_ITEM, loading: true }));
 
-    yield put({
-      type: ACTIONS.DELETE_TODO_ITEM_SUCCESS,
-      payload: response.data
-    });
+    yield call(patchToDoItem, payload);
+    yield put(ACTIONS.fetchToDoList({ initialization: false }));
+
+    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.UPDATE_TO_DO_ITEM, loading: false }));
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      yield put({ type: ACTIONS.DELETE_TODO_ITEM_FAILURE, payload: error });
-    }
+    yield put(
+      ACTIONS.showError({
+        title: ERROR_NOTIFICATIONS.updateToDoListItemErrorTitle,
+        message: ERROR_NOTIFICATIONS.defaultErrorMessage
+      })
+    );
   }
 }
 
-function* handleUpdateToDo(action: Effect) {
-  try {
-    yield call(updateToDoItem, action.payload);
-    const response: getToDoListResponse = yield call(getToDoList);
+type GetToDoList = SagaReturnType<typeof getToDoList>;
 
-    yield put({
-      type: ACTIONS.UPDATE_TODO_ITEM_SUCCESS,
-      payload: response.data
-    });
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      yield put({ type: ACTIONS.UPDATE_TODO_ITEM_FAILURE, payload: error });
+function* fetchToDoList({ payload }: PayloadAction<IInitializationState>) {
+  try {
+    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.GET_TODO_LIST, loading: true }));
+
+    const response: GetToDoList = yield call(getToDoList);
+    const toDoList = response.data;
+
+    yield put(ACTIONS.setToDoList(toDoList));
+    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.GET_TODO_LIST, loading: false }));
+
+    if (payload.initialization) {
+      yield put(
+        ACTIONS.showSuccess({
+          title: SUCCESS_NOTIFICATIONS.defaultSuccessTitle,
+          message: SUCCESS_NOTIFICATIONS.getToDoListSuccessMessage
+        })
+      );
     }
+  } catch (error) {
+    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.GET_TODO_LIST, loading: false }));
+    // TODO: add error logging service
+
+    yield put(
+      ACTIONS.showError({
+        title: ERROR_NOTIFICATIONS.getToDoListErrorTitle,
+        message: ERROR_NOTIFICATIONS.defaultErrorMessage
+      })
+    );
   }
 }
 
-// WATCHERS
-export function* watchPostToDo() {
-  yield takeLatest(ACTIONS.POST_TODO_ITEM_REQUEST, handlePostToDo);
-}
-
-export function* watchGetToDoList() {
-  yield takeLatest(ACTIONS.GET_TODO_LIST_REQUEST, handleGetToDoList);
-}
-
-export function* watchDeleteToDo() {
-  yield takeLatest(ACTIONS.DELETE_TODO_ITEM_REQUEST, handleDeleteToDo);
-}
-
-export function* watchUpdateToDo() {
-  yield takeLatest(ACTIONS.UPDATE_TODO_ITEM_REQUEST, handleUpdateToDo);
+export function* toDoListSagas() {
+  yield takeLatest(ACTIONS.createToDoItem, createToDoItem);
+  yield takeLatest(ACTIONS.removeToDoItem, removeToDoItem);
+  yield takeLatest(ACTIONS.updateToDoItem, updateToDoItem);
+  yield takeLatest(ACTIONS.fetchToDoList, fetchToDoList);
 }
