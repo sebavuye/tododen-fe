@@ -8,6 +8,5 @@ export type { IGlobalState } from './store';
 export type { IToDoListItemProps } from './components/toDoList';
 export type { ILoadingProps } from './components/loading';
 export type { ILoadingTextProps } from './components/loadingText';
-export type { IErrorProps } from './components/error';
 
 export { EToDoListLoadingKeys } from './loading';
