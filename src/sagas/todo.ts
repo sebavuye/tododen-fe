@@ -1,5 +1,6 @@
 import { call, put, SagaReturnType, takeLatest } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
+import * as Sentry from '@sentry/react';
 import { deleteToDoItem, getToDoList, patchToDoItem, postToDoItem } from '../api/services';
 import * as ACTIONS from '../store/actions';
 import { EToDoListLoadingKeys, IInitializationState, IToDoItem } from '../types';
@@ -21,6 +22,10 @@ function* createToDoItem({ payload }: PayloadAction<IToDoItem>) {
       })
     );
   } catch (error) {
+    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.CREATE_TO_DO_ITEM, loading: false }));
+
+    Sentry.captureException(error);
+
     yield put(
       ACTIONS.showError({
         title: ERROR_NOTIFICATIONS.createToDoListItemErrorTitle,
@@ -45,6 +50,10 @@ function* removeToDoItem({ payload }: PayloadAction<IToDoItem['id']>) {
       })
     );
   } catch (error) {
+    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.REMOVE_TO_DO_ITEM, loading: false }));
+
+    Sentry.captureException(error);
+
     yield put(
       ACTIONS.showError({
         title: ERROR_NOTIFICATIONS.removeToDoListItemErrorTitle,
@@ -63,6 +72,10 @@ function* updateToDoItem({ payload }: PayloadAction<IToDoItem>) {
 
     yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.UPDATE_TO_DO_ITEM, loading: false }));
   } catch (error) {
+    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.UPDATE_TO_DO_ITEM, loading: false }));
+
+    Sentry.captureException(error);
+
     yield put(
       ACTIONS.showError({
         title: ERROR_NOTIFICATIONS.updateToDoListItemErrorTitle,
@@ -94,7 +107,8 @@ function* fetchToDoList({ payload }: PayloadAction<IInitializationState>) {
     }
   } catch (error) {
     yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.GET_TODO_LIST, loading: false }));
-    // TODO: add error logging service
+
+    Sentry.captureException(error);
 
     yield put(
       ACTIONS.showError({
