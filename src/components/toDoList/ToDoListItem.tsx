@@ -1,12 +1,7 @@
 import React from 'react';
 import { Flex, Icon, Input, ListItem, Text } from '@chakra-ui/react';
-import {
-  IoCheckmarkCircleSharp,
-  IoCloseCircleOutline,
-  IoEllipseOutline,
-  IoPencilOutline
-} from 'react-icons/io5';
-import { ToDoListItemProps } from './types';
+import { IoCheckmarkCircleSharp, IoCloseCircleOutline, IoEllipseOutline, IoPencilOutline } from 'react-icons/io5';
+import { IToDoListItemProps } from '../../types';
 
 const ToDoListItem = ({
   children,
@@ -15,7 +10,7 @@ const ToDoListItem = ({
   onDelete,
   onEdit,
   onUpdate
-}: ToDoListItemProps): JSX.Element => {
+}: IToDoListItemProps): JSX.Element => {
   const [showOptions, setShowOptions] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -26,9 +21,7 @@ const ToDoListItem = ({
     }
   }, [editMode]);
 
-  const handleInputKeyPress = (
-    event: React.KeyboardEvent<HTMLInputElement>
-  ) => {
+  const handleInputKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && inputRef.current) {
       inputRef.current.blur();
     }
@@ -38,29 +31,13 @@ const ToDoListItem = ({
   };
 
   return (
-    <ListItem
-      onMouseEnter={() => setShowOptions(true)}
-      onMouseLeave={() => setShowOptions(false)}>
+    <ListItem onMouseEnter={() => setShowOptions(true)} onMouseLeave={() => setShowOptions(false)}>
       <Flex justifyContent='space-between'>
         <Flex alignItems='center' flex={1}>
           {completed ? (
-            <Icon
-              as={IoCheckmarkCircleSharp}
-              color='teal.400'
-              cursor='pointer'
-              h={6}
-              w={6}
-              onClick={onUpdate}
-            />
+            <Icon as={IoCheckmarkCircleSharp} color='teal.400' cursor='pointer' h={6} w={6} onClick={onUpdate} />
           ) : (
-            <Icon
-              as={IoEllipseOutline}
-              color='gray.400'
-              cursor='pointer'
-              h={6}
-              w={6}
-              onClick={onUpdate}
-            />
+            <Icon as={IoEllipseOutline} color='gray.400' cursor='pointer' h={6} w={6} onClick={onUpdate} />
           )}
           {editMode ? (
             <Input
@@ -71,9 +48,7 @@ const ToDoListItem = ({
               onBlur={event => {
                 onEdit(event.target.value);
               }}
-              onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) =>
-                handleInputKeyPress(event)
-              }
+              onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => handleInputKeyPress(event)}
             />
           ) : (
             <Text
@@ -99,15 +74,7 @@ const ToDoListItem = ({
                 onEdit(children as string);
               }}
             />
-            <Icon
-              as={IoCloseCircleOutline}
-              color='gray.400'
-              cursor='pointer'
-              h={6}
-              ml={1}
-              w={6}
-              onClick={onDelete}
-            />
+            <Icon as={IoCloseCircleOutline} color='gray.400' cursor='pointer' h={6} ml={1} w={6} onClick={onDelete} />
           </Flex>
         )}
       </Flex>

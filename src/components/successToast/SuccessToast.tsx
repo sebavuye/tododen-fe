@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useToast, UseToastOptions } from '@chakra-ui/react';
 import { successNotificationSelector } from '../../store/selectors';
-import { SUCCESS_NOTIFICATIONS } from '../../constants/notifications';
+import { SUCCESS_NOTIFICATIONS } from '../../constants';
 
 const toastOptions: UseToastOptions = {
   title: SUCCESS_NOTIFICATIONS.defaultSuccessTitle,

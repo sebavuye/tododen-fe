@@ -8,6 +8,7 @@ const ToDoListInput = (): JSX.Element => {
   const [userInput, setUserInput] = React.useState<string>('');
   const dispatch = useDispatch();
 
+  // TODO: Fix Notification Toast
   const notificationToast = useToast();
   const notificationToastRef = React.useRef<ToastId | undefined>();
 

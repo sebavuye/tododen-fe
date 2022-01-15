@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { EToDoListLoadingKeys, ILoadingTextProps, IToDoListLoadingMessages } from '../../types';
 import { loadingStateSelector } from '../../store/selectors';
 import { TO_DO_LOADING_MESSAGES } from '../../constants';
+import { EToDoListLoadingKeys, ILoadingTextProps, IToDoListLoadingMessages } from '../../types';
 
 export const LoadingText = ({
   children = TO_DO_LOADING_MESSAGES.DEFAULT,

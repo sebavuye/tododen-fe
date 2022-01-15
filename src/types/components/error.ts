@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 
-export interface ErrorProps {
+export interface IErrorProps {
   error: AxiosError;
   loading: boolean;
   onReset?: () => void;
