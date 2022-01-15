@@ -10,7 +10,7 @@
       "id": "2E9oCH4TtWOr4VYVtr3hH",
       "editMode": false,
       "todo": "se",
-      "completed": false
+      "completed": true
     },
     {
       "id": "KVxl2_s_4IOkhlC9ywCku",
@@ -29,6 +29,12 @@
       "editMode": false,
       "todo": "jeptesd",
       "completed": true
+    },
+    {
+      "id": "3rcluCesTrpdv90O9eltz",
+      "editMode": false,
+      "todo": "s",
+      "completed": false
     }
   ]
 }

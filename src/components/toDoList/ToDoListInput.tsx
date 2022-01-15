@@ -1,43 +1,25 @@
 import React from 'react';
-import { Button, Input, InputGroup, ToastId, useToast } from '@chakra-ui/react';
+import { Button, Input, InputGroup } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 import * as ACTIONS from '../../store/actions';
+import { ERROR_NOTIFICATIONS } from '../../constants';
 
 const ToDoListInput = (): JSX.Element => {
   const [userInput, setUserInput] = React.useState<string>('');
   const dispatch = useDispatch();
 
-  // TODO: Fix Notification Toast
-  const notificationToast = useToast();
-  const notificationToastRef = React.useRef<ToastId | undefined>();
-
   const handleUserInput = (event: React.ChangeEvent<HTMLInputElement>) => setUserInput(event.currentTarget.value);
 
   const handleAddToDo = () => {
     if (!userInput) {
-      if (notificationToastRef.current && notificationToast.isActive(notificationToastRef.current)) return;
-
-      notificationToastRef.current = notificationToast({
-        title: 'Oops!',
-        description: 'You need to input some text',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-        variant: 'top-accent'
-      });
+      dispatch(
+        ACTIONS.showError({
+          title: ERROR_NOTIFICATIONS.defaultErrorTitle,
+          message: ERROR_NOTIFICATIONS.toDoListNoIserInput
+        })
+      );
     } else {
-      if (notificationToastRef.current) {
-        notificationToast.update(notificationToastRef.current, {
-          title: 'Success!',
-          status: 'success',
-          description: 'Adding your todo!',
-          duration: 5000,
-          isClosable: true,
-          variant: 'top-accent'
-        });
-      }
-
       dispatch(ACTIONS.createToDoItem({ id: nanoid(), editMode: false, todo: userInput, completed: false }));
       setUserInput('');
     }
