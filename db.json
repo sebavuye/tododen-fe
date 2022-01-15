@@ -1,22 +1,3 @@
 {
-  "todos": [
-    {
-      "id": "uzXZ8ANGqLI_IZMPDVrH9",
-      "editMode": false,
-      "todo": "se",
-      "completed": true
-    },
-    {
-      "id": "eUTBbCzeInlof7FMO4z5F",
-      "editMode": false,
-      "todo": "se",
-      "completed": false
-    },
-    {
-      "id": "MnjiFO8UodwwP4gth8N4D",
-      "editMode": false,
-      "todo": "Sebastian",
-      "completed": true
-    }
-  ]
+  "todos": []
 }

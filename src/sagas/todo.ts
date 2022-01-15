@@ -36,9 +36,9 @@ function* removeToDoItem({ payload }: PayloadAction<IToDoItem['id']>) {
     yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.REMOVE_TO_DO_ITEM, loading: true }));
 
     yield call(deleteToDoItem, payload);
-    yield put(ACTIONS.fetchToDoList({ initialization: false }));
-
     yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.REMOVE_TO_DO_ITEM, loading: false }));
+
+    yield put(ACTIONS.fetchToDoList({ initialization: false }));
     yield put(
       ACTIONS.showSuccess({
         title: SUCCESS_NOTIFICATIONS.defaultSuccessTitle,
