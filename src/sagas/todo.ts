@@ -72,13 +72,13 @@ function* updateToDoItem({ payload }: PayloadAction<IToDoItem>) {
   }
 }
 
-type fetchToDoList = SagaReturnType<typeof getToDoList>;
+type GetToDoList = SagaReturnType<typeof getToDoList>;
 
 function* fetchToDoList({ payload }: PayloadAction<IInitializationState>) {
   try {
     yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.GET_TODO_LIST, loading: true }));
 
-    const response: fetchToDoList = yield call(getToDoList);
+    const response: GetToDoList = yield call(getToDoList);
     const toDoList = response.data;
 
     yield put(ACTIONS.setToDoList(toDoList));
