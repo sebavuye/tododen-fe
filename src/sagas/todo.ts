@@ -21,8 +21,6 @@ function* createToDoItem({ payload }: PayloadAction<IToDoItem>) {
       })
     );
   } catch (error) {
-    console.error(error);
-
     yield put(
       ACTIONS.showError({
         title: ERROR_NOTIFICATIONS.createToDoListItemErrorTitle,
@@ -47,8 +45,6 @@ function* removeToDoItem({ payload }: PayloadAction<IToDoItem['id']>) {
       })
     );
   } catch (error) {
-    console.error(error);
-
     yield put(
       ACTIONS.showError({
         title: ERROR_NOTIFICATIONS.removeToDoListItemErrorTitle,
@@ -67,8 +63,6 @@ function* updateToDoItem({ payload }: PayloadAction<IToDoItem>) {
 
     yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.UPDATE_TO_DO_ITEM, loading: false }));
   } catch (error) {
-    console.error(error);
-
     yield put(
       ACTIONS.showError({
         title: ERROR_NOTIFICATIONS.updateToDoListItemErrorTitle,
@@ -100,7 +94,7 @@ function* fetchToDoList({ payload }: PayloadAction<IInitializationState>) {
     }
   } catch (error) {
     yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.GET_TODO_LIST, loading: false }));
-    console.error(error); // TODO: add error logging service
+    // TODO: add error logging service
 
     yield put(
       ACTIONS.showError({
