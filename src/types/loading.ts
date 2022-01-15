@@ -8,8 +8,6 @@ export interface ILoadingState {
 }
 
 // LOADING KEYS
-// TODO: fix weird eslint error
-// eslint-disable-next-line no-shadow
 export enum EToDoListLoadingKeys {
   GET_TODO_LIST = 'GET_TO_DO_LIST',
   CREATE_TO_DO_ITEM = 'CREATE_TO_DO_ITEM',

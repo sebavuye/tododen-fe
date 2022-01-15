@@ -17,6 +17,7 @@
     "import/extensions": ["error", "ignorePackages", { "ts": "never", "tsx": "never" }],
     "import/prefer-default-export": "off",
     "import/no-extraneous-dependencies": "off",
+    "no-shadow": "off",
 
     // sort-destructure-keys
     "sort-destructure-keys/sort-destructure-keys": ["error", {"caseSensitive": false}],
