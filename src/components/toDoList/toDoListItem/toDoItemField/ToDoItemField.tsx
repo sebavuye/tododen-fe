@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Input, Text } from '@chakra-ui/react';
-import { toDoListActionsLoadingSelector } from '../../../store/selectors';
-import { IToDoItemField } from '../../../types';
+import { toDoListActionsLoadingSelector } from '../../../../store/selectors';
+import { IToDoItemField } from '../../../../types';
 
 const ToDoItemField = ({
   children,

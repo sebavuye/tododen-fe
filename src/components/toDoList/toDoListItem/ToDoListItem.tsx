@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { IToDoListItemProps } from '../../../types';
 import { toDoListActionsLoadingSelector } from '../../../store/selectors';
 import StatusButton from './statusButton/StatusButton';
-import ToDoItemField from '../toDoItemField/ToDoItemField';
+import ToDoItemField from './toDoItemField/ToDoItemField';
 
 const ToDoListItem = ({
   children,
