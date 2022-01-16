@@ -8,7 +8,8 @@ import Loading from '../loading/Loading';
 import { LoadingText } from '../loadingText/LoadingText';
 import * as ACTIONS from '../../store/actions';
 import { toDoListActionsLoadingSelector, toDoStateSelector } from '../../store/selectors';
-import { EToDoListLoadingKeys, IToDoItem } from '../../types';
+import { TO_DO_LOADING_KEYS } from '../../constants';
+import { IToDoItem } from '../../types';
 
 const ToDoList = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -40,14 +41,7 @@ const ToDoList = (): JSX.Element => {
         <Flex alignItems='center' width='50%'>
           {isToDoActionLoading && (
             <Loading>
-              <LoadingText
-                loadingKeys={[
-                  EToDoListLoadingKeys.GET_TODO_LIST,
-                  EToDoListLoadingKeys.REMOVE_TO_DO_ITEM,
-                  EToDoListLoadingKeys.CREATE_TO_DO_ITEM,
-                  EToDoListLoadingKeys.UPDATE_TO_DO_ITEM
-                ]}
-              />
+              <LoadingText loadingKeys={TO_DO_LOADING_KEYS} />
             </Loading>
           )}
         </Flex>
