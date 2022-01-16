@@ -7,20 +7,14 @@ import ToDoListInput from './ToDoListInput';
 import Loading from '../loading/Loading';
 import { LoadingText } from '../loadingText/LoadingText';
 import * as ACTIONS from '../../store/actions';
-import { getLoadingStateByKey, toDoStateSelector } from '../../store/selectors';
+import { toDoListActionsLoadingSelector, toDoStateSelector } from '../../store/selectors';
 import { EToDoListLoadingKeys, IToDoItem } from '../../types';
 
 const ToDoList = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const toDoList = useSelector(toDoStateSelector);
-  const isGetToDoListLoading = useSelector(getLoadingStateByKey(EToDoListLoadingKeys.GET_TODO_LIST));
-  const isRemoveToDoItemLoading = useSelector(getLoadingStateByKey(EToDoListLoadingKeys.REMOVE_TO_DO_ITEM));
-  const isCreateToDoItemLoading = useSelector(getLoadingStateByKey(EToDoListLoadingKeys.CREATE_TO_DO_ITEM));
-  const isUpdateToDoItemLoading = useSelector(getLoadingStateByKey(EToDoListLoadingKeys.UPDATE_TO_DO_ITEM));
-
-  const isLoading =
-    isGetToDoListLoading || isRemoveToDoItemLoading || isCreateToDoItemLoading || isUpdateToDoItemLoading;
+  const isToDoActionLoading = useSelector(toDoListActionsLoadingSelector);
 
   const handleDeleteToDoItem = (toDoItemId: IToDoItem['id']) => dispatch(ACTIONS.removeToDoItem(toDoItemId));
 
@@ -45,7 +39,7 @@ const ToDoList = (): JSX.Element => {
     <Grid h='100%' templateRows='auto 1fr'>
       <GridItem bg='teal.100' display='flex' p={4}>
         <Flex alignItems='center' width='50%'>
-          {isLoading && (
+          {isToDoActionLoading && (
             <Loading>
               <LoadingText
                 loadingKeys={[

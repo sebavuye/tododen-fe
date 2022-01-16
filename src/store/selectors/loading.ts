@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { IGlobalState, ILoading } from '../../types';
+import { EToDoListLoadingKeys, IGlobalState, ILoading } from '../../types';
 
 export const loadingStateSelector = (state: IGlobalState) => state.loading;
 
@@ -13,3 +13,12 @@ export const getLoadingStateByKey = (key: ILoading['key']) =>
 
     return false;
   });
+
+export const toDoListActionsLoadingSelector = createSelector(
+  getLoadingStateByKey(EToDoListLoadingKeys.GET_TODO_LIST),
+  getLoadingStateByKey(EToDoListLoadingKeys.CREATE_TO_DO_ITEM),
+  getLoadingStateByKey(EToDoListLoadingKeys.REMOVE_TO_DO_ITEM),
+  getLoadingStateByKey(EToDoListLoadingKeys.UPDATE_TO_DO_ITEM),
+  (getToDoListLoadingState, postToDoItemLoadingState, deleteToDoItemLoadingState, patchToDoItemLoadingState) =>
+    getToDoListLoadingState || postToDoItemLoadingState || deleteToDoItemLoadingState || patchToDoItemLoadingState
+);
