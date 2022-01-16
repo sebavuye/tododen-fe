@@ -12,7 +12,6 @@ import { EToDoListLoadingKeys, IToDoItem } from '../../types';
 
 const ToDoList = (): JSX.Element => {
   const dispatch = useDispatch();
-
   const toDoList = useSelector(toDoStateSelector);
   const isToDoActionLoading = useSelector(toDoListActionsLoadingSelector);
 
@@ -75,7 +74,7 @@ const ToDoList = (): JSX.Element => {
             </List>
           </GridItem>
           <GridItem display='flex'>
-            <ToDoListInput />
+            <ToDoListInput disabled={isToDoActionLoading} />
           </GridItem>
         </Grid>
       </GridItem>

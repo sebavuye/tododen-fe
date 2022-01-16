@@ -5,7 +5,7 @@ export type { INotification, INotificationsState } from './notifications';
 export type { IGlobalState } from './store';
 
 // components
-export type { IToDoListItemProps } from './components/toDoList';
+export type { IToDoListItemProps, IToDoListInput } from './components/toDoList';
 export type { ILoadingProps } from './components/loading';
 export type { ILoadingTextProps } from './components/loadingText';
 
