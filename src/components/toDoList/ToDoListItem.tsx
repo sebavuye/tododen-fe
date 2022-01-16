@@ -1,7 +1,9 @@
 import React from 'react';
 import { Flex, Icon, Input, ListItem, Text } from '@chakra-ui/react';
 import { IoCheckmarkCircleSharp, IoCloseCircleOutline, IoEllipseOutline, IoPencilOutline } from 'react-icons/io5';
+import { useSelector } from 'react-redux';
 import { IToDoListItemProps } from '../../types';
+import { toDoListActionsLoadingSelector } from '../../store/selectors';
 
 const ToDoListItem = ({
   children,
@@ -13,6 +15,9 @@ const ToDoListItem = ({
 }: IToDoListItemProps): JSX.Element => {
   const [showOptions, setShowOptions] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const isToDoActionLoading = useSelector(toDoListActionsLoadingSelector);
+
+  const loadingClasses = isToDoActionLoading ? 'h-pointer-events-none h-touch-events-none' : ''.trim();
 
   React.useEffect(() => {
     if (!editMode) return;
@@ -35,14 +40,32 @@ const ToDoListItem = ({
       <Flex justifyContent='space-between'>
         <Flex alignItems='center' flex={1}>
           {completed ? (
-            <Icon as={IoCheckmarkCircleSharp} color='teal.400' cursor='pointer' h={6} w={6} onClick={onUpdate} />
+            <Icon
+              as={IoCheckmarkCircleSharp}
+              className={loadingClasses}
+              color='teal.400'
+              cursor='pointer'
+              h={6}
+              w={6}
+              onClick={onUpdate}
+            />
           ) : (
-            <Icon as={IoEllipseOutline} color='gray.400' cursor='pointer' h={6} w={6} onClick={onUpdate} />
+            <Icon
+              as={IoEllipseOutline}
+              className={loadingClasses}
+              color='gray.400'
+              cursor='pointer'
+              h={6}
+              w={6}
+              onClick={onUpdate}
+            />
           )}
           {editMode ? (
             <Input
               ref={inputRef}
+              className={loadingClasses}
               defaultValue={children as string}
+              disabled={isToDoActionLoading}
               size='sm'
               type='text'
               onBlur={event => {
@@ -53,6 +76,7 @@ const ToDoListItem = ({
           ) : (
             <Text
               as='span'
+              className={loadingClasses}
               pl={2}
               onClick={() => {
                 onEdit(children as string);
@@ -65,6 +89,7 @@ const ToDoListItem = ({
           <Flex alignItems='center' justifyContent='end'>
             <Icon
               as={IoPencilOutline}
+              className={loadingClasses}
               color='gray.400'
               cursor='pointer'
               h={6}
@@ -74,7 +99,16 @@ const ToDoListItem = ({
                 onEdit(children as string);
               }}
             />
-            <Icon as={IoCloseCircleOutline} color='gray.400' cursor='pointer' h={6} ml={1} w={6} onClick={onDelete} />
+            <Icon
+              as={IoCloseCircleOutline}
+              className={loadingClasses}
+              color='gray.400'
+              cursor='pointer'
+              h={6}
+              ml={1}
+              w={6}
+              onClick={onDelete}
+            />
           </Flex>
         )}
       </Flex>

@@ -29,6 +29,7 @@ const ToDoListInput = ({ disabled }: IToDoListInput): JSX.Element => {
   return (
     <InputGroup size='lg'>
       <Input
+        disabled={disabled}
         placeholder='What needs to be done?'
         value={userInput}
         onChange={event => handleUserInput(event)}
