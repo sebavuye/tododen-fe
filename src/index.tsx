@@ -6,6 +6,9 @@ import { Provider } from 'react-redux';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { store } from './store';
+import { pluginInitialisation } from './plugins';
+
+pluginInitialisation();
 
 ReactDOM.render(
   <React.StrictMode>
