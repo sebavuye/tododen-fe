@@ -1,10 +1,11 @@
 import React from 'react';
-import { Flex, Icon, Input, ListItem, Text } from '@chakra-ui/react';
+import { Flex, Icon, ListItem } from '@chakra-ui/react';
 import { IoCloseCircleOutline, IoPencilOutline } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import { IToDoListItemProps } from '../../../types';
 import { toDoListActionsLoadingSelector } from '../../../store/selectors';
 import StatusButton from './statusButton/StatusButton';
+import ToDoItemField from '../toDoItemField/ToDoItemField';
 
 const ToDoListItem = ({
   children,
@@ -41,30 +42,17 @@ const ToDoListItem = ({
       <Flex justifyContent='space-between'>
         <Flex alignItems='center' flex={1}>
           <StatusButton completed={completed} onClick={onUpdate} />
-          {editMode ? (
-            <Input
-              ref={inputRef}
-              className={loadingClasses}
-              defaultValue={children as string}
-              disabled={isToDoActionLoading}
-              size='sm'
-              type='text'
-              onBlur={event => {
-                onEdit(event.target.value);
-              }}
-              onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => handleInputKeyPress(event)}
-            />
-          ) : (
-            <Text
-              as='span'
-              className={loadingClasses}
-              pl={2}
-              onClick={() => {
-                onEdit(children as string);
-              }}>
-              {completed ? <Text as='s'>{children}</Text> : children}
-            </Text>
-          )}
+          <ToDoItemField
+            completed={completed}
+            defaultValue={children as string}
+            disabled={isToDoActionLoading}
+            editMode={editMode}
+            inputRef={inputRef}
+            onBlur={event => onEdit(event.target.value)}
+            onClick={() => onEdit(children as string)}
+            onKeyDown={event => handleInputKeyPress(event)}>
+            {children}
+          </ToDoItemField>
         </Flex>
         {showOptions && !editMode && (
           <Flex alignItems='center' justifyContent='end'>

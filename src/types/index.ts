@@ -6,6 +6,7 @@ export type { IGlobalState } from './store';
 
 // components
 export type { IToDoListItemProps, IToDoListInput } from './components/toDoList';
+export type { IToDoItemField } from './components/toDoItemField';
 export type { IStatusButton } from './components/statusButton';
 export type { ILoadingProps } from './components/loading';
 export type { ILoadingTextProps } from './components/loadingText';
