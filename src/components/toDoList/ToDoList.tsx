@@ -2,7 +2,7 @@ import React from 'react';
 import { Flex, Grid, GridItem, List } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import ToDoListStats from './ToDoListStats';
-import ToDoListItem from './ToDoListItem';
+import ToDoListItem from './toDoListItem/ToDoListItem';
 import ToDoListInput from './ToDoListInput';
 import Loading from '../loading/Loading';
 import { LoadingText } from '../loadingText/LoadingText';

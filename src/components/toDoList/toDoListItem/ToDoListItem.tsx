@@ -1,9 +1,10 @@
 import React from 'react';
 import { Flex, Icon, Input, ListItem, Text } from '@chakra-ui/react';
-import { IoCheckmarkCircleSharp, IoCloseCircleOutline, IoEllipseOutline, IoPencilOutline } from 'react-icons/io5';
+import { IoCloseCircleOutline, IoPencilOutline } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
-import { IToDoListItemProps } from '../../types';
-import { toDoListActionsLoadingSelector } from '../../store/selectors';
+import { IToDoListItemProps } from '../../../types';
+import { toDoListActionsLoadingSelector } from '../../../store/selectors';
+import StatusButton from './statusButton/StatusButton';
 
 const ToDoListItem = ({
   children,
@@ -39,27 +40,7 @@ const ToDoListItem = ({
     <ListItem onMouseEnter={() => setShowOptions(true)} onMouseLeave={() => setShowOptions(false)}>
       <Flex justifyContent='space-between'>
         <Flex alignItems='center' flex={1}>
-          {completed ? (
-            <Icon
-              as={IoCheckmarkCircleSharp}
-              className={loadingClasses}
-              color='teal.400'
-              cursor='pointer'
-              h={6}
-              w={6}
-              onClick={onUpdate}
-            />
-          ) : (
-            <Icon
-              as={IoEllipseOutline}
-              className={loadingClasses}
-              color='gray.400'
-              cursor='pointer'
-              h={6}
-              w={6}
-              onClick={onUpdate}
-            />
-          )}
+          <StatusButton completed={completed} onClick={onUpdate} />
           {editMode ? (
             <Input
               ref={inputRef}
