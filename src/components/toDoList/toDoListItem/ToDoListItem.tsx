@@ -1,11 +1,11 @@
 import React from 'react';
-import { Flex, Icon, ListItem } from '@chakra-ui/react';
-import { IoCloseCircleOutline, IoPencilOutline } from 'react-icons/io5';
+import { Flex, ListItem } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { IToDoListItemProps } from '../../../types';
 import { toDoListActionsLoadingSelector } from '../../../store/selectors';
 import ToDoStatusButton from './toDoStatusButton/ToDoStatusButton';
 import ToDoItemField from './toDoItemField/ToDoItemField';
+import ToDoOptionsMenu from './toDoOptionsMenu/ToDoOptionsMenu';
 
 const ToDoListItem = ({
   children,
@@ -18,8 +18,6 @@ const ToDoListItem = ({
   const [showOptions, setShowOptions] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const isToDoActionLoading = useSelector(toDoListActionsLoadingSelector);
-
-  const loadingClasses = isToDoActionLoading ? 'h-pointer-events-none h-touch-events-none' : ''.trim();
 
   React.useEffect(() => {
     if (!editMode) return;
@@ -54,32 +52,12 @@ const ToDoListItem = ({
             {children}
           </ToDoItemField>
         </Flex>
-        {showOptions && !editMode && (
-          <Flex alignItems='center' justifyContent='end'>
-            <Icon
-              as={IoPencilOutline}
-              className={loadingClasses}
-              color='gray.400'
-              cursor='pointer'
-              h={6}
-              mx={1}
-              w={6}
-              onClick={() => {
-                onEdit(children as string);
-              }}
-            />
-            <Icon
-              as={IoCloseCircleOutline}
-              className={loadingClasses}
-              color='gray.400'
-              cursor='pointer'
-              h={6}
-              ml={1}
-              w={6}
-              onClick={onDelete}
-            />
-          </Flex>
-        )}
+        <ToDoOptionsMenu
+          editMode={editMode}
+          visible={showOptions}
+          onDeleteClick={onDelete}
+          onEditClick={() => onEdit(children as string)}
+        />
       </Flex>
     </ListItem>
   );
