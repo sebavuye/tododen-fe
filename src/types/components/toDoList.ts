@@ -8,3 +8,7 @@ export interface IToDoListItemProps {
   onEdit: (value: string) => void;
   onUpdate: () => void;
 }
+
+export interface IToDoListInput {
+  disabled?: boolean;
+}

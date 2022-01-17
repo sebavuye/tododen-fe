@@ -4,8 +4,9 @@ import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 import * as ACTIONS from '../../store/actions';
 import { ERROR_NOTIFICATIONS } from '../../constants';
+import { IToDoListInput } from '../../types';
 
-const ToDoListInput = (): JSX.Element => {
+const ToDoListInput = ({ disabled }: IToDoListInput): JSX.Element => {
   const [userInput, setUserInput] = React.useState<string>('');
   const dispatch = useDispatch();
 
@@ -28,6 +29,7 @@ const ToDoListInput = (): JSX.Element => {
   return (
     <InputGroup size='lg'>
       <Input
+        disabled={disabled}
         placeholder='What needs to be done?'
         value={userInput}
         onChange={event => handleUserInput(event)}
@@ -35,7 +37,7 @@ const ToDoListInput = (): JSX.Element => {
           if (event.key === 'Enter') handleAddToDo();
         }}
       />
-      <Button colorScheme='teal' ml={2} size='lg' onClick={handleAddToDo}>
+      <Button colorScheme='teal' disabled={disabled} ml={2} size='lg' onClick={handleAddToDo}>
         Add
       </Button>
     </InputGroup>

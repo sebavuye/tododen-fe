@@ -7,3 +7,10 @@ export const TO_DO_LOADING_MESSAGES: IToDoListLoadingMessages = {
   [EToDoListLoadingKeys.UPDATE_TO_DO_ITEM]: 'Updating To Do Item',
   DEFAULT: 'Loading'
 };
+
+export const TO_DO_LOADING_KEYS: EToDoListLoadingKeys[] = [
+  EToDoListLoadingKeys.GET_TODO_LIST,
+  EToDoListLoadingKeys.CREATE_TO_DO_ITEM,
+  EToDoListLoadingKeys.REMOVE_TO_DO_ITEM,
+  EToDoListLoadingKeys.UPDATE_TO_DO_ITEM
+];
