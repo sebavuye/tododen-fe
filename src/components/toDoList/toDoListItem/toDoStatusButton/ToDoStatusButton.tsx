@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 import { Icon } from '@chakra-ui/react';
 import { IoCheckmarkCircleSharp, IoEllipseOutline } from 'react-icons/io5';
 import { toDoListActionsLoadingSelector } from '../../../../store/selectors';
-import { IStatusButton } from '../../../../types';
+import { IToDoStatusButton } from '../../../../types';
 
-const StatusButton = ({ completed, onClick }: IStatusButton): JSX.Element => {
+const ToDoStatusButton = ({ completed, onClick }: IToDoStatusButton): JSX.Element => {
   const isToDoActionLoading = useSelector(toDoListActionsLoadingSelector);
   const loadingClasses = isToDoActionLoading ? 'h-pointer-events-none h-touch-events-none' : ''.trim();
 
@@ -22,4 +22,4 @@ const StatusButton = ({ completed, onClick }: IStatusButton): JSX.Element => {
   );
 };
 
-export default StatusButton;
+export default ToDoStatusButton;

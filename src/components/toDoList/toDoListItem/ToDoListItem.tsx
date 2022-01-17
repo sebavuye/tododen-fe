@@ -4,7 +4,7 @@ import { IoCloseCircleOutline, IoPencilOutline } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 import { IToDoListItemProps } from '../../../types';
 import { toDoListActionsLoadingSelector } from '../../../store/selectors';
-import StatusButton from './statusButton/StatusButton';
+import ToDoStatusButton from './toDoStatusButton/ToDoStatusButton';
 import ToDoItemField from './toDoItemField/ToDoItemField';
 
 const ToDoListItem = ({
@@ -41,7 +41,7 @@ const ToDoListItem = ({
     <ListItem onMouseEnter={() => setShowOptions(true)} onMouseLeave={() => setShowOptions(false)}>
       <Flex justifyContent='space-between'>
         <Flex alignItems='center' flex={1}>
-          <StatusButton completed={completed} onClick={onUpdate} />
+          <ToDoStatusButton completed={completed} onClick={onUpdate} />
           <ToDoItemField
             completed={completed}
             defaultValue={children as string}

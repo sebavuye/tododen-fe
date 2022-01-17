@@ -1,4 +1,4 @@
-export interface IStatusButton {
+export interface IToDoStatusButton {
   completed: boolean;
   onClick: () => void;
 }
