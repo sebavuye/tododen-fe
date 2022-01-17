@@ -15,6 +15,16 @@ export enum EToDoListLoadingKeys {
   UPDATE_TO_DO_ITEM = 'UPDATE_TO_DO_ITEM'
 }
 
+export enum ELoadingDelays {
+  NONE = 'NONE',
+  DEFAULT = 'DEFAULT'
+}
+
+export interface ILoadingDelays {
+  [ELoadingDelays.NONE]: number;
+  [ELoadingDelays.DEFAULT]: number;
+}
+
 export interface IToDoListLoadingMessages {
   [EToDoListLoadingKeys.GET_TODO_LIST]: string;
   [EToDoListLoadingKeys.REMOVE_TO_DO_ITEM]: string;

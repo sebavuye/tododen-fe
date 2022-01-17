@@ -8,7 +8,7 @@ import Loading from '../loading/Loading';
 import { LoadingText } from '../loadingText/LoadingText';
 import * as ACTIONS from '../../store/actions';
 import { toDoListActionsLoadingSelector, toDoStateSelector } from '../../store/selectors';
-import { TO_DO_LOADING_KEYS } from '../../constants';
+import { LOADING_DELAYS, TO_DO_LOADING_KEYS } from '../../constants';
 import { IToDoItem } from '../../types';
 
 const ToDoList = (): JSX.Element => {
@@ -16,7 +16,9 @@ const ToDoList = (): JSX.Element => {
   const toDoList = useSelector(toDoStateSelector);
   const isToDoActionLoading = useSelector(toDoListActionsLoadingSelector);
 
-  const handleDeleteToDoItem = (toDoItemId: IToDoItem['id']) => dispatch(ACTIONS.removeToDoItem(toDoItemId));
+  const handleDeleteToDoItem = (toDoItemId: IToDoItem['id']) => {
+    dispatch(ACTIONS.removeToDoItem(toDoItemId));
+  };
 
   const handleStatusUpdateToDoItem = (toDoListItem: IToDoItem) => {
     const updatedToDoItem: IToDoItem = {
@@ -40,7 +42,7 @@ const ToDoList = (): JSX.Element => {
       <GridItem bg='teal.100' display='flex' p={4}>
         <Flex alignItems='center' width='50%'>
           {isToDoActionLoading && (
-            <Loading>
+            <Loading delay={LOADING_DELAYS.DEFAULT}>
               <LoadingText loadingKeys={TO_DO_LOADING_KEYS} />
             </Loading>
           )}
