@@ -1,4 +1,9 @@
-import { EToDoListLoadingKeys, IToDoListLoadingMessages } from '../../types';
+import { ELoadingDelays, EToDoListLoadingKeys, ILoadingDelays, IToDoListLoadingMessages } from '../../types';
+
+export const LOADING_DELAYS: ILoadingDelays = {
+  [ELoadingDelays.NONE]: 0,
+  [ELoadingDelays.DEFAULT]: 1500
+};
 
 export const TO_DO_LOADING_MESSAGES: IToDoListLoadingMessages = {
   [EToDoListLoadingKeys.GET_TODO_LIST]: 'Loading To Do List',
