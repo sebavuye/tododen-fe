@@ -10,6 +10,8 @@ import * as ACTIONS from '../../store/actions';
 import { toDoListActionsLoadingSelector, toDoStateSelector } from '../../store/selectors';
 import { LOADING_DELAYS, TO_DO_LOADING_KEYS } from '../../constants';
 import { IToDoItem } from '../../types';
+import { ReactComponent as EmptyStateImage } from '../../assets/images/EmptyState.svg';
+import { EmptyState } from '../emptyState/EmptyState';
 
 const ToDoList = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -55,6 +57,13 @@ const ToDoList = (): JSX.Element => {
       <GridItem bg='teal.50' p={6}>
         <Grid h='100%' mx='auto' templateRows='1fr auto' w='90%'>
           <GridItem>
+            {toDoList.length === 0 && !isToDoActionLoading && (
+              <EmptyState
+                image={<EmptyStateImage height='100%' width='100%' />}
+                message='What needs to be done?'
+                title='Add a To Do'
+              />
+            )}
             <List spacing={4}>
               {toDoList.map((toDoListItem: IToDoItem) => (
                 <ToDoListItem
