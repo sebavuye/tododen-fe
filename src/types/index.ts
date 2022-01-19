@@ -11,5 +11,6 @@ export type { IToDoStatusButton } from './components/toDoStatusButton';
 export type { IToDoOptionsMenu } from './components/toDoOptionsMenu';
 export type { ILoadingProps } from './components/loading';
 export type { ILoadingTextProps } from './components/loadingText';
+export type { IEmptyState } from './components/emptyState';
 
 export { ELoadingDelays, EToDoListLoadingKeys } from './loading';
