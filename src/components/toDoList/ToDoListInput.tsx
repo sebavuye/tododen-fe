@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 import * as ACTIONS from '../../store/actions';
 import { ERROR_NOTIFICATIONS } from '../../constants';
-import { IToDoListInput } from '../../types';
+import { ENotificationIds, IToDoListInput } from '../../types';
 
 const ToDoListInput = ({ disabled }: IToDoListInput): JSX.Element => {
   const [userInput, setUserInput] = React.useState<string>('');
@@ -17,7 +17,8 @@ const ToDoListInput = ({ disabled }: IToDoListInput): JSX.Element => {
       dispatch(
         ACTIONS.showError({
           title: ERROR_NOTIFICATIONS.defaultErrorTitle,
-          message: ERROR_NOTIFICATIONS.toDoListNoIserInput
+          message: ERROR_NOTIFICATIONS.toDoListNoIserInput,
+          id: ENotificationIds.TO_DO_NO_USER_INPUT
         })
       );
     } else {
