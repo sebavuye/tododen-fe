@@ -3,7 +3,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react';
 import { deleteToDoItem, getToDoList, patchToDoItem, postToDoItem } from '../api/services';
 import * as ACTIONS from '../store/actions';
-import { EToDoListLoadingKeys, IInitializationState, IToDoItem } from '../types';
+import { ENotificationIds, EToDoListLoadingKeys, IInitializationState, IToDoItem } from '../types';
 import { ERROR_NOTIFICATIONS, SUCCESS_NOTIFICATIONS } from '../constants';
 
 function* createToDoItem({ payload }: PayloadAction<IToDoItem>) {
@@ -18,7 +18,8 @@ function* createToDoItem({ payload }: PayloadAction<IToDoItem>) {
     yield put(
       ACTIONS.showSuccess({
         title: SUCCESS_NOTIFICATIONS.defaultSuccessTitle,
-        message: SUCCESS_NOTIFICATIONS.createToDoItemSuccessMessage
+        message: SUCCESS_NOTIFICATIONS.createToDoItemSuccessMessage,
+        id: ENotificationIds.TO_DO_CREATE_ITEM_SUCCESS
       })
     );
   } catch (error) {
@@ -29,7 +30,8 @@ function* createToDoItem({ payload }: PayloadAction<IToDoItem>) {
     yield put(
       ACTIONS.showError({
         title: ERROR_NOTIFICATIONS.createToDoListItemErrorTitle,
-        message: ERROR_NOTIFICATIONS.defaultErrorMessage
+        message: ERROR_NOTIFICATIONS.defaultErrorMessage,
+        id: ENotificationIds.TO_DO_CREATE_ITEM_ERROR
       })
     );
   }
@@ -46,7 +48,8 @@ function* removeToDoItem({ payload }: PayloadAction<IToDoItem['id']>) {
     yield put(
       ACTIONS.showSuccess({
         title: SUCCESS_NOTIFICATIONS.defaultSuccessTitle,
-        message: SUCCESS_NOTIFICATIONS.removeToDoItemSuccessMessage
+        message: SUCCESS_NOTIFICATIONS.removeToDoItemSuccessMessage,
+        id: ENotificationIds.TO_DO_REMOVE_ITEM_SUCCESS
       })
     );
   } catch (error) {
@@ -57,7 +60,8 @@ function* removeToDoItem({ payload }: PayloadAction<IToDoItem['id']>) {
     yield put(
       ACTIONS.showError({
         title: ERROR_NOTIFICATIONS.removeToDoListItemErrorTitle,
-        message: ERROR_NOTIFICATIONS.defaultErrorMessage
+        message: ERROR_NOTIFICATIONS.defaultErrorMessage,
+        id: ENotificationIds.TO_DO_REMOVE_ITEM_ERROR
       })
     );
   }
@@ -79,7 +83,8 @@ function* updateToDoItem({ payload }: PayloadAction<IToDoItem>) {
     yield put(
       ACTIONS.showError({
         title: ERROR_NOTIFICATIONS.updateToDoListItemErrorTitle,
-        message: ERROR_NOTIFICATIONS.defaultErrorMessage
+        message: ERROR_NOTIFICATIONS.defaultErrorMessage,
+        id: ENotificationIds.TO_DO_UPDATE_ITEM_ERROR
       })
     );
   }
@@ -101,7 +106,8 @@ function* fetchToDoList({ payload }: PayloadAction<IInitializationState>) {
       yield put(
         ACTIONS.showSuccess({
           title: SUCCESS_NOTIFICATIONS.defaultSuccessTitle,
-          message: SUCCESS_NOTIFICATIONS.getToDoListSuccessMessage
+          message: SUCCESS_NOTIFICATIONS.getToDoListSuccessMessage,
+          id: ENotificationIds.TO_DO_GET_LIST_SUCCESS
         })
       );
     }
@@ -113,7 +119,8 @@ function* fetchToDoList({ payload }: PayloadAction<IInitializationState>) {
     yield put(
       ACTIONS.showError({
         title: ERROR_NOTIFICATIONS.getToDoListErrorTitle,
-        message: ERROR_NOTIFICATIONS.defaultErrorMessage
+        message: ERROR_NOTIFICATIONS.defaultErrorMessage,
+        id: ENotificationIds.TO_DO_GET_LIST_ERROR
       })
     );
   }
