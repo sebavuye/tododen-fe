@@ -47,6 +47,12 @@
       "rules": {
         "default-param-last": "off"
       }
+    },
+    {
+      "files": "./src/sagas/index.ts",
+      "rules": {
+        "redux-saga/no-unhandled-errors": "off"
+      }
     }
   ]
 }

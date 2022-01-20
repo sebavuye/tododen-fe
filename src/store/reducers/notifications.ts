@@ -7,7 +7,7 @@ export const error = createReducer<INotification | null>(null, {
 });
 
 export const success = createReducer<INotification | null>(null, {
-  [ACTIONS.showSuccess.type]: (state, { payload }: PayloadAction<INotification>) => payload
+  [ACTIONS.setSuccess.type]: (state, { payload }: PayloadAction<INotification>) => payload
 });
 
 export const notificationsReducer = combineReducers({
