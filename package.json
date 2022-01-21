@@ -20,7 +20,6 @@
     "@typescript-eslint/eslint-plugin": "^5.7.0",
     "axios": "^0.24.0",
     "framer-motion": "^4",
-    "json-server": "^0.17.0",
     "nanoid": "^3.1.30",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
