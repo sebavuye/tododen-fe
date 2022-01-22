@@ -55,7 +55,7 @@ const ToDoList = (): JSX.Element => {
       </GridItem>
 
       <GridItem bg='teal.50' p={6}>
-        <Grid h='100%' mx='auto' templateRows='1fr auto' w='90%'>
+        <Grid h='100%' mx='auto' templateRows='1fr auto' w={{ base: '100%', md: '75%', xl: '50%' }}>
           <GridItem>
             {toDoList.length === 0 && !isToDoActionLoading && (
               <EmptyState
