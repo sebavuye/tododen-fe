@@ -11,6 +11,7 @@ const ToDoListItem = ({
   children,
   completed,
   editMode,
+  onClick,
   onDelete,
   onEdit,
   onUpdate
@@ -36,7 +37,7 @@ const ToDoListItem = ({
   };
 
   return (
-    <ListItem onMouseEnter={() => setShowOptions(true)} onMouseLeave={() => setShowOptions(false)}>
+    <ListItem cursor='pointer' onMouseEnter={() => setShowOptions(true)} onMouseLeave={() => setShowOptions(false)}>
       <Flex justifyContent='space-between'>
         <Flex alignItems='center' flex={1}>
           <ToDoStatusButton completed={completed} onClick={onUpdate} />
@@ -47,7 +48,7 @@ const ToDoListItem = ({
             editMode={editMode}
             inputRef={inputRef}
             onBlur={event => onEdit(event.target.value)}
-            onClick={() => onEdit(children as string)}
+            onClick={onClick}
             onKeyDown={event => handleInputKeyPress(event)}>
             {children}
           </ToDoItemField>
