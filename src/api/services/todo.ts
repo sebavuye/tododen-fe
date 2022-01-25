@@ -25,3 +25,9 @@ interface PatchToDoItem {
 }
 
 export const patchToDoItem: PatchToDoItem = toDoItem => client.patch<IToDoItem>(`todos/${toDoItem.id}`, toDoItem);
+
+interface GetToDoItem {
+  (toDoItemId: IToDoItem['id']): Promise<AxiosResponse<IToDoItem>>;
+}
+
+export const getToDoItem: GetToDoItem = toDoItemId => client.get<IToDoItem>(`todos/${toDoItemId}`);

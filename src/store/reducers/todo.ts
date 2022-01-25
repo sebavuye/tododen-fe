@@ -5,3 +5,7 @@ import { IToDoItem } from '../../types';
 export const toDoListReducer = createReducer<IToDoItem[]>([], {
   [ACTIONS.setToDoList.type]: (state, { payload }: PayloadAction<IToDoItem[]>) => payload
 });
+
+export const activeToDoItem = createReducer<IToDoItem | null>(null, {
+  [ACTIONS.setActiveToDoItem.type]: (state, { payload }: PayloadAction<IToDoItem>) => payload
+});

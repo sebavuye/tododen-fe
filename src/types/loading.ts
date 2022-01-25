@@ -10,6 +10,7 @@ export interface ILoadingState {
 // LOADING KEYS
 export enum EToDoListLoadingKeys {
   GET_TODO_LIST = 'GET_TO_DO_LIST',
+  GET_TODO_ITEM = 'GET_TO_DO_ITEM',
   CREATE_TO_DO_ITEM = 'CREATE_TO_DO_ITEM',
   REMOVE_TO_DO_ITEM = 'REMOVE_TO_DO_ITEM',
   UPDATE_TO_DO_ITEM = 'UPDATE_TO_DO_ITEM'

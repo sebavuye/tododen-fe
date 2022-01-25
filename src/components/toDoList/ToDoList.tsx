@@ -7,7 +7,7 @@ import ToDoListInput from './ToDoListInput';
 import Loading from '../loading/Loading';
 import { LoadingText } from '../loadingText/LoadingText';
 import * as ACTIONS from '../../store/actions';
-import { getToDoItemById, toDoListActionsLoadingSelector, toDoStateSelector } from '../../store/selectors';
+import { toDoListActionsLoadingSelector, toDoStateSelector } from '../../store/selectors';
 import { LOADING_DELAYS, TO_DO_LOADING_KEYS } from '../../constants';
 import { IToDoItem } from '../../types';
 import { ReactComponent as EmptyStateImage } from '../../assets/images/EmptyState.svg';
@@ -15,10 +15,8 @@ import { EmptyState } from '../emptyState/EmptyState';
 import ToDoModal from '../toDoModal/ToDoModal';
 
 const ToDoList = (): JSX.Element => {
-  const [selectedToDoItem, setSelectedToDoItem] = React.useState<IToDoItem | null>(null);
   const dispatch = useDispatch();
   const toDoList = useSelector(toDoStateSelector);
-  const activeToDoListItem = useSelector(getToDoItemById(selectedToDoItem?.id));
   const isToDoActionLoading = useSelector(toDoListActionsLoadingSelector);
   const { isOpen, onClose, onOpen } = useDisclosure();
 
@@ -44,7 +42,7 @@ const ToDoList = (): JSX.Element => {
   };
 
   const handleClickToDoItem = (toDoListItem: IToDoItem) => {
-    setSelectedToDoItem(toDoListItem);
+    dispatch(ACTIONS.setActiveToDoItem(toDoListItem));
     onOpen();
   };
 
@@ -94,14 +92,7 @@ const ToDoList = (): JSX.Element => {
         </Grid>
       </GridItem>
 
-      {activeToDoListItem && (
-        <ToDoModal
-          isOpen={isOpen}
-          toDoItem={activeToDoListItem}
-          onClose={onClose}
-          onStatusClick={handleStatusUpdateToDoItem}
-        />
-      )}
+      <ToDoModal isOpen={isOpen} onClose={onClose} />
     </Grid>
   );
 };

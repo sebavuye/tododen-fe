@@ -10,3 +10,5 @@ export const getToDoItemById = (toDoItemId: IToDoItem['id'] | undefined) =>
     if (index > -1) return toDoListState[index];
     return null;
   });
+
+export const activeToDoItem = (state: IGlobalState) => state.activeToDoItem;
