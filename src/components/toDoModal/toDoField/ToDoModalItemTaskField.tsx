@@ -9,7 +9,7 @@ import { IToDoItem, IToDoModalItemTaskFieldProps } from '../../../types';
 const ToDoModalItemTaskField = ({ onSave }: IToDoModalItemTaskFieldProps): JSX.Element => {
   const dispatch = useDispatch();
   const activeToDoItem = useSelector(activeToDoItemSelector);
-  const [inputValue, setInputValue] = React.useState<string>(activeToDoItem.todo);
+  const [inputValue, setInputValue] = React.useState<string>(activeToDoItem.task);
 
   // RESET active to do item, when field component is destroyed (modal closed)
   React.useEffect(
@@ -22,14 +22,14 @@ const ToDoModalItemTaskField = ({ onSave }: IToDoModalItemTaskFieldProps): JSX.E
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value);
 
   const handleSave = () => {
-    const updatedToDoItem: IToDoItem = { ...activeToDoItem, todo: inputValue, readOnly: false };
+    const updatedToDoItem: IToDoItem = { ...activeToDoItem, task: inputValue, readOnly: false };
     dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
     onSave();
   };
 
   const handleCancel = () => {
-    const initialToDoItem: IToDoItem = { ...activeToDoItem, todo: activeToDoItem.todo, readOnly: false };
-    setInputValue(activeToDoItem.todo);
+    const initialToDoItem: IToDoItem = { ...activeToDoItem, task: activeToDoItem.task, readOnly: false };
+    setInputValue(activeToDoItem.task);
     dispatch(ACTIONS.setActiveToDoItem(initialToDoItem));
   };
 
@@ -40,7 +40,7 @@ const ToDoModalItemTaskField = ({ onSave }: IToDoModalItemTaskFieldProps): JSX.E
   };
 
   const handleInlineEdit = () => {
-    const updatedToDoItem: IToDoItem = { ...activeToDoItem, readOnly: !activeToDoItem.readOnly, todo: inputValue };
+    const updatedToDoItem: IToDoItem = { ...activeToDoItem, readOnly: !activeToDoItem.readOnly, task: inputValue };
     dispatch(ACTIONS.setActiveToDoItem(updatedToDoItem));
   };
 
@@ -68,7 +68,7 @@ const ToDoModalItemTaskField = ({ onSave }: IToDoModalItemTaskFieldProps): JSX.E
         fontWeight='700'
         ml={2}
         onClick={handleInlineEdit}>
-        {activeToDoItem.todo}
+        {activeToDoItem.task}
       </Text>
     </>
   );

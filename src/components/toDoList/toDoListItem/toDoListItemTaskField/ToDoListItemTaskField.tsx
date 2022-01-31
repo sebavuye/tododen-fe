@@ -25,7 +25,7 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
   };
 
   const handleSave = () => {
-    const updatedToDoItem: IToDoItem = { ...toDoItem, todo: inputValue, readOnly: !toDoItem.readOnly };
+    const updatedToDoItem: IToDoItem = { ...toDoItem, task: inputValue, readOnly: !toDoItem.readOnly };
     dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
   };
 
@@ -50,7 +50,7 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
           <Flex width='100%'>
             <ToDoStatusButton completed={toDoItem.completed} onClick={handleStatus} />
             <Text as={toDoItem.completed ? 's' : 'span'} ml={2} onClick={handleEdit}>
-              {toDoItem.todo}
+              {toDoItem.task}
             </Text>
           </Flex>
           <ToDoActionsMenu
@@ -62,7 +62,7 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
         </>
       ) : (
         <Flex flexDirection='column' width='100%'>
-          <Input defaultValue={toDoItem.todo} size='sm' onChange={handleInput} />
+          <Input defaultValue={toDoItem.task} size='sm' onChange={handleInput} />
           <ButtonGroup my={2} size='sm'>
             <Button colorScheme='teal' onClick={handleSave}>
               Save

@@ -2,7 +2,7 @@ export interface IToDoItem {
   completed: boolean;
   id: string;
   readOnly: boolean;
-  todo: string;
+  task: string;
 }
 
 export interface IInitializationState {

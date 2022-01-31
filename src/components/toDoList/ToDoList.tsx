@@ -12,7 +12,6 @@ import { ReactComponent as EmptyStateImage } from '../../assets/images/EmptyStat
 import { EmptyState } from '../emptyState/EmptyState';
 import ToDoListItem from './toDoListItem/ToDoListItem';
 
-// TODO: todoitem.todo should be todoitem.task
 const ToDoList = (): JSX.Element => {
   const toDoList = useSelector(toDoStateSelector);
   const isToDoActionLoading = useSelector(toDoListActionsLoadingSelector);
