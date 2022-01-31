@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Input, Text } from '@chakra-ui/react';
+import classNames from 'classnames';
 import { toDoListActionsLoadingSelector } from '../../../../store/selectors';
 import { IToDoItemField } from '../../../../types';
 
@@ -16,7 +17,7 @@ const ToDoItemField = ({
   readOnly
 }: IToDoItemField): JSX.Element => {
   const isToDoActionLoading = useSelector(toDoListActionsLoadingSelector);
-  const loadingClasses = isToDoActionLoading ? 'h-pointer-events-none h-touch-events-none' : ''.trim();
+  const loadingClasses = classNames({ 'h-pointer-events-none h-touch-events-none': isToDoActionLoading });
 
   if (readOnly)
     return (
