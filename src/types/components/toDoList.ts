@@ -1,13 +1,13 @@
 import { ReactNode } from 'react';
 
-export interface IToDoListItemProps {
+export interface IToDoListItemPropsOld {
   children: ReactNode;
   completed: boolean;
-  editMode: boolean;
   onClick: () => void;
   onDelete: () => void;
   onEdit: (value: string) => void;
   onUpdate: () => void;
+  readOnly: boolean;
 }
 
 export interface IToDoListInput {

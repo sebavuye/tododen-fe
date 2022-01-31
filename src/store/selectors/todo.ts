@@ -11,4 +11,4 @@ export const getToDoItemById = (toDoItemId: IToDoItem['id'] | undefined) =>
     return null;
   });
 
-export const activeToDoItem = (state: IGlobalState) => state.activeToDoItem;
+export const activeToDoItemSelector = (state: IGlobalState) => state.activeToDoItem;

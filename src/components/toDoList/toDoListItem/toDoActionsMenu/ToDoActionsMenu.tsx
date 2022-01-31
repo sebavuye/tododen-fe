@@ -3,14 +3,16 @@ import { useSelector } from 'react-redux';
 import { Flex, Icon } from '@chakra-ui/react';
 import { IoCloseCircleOutline, IoPencilOutline } from 'react-icons/io5';
 import { toDoListActionsLoadingSelector } from '../../../../store/selectors';
-import { IToDoOptionsMenu } from '../../../../types';
+import { IToDoActionsMenu } from '../../../../types';
 
-const ToDoOptionsMenu = ({ editMode, onDeleteClick, onEditClick, visible }: IToDoOptionsMenu) => {
+// TODO: rename to OnEdit and On Delete
+const ToDoActionsMenu = ({ onDeleteClick, onEditClick, readOnly, visible }: IToDoActionsMenu) => {
   const isToDoActionLoading = useSelector(toDoListActionsLoadingSelector);
 
+  // TODO: classNames library
   const loadingClasses = isToDoActionLoading ? 'h-pointer-events-none h-touch-events-none' : ''.trim();
 
-  if (visible && !editMode)
+  if (visible && !readOnly)
     return (
       <Flex alignItems='center' justifyContent='end'>
         <Icon
@@ -39,4 +41,4 @@ const ToDoOptionsMenu = ({ editMode, onDeleteClick, onEditClick, visible }: IToD
   return null;
 };
 
-export default ToDoOptionsMenu;
+export default ToDoActionsMenu;

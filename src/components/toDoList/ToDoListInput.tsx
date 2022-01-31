@@ -22,7 +22,7 @@ const ToDoListInput = ({ disabled }: IToDoListInput): JSX.Element => {
         })
       );
     } else {
-      dispatch(ACTIONS.createToDoItem({ id: nanoid(), editMode: false, todo: userInput, completed: false }));
+      dispatch(ACTIONS.createToDoItem({ id: nanoid(), readOnly: false, todo: userInput, completed: false }));
       setUserInput('');
     }
   };

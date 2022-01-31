@@ -1,7 +1,7 @@
 export interface IToDoItem {
   completed: boolean;
-  editMode: boolean;
   id: string;
+  readOnly: boolean;
   todo: string;
 }
 

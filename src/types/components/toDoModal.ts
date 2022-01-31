@@ -1,4 +1,4 @@
-export interface IToDoModalProps {
+export interface IToDoEditModalProps {
   isOpen: boolean;
   onClose: () => void;
 }

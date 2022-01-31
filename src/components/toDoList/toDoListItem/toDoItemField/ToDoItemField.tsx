@@ -9,16 +9,16 @@ const ToDoItemField = ({
   completed,
   defaultValue,
   disabled,
-  editMode,
   inputRef,
   onBlur,
   onClick,
-  onKeyDown
+  onKeyDown,
+  readOnly
 }: IToDoItemField): JSX.Element => {
   const isToDoActionLoading = useSelector(toDoListActionsLoadingSelector);
   const loadingClasses = isToDoActionLoading ? 'h-pointer-events-none h-touch-events-none' : ''.trim();
 
-  if (editMode)
+  if (readOnly)
     return (
       <Input
         ref={inputRef}

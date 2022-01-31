@@ -1,50 +1,21 @@
 import React from 'react';
-import { Flex, Grid, GridItem, List, useDisclosure } from '@chakra-ui/react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Flex, Grid, GridItem, List } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 import ToDoListStats from './ToDoListStats';
-import ToDoListItem from './toDoListItem/ToDoListItem';
 import ToDoListInput from './ToDoListInput';
 import Loading from '../loading/Loading';
 import { LoadingText } from '../loadingText/LoadingText';
-import * as ACTIONS from '../../store/actions';
 import { toDoListActionsLoadingSelector, toDoStateSelector } from '../../store/selectors';
 import { LOADING_DELAYS, TO_DO_LOADING_KEYS } from '../../constants';
 import { IToDoItem } from '../../types';
 import { ReactComponent as EmptyStateImage } from '../../assets/images/EmptyState.svg';
 import { EmptyState } from '../emptyState/EmptyState';
-import ToDoModal from '../toDoModal/ToDoModal';
+import ToDoListItem from './toDoListItem/ToDoListItem';
 
+// TODO: todoitem.todo should be todoitem.task
 const ToDoList = (): JSX.Element => {
-  const dispatch = useDispatch();
   const toDoList = useSelector(toDoStateSelector);
   const isToDoActionLoading = useSelector(toDoListActionsLoadingSelector);
-  const { isOpen, onClose, onOpen } = useDisclosure();
-
-  const handleDeleteToDoItem = (toDoItemId: IToDoItem['id']) => {
-    dispatch(ACTIONS.removeToDoItem(toDoItemId));
-  };
-
-  const handleStatusUpdateToDoItem = (toDoListItem: IToDoItem) => {
-    const updatedToDoItem: IToDoItem = {
-      ...toDoListItem,
-      completed: !toDoListItem.completed
-    };
-    dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
-  };
-
-  const handleEditToDoItem = (toDoListItem: IToDoItem, newValue: string) => {
-    const updatedToDoItem = {
-      ...toDoListItem,
-      todo: newValue,
-      editMode: !toDoListItem.editMode
-    };
-    dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
-  };
-
-  const handleClickToDoItem = (toDoListItem: IToDoItem) => {
-    dispatch(ACTIONS.setActiveToDoItem(toDoListItem));
-    onOpen();
-  };
 
   return (
     <Grid h='100%' templateRows='auto 1fr'>
@@ -60,7 +31,6 @@ const ToDoList = (): JSX.Element => {
           <ToDoListStats />
         </Flex>
       </GridItem>
-
       <GridItem bg='teal.50' p={6}>
         <Grid h='100%' mx='auto' templateRows='1fr auto' w={{ base: '100%', md: '75%', xl: '50%' }}>
           <GridItem>
@@ -73,16 +43,7 @@ const ToDoList = (): JSX.Element => {
             )}
             <List spacing={4}>
               {toDoList.map((toDoListItem: IToDoItem) => (
-                <ToDoListItem
-                  key={toDoListItem.id}
-                  completed={toDoListItem.completed}
-                  editMode={toDoListItem.editMode}
-                  onClick={() => handleClickToDoItem(toDoListItem)}
-                  onDelete={() => handleDeleteToDoItem(toDoListItem.id)}
-                  onEdit={newValue => handleEditToDoItem(toDoListItem, newValue)}
-                  onUpdate={() => handleStatusUpdateToDoItem(toDoListItem)}>
-                  {toDoListItem.todo}
-                </ToDoListItem>
+                <ToDoListItem key={toDoListItem.id}>{toDoListItem}</ToDoListItem>
               ))}
             </List>
           </GridItem>
@@ -91,8 +52,6 @@ const ToDoList = (): JSX.Element => {
           </GridItem>
         </Grid>
       </GridItem>
-
-      <ToDoModal isOpen={isOpen} onClose={onClose} />
     </Grid>
   );
 };

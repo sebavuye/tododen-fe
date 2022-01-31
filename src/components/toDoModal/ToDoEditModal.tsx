@@ -1,28 +1,18 @@
 import React from 'react';
 import { Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react';
-import { useDispatch, useSelector } from 'react-redux';
-import { IToDoItem, IToDoModalProps } from '../../types';
-import { activeToDoItem } from '../../store/selectors';
-import * as ACTIONS from '../../store/actions';
-import ToDoField from './toDoField/ToDoField';
+import { useSelector } from 'react-redux';
+import { IToDoEditModalProps } from '../../types';
+import ToDoModalItemTaskField from './toDoField/ToDoModalItemTaskField';
 import ConfirmationModal from '../confirmationModal/ConfirmationModal';
+import { activeToDoItemSelector } from '../../store/selectors';
 
-const ToDoModal = ({ isOpen, onClose }: IToDoModalProps): JSX.Element => {
-  const dispatch = useDispatch();
-  const toDoItem = useSelector(activeToDoItem);
-  const [confirmationModal, setConfirmationModal] = React.useState(false);
-
-  const handleOnCancel = (updatedToDoItem: IToDoItem) => {
-    dispatch(ACTIONS.setActiveToDoItem(updatedToDoItem));
-  };
-
-  const handleOnSave = (updatedToDoItem: IToDoItem) => {
-    dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
-    onClose();
-  };
+// TODO: readonly needs to be switched
+const ToDoEditModal = ({ isOpen, onClose }: IToDoEditModalProps): JSX.Element => {
+  const activeToDoItem = useSelector(activeToDoItemSelector);
+  const [confirmationModal, setConfirmationModal] = React.useState<boolean>(false);
 
   const handleOnClose = () => {
-    if (toDoItem.editMode) {
+    if (activeToDoItem.readOnly) {
       setConfirmationModal(true);
     } else {
       onClose();
@@ -30,6 +20,7 @@ const ToDoModal = ({ isOpen, onClose }: IToDoModalProps): JSX.Element => {
   };
 
   const handleConfirmationCancel = () => setConfirmationModal(false);
+
   const handleConfirmationDiscard = () => {
     setConfirmationModal(false);
     onClose();
@@ -44,7 +35,7 @@ const ToDoModal = ({ isOpen, onClose }: IToDoModalProps): JSX.Element => {
           <ModalCloseButton />
           <ModalBody mb={8}>
             <Flex alignItems='center'>
-              <ToDoField onCancel={handleOnCancel} onSave={handleOnSave} />
+              <ToDoModalItemTaskField onSave={onClose} />
             </Flex>
           </ModalBody>
         </ModalContent>
@@ -56,4 +47,4 @@ const ToDoModal = ({ isOpen, onClose }: IToDoModalProps): JSX.Element => {
     </>
   );
 };
-export default ToDoModal;
+export default ToDoEditModal;
