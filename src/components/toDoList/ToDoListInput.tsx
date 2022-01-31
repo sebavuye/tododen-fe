@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 import * as ACTIONS from '../../store/actions';
 import { ERROR_NOTIFICATIONS } from '../../constants';
-import { ENotificationIds, IToDoListInput } from '../../types';
+import { ENotificationIds, IToDoItem, IToDoListInput } from '../../types';
 
 const ToDoListInput = ({ disabled }: IToDoListInput): JSX.Element => {
   const [userInput, setUserInput] = React.useState<string>('');
@@ -22,7 +22,8 @@ const ToDoListInput = ({ disabled }: IToDoListInput): JSX.Element => {
         })
       );
     } else {
-      dispatch(ACTIONS.createToDoItem({ id: nanoid(), readOnly: false, task: userInput, completed: false }));
+      const toDoItem: IToDoItem = { id: nanoid(), readOnly: true, task: userInput, completed: false };
+      dispatch(ACTIONS.createToDoItem(toDoItem));
       setUserInput('');
     }
   };

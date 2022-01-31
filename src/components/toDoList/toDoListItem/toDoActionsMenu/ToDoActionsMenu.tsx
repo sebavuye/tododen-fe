@@ -12,7 +12,7 @@ const ToDoActionsMenu = ({ onDeleteClick, onEditClick, readOnly, visible }: IToD
   // TODO: classNames library
   const loadingClasses = isToDoActionLoading ? 'h-pointer-events-none h-touch-events-none' : ''.trim();
 
-  if (visible && !readOnly)
+  if (visible && readOnly)
     return (
       <Flex alignItems='center' justifyContent='end'>
         <Icon

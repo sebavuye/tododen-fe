@@ -20,22 +20,22 @@ const ToDoItemField = ({
 
   if (readOnly)
     return (
-      <Input
-        ref={inputRef}
-        className={loadingClasses}
-        defaultValue={defaultValue}
-        disabled={disabled}
-        size='sm'
-        type='text'
-        onBlur={onBlur}
-        onKeyDown={onKeyDown}
-      />
+      <Text as='span' className={loadingClasses} pl={2} onClick={onClick}>
+        {completed ? <Text as='s'>{children}</Text> : children}
+      </Text>
     );
 
   return (
-    <Text as='span' className={loadingClasses} pl={2} onClick={onClick}>
-      {completed ? <Text as='s'>{children}</Text> : children}
-    </Text>
+    <Input
+      ref={inputRef}
+      className={loadingClasses}
+      defaultValue={defaultValue}
+      disabled={disabled}
+      size='sm'
+      type='text'
+      onBlur={onBlur}
+      onKeyDown={onKeyDown}
+    />
   );
 };
 

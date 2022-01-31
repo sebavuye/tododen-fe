@@ -20,7 +20,7 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
   };
 
   const handleInlineEdit = () => {
-    const updatedToDoItem: IToDoItem = { ...toDoItem, readOnly: true };
+    const updatedToDoItem: IToDoItem = { ...toDoItem, readOnly: false };
     dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
   };
 
@@ -30,7 +30,7 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
   };
 
   const handleCancel = () => {
-    const updatedToDoItem: IToDoItem = { ...toDoItem, readOnly: false };
+    const updatedToDoItem: IToDoItem = { ...toDoItem, readOnly: true };
     dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
   };
 
@@ -45,7 +45,7 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
 
   return (
     <Flex justifyContent='space-between'>
-      {!toDoItem.readOnly ? (
+      {toDoItem.readOnly ? (
         <>
           <Flex width='100%'>
             <ToDoStatusButton completed={toDoItem.completed} onClick={handleStatus} />

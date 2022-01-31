@@ -6,16 +6,15 @@ import ToDoModalItemTaskField from './toDoField/ToDoModalItemTaskField';
 import ConfirmationModal from '../confirmationModal/ConfirmationModal';
 import { activeToDoItemSelector } from '../../store/selectors';
 
-// TODO: readonly needs to be switched
 const ToDoEditModal = ({ isOpen, onClose }: IToDoEditModalProps): JSX.Element => {
   const activeToDoItem = useSelector(activeToDoItemSelector);
   const [confirmationModal, setConfirmationModal] = React.useState<boolean>(false);
 
   const handleOnClose = () => {
     if (activeToDoItem.readOnly) {
-      setConfirmationModal(true);
-    } else {
       onClose();
+    } else {
+      setConfirmationModal(true);
     }
   };
 
