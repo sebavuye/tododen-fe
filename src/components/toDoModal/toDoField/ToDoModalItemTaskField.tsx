@@ -44,6 +44,15 @@ const ToDoModalItemTaskField = ({ onSave }: IToDoModalItemTaskFieldProps): JSX.E
     dispatch(ACTIONS.setActiveToDoItem(updatedToDoItem));
   };
 
+  const handleKeyboardInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSave();
+    }
+    if (event.key === 'Escape') {
+      handleCancel();
+    }
+  };
+
   if (activeToDoItem.readOnly)
     return (
       <>
@@ -61,7 +70,7 @@ const ToDoModalItemTaskField = ({ onSave }: IToDoModalItemTaskFieldProps): JSX.E
 
   return (
     <Flex flexDirection='column' width='100%'>
-      <Input size='sm' value={inputValue} onChange={handleInput} />
+      <Input size='sm' value={inputValue} onChange={handleInput} onKeyDown={handleKeyboardInput} />
       <ButtonGroup my={2} size='sm'>
         <Button colorScheme='teal' onClick={handleSave}>
           Save

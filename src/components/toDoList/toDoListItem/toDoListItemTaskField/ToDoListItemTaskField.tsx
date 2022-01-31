@@ -43,6 +43,15 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
     dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
   };
 
+  const handleKeyboardInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSave();
+    }
+    if (event.key === 'Escape') {
+      handleCancel();
+    }
+  };
+
   return (
     <Flex justifyContent='space-between'>
       {toDoItem.readOnly ? (
@@ -62,7 +71,7 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
         </>
       ) : (
         <Flex flexDirection='column' width='100%'>
-          <Input defaultValue={toDoItem.task} size='sm' onChange={handleInput} />
+          <Input defaultValue={toDoItem.task} size='sm' onChange={handleInput} onKeyDown={handleKeyboardInput} />
           <ButtonGroup my={2} size='sm'>
             <Button colorScheme='teal' onClick={handleSave}>
               Save
