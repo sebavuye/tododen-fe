@@ -17,6 +17,8 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
     setInputValue(toDoItem.task);
   }, [toDoItem]);
 
+  const handleStatusStyling = (completed: IToDoItem['completed']) => (completed ? 's' : 'span');
+
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value);
 
   const handleEdit = () => {
@@ -70,7 +72,7 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
         <>
           <Flex width='100%'>
             <ToDoStatusButton completed={toDoItem.completed} onClick={handleStatus} />
-            <Text as={toDoItem.completed ? 's' : 'span'} ml={2} onClick={handleEdit}>
+            <Text as={handleStatusStyling(toDoItem.completed)} ml={2} onClick={handleEdit}>
               {inputValue}
             </Text>
           </Flex>
