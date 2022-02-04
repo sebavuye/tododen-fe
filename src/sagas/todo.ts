@@ -72,11 +72,20 @@ function* updateToDoItem({ payload }: PayloadAction<IToDoItem>) {
     yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.UPDATE_TO_DO_ITEM, loading: true }));
 
     yield call(patchToDoItem, payload);
+
+    if (payload.onSuccess) {
+      payload.onSuccess();
+    }
+
     yield put(ACTIONS.fetchToDoList({ initialization: false }));
 
     yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.UPDATE_TO_DO_ITEM, loading: false }));
   } catch (error) {
     yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.UPDATE_TO_DO_ITEM, loading: false }));
+
+    if (payload.onError) {
+      payload.onError();
+    }
 
     Sentry.captureException(error);
 

@@ -1,4 +1,9 @@
-export interface IToDoItem {
+interface IToDoActionCallbackProps {
+  onError?: () => void;
+  onSuccess?: () => void;
+}
+
+export interface IToDoItem extends IToDoActionCallbackProps {
   completed: boolean;
   id: string;
   readOnly: boolean;

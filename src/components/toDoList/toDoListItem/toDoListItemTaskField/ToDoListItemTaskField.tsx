@@ -11,6 +11,11 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
   const dispatch = useDispatch();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [inputValue, setInputValue] = React.useState<string>('');
+  const [readOnly, setReadOnly] = React.useState<boolean>(true);
+
+  React.useEffect(() => {
+    setInputValue(toDoItem.task);
+  }, [toDoItem]);
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value);
 
@@ -20,17 +25,16 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
   };
 
   const handleInlineEdit = () => {
-    const updatedToDoItem: IToDoItem = { ...toDoItem, readOnly: false };
-    dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
-  };
-
-  const handleSave = () => {
-    const updatedToDoItem: IToDoItem = { ...toDoItem, task: inputValue, readOnly: !toDoItem.readOnly };
-    dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
+    setReadOnly(false);
   };
 
   const handleCancel = () => {
-    const updatedToDoItem: IToDoItem = { ...toDoItem, readOnly: true };
+    setInputValue(toDoItem.task);
+    setReadOnly(true);
+  };
+
+  const handleStatus = () => {
+    const updatedToDoItem: IToDoItem = { ...toDoItem, completed: !toDoItem.completed };
     dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
   };
 
@@ -38,8 +42,16 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
     dispatch(ACTIONS.removeToDoItem(toDoItem.id));
   };
 
-  const handleStatus = () => {
-    const updatedToDoItem: IToDoItem = { ...toDoItem, completed: !toDoItem.completed };
+  const handleSave = () => {
+    const updatedToDoItem: IToDoItem = {
+      ...toDoItem,
+      task: inputValue,
+      onError: () => {
+        setInputValue(toDoItem.task);
+        setReadOnly(true);
+      },
+      onSuccess: () => setReadOnly(true)
+    };
     dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
   };
 
@@ -54,12 +66,12 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
 
   return (
     <Flex justifyContent='space-between'>
-      {toDoItem.readOnly ? (
+      {readOnly ? (
         <>
           <Flex width='100%'>
             <ToDoStatusButton completed={toDoItem.completed} onClick={handleStatus} />
             <Text as={toDoItem.completed ? 's' : 'span'} ml={2} onClick={handleEdit}>
-              {toDoItem.task}
+              {inputValue}
             </Text>
           </Flex>
           <ToDoActionsMenu
@@ -71,7 +83,7 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
         </>
       ) : (
         <Flex flexDirection='column' width='100%'>
-          <Input defaultValue={toDoItem.task} size='sm' onChange={handleInput} onKeyDown={handleKeyboardInput} />
+          <Input size='sm' value={inputValue} onChange={handleInput} onKeyDown={handleKeyboardInput} />
           <ButtonGroup my={2} size='sm'>
             <Button colorScheme='teal' onClick={handleSave}>
               Save
