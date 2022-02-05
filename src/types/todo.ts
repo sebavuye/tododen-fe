@@ -6,8 +6,11 @@ interface IToDoActionCallbackProps {
 export interface IToDoItem extends IToDoActionCallbackProps {
   completed: boolean;
   id: string;
-  readOnly: boolean;
   task: string;
+}
+
+export interface IActiveToDoItem extends Omit<IToDoItem, 'onError' | 'onSuccess'> {
+  readOnly: boolean;
 }
 
 export interface IInitializationState {

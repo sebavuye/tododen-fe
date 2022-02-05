@@ -1,5 +1,5 @@
 // redux, saga and api
-export type { IInitializationState, IToDoItem } from './todo';
+export type { IInitializationState, IToDoItem, IActiveToDoItem } from './todo';
 export type { ILoading, ILoadingState, IToDoListLoadingMessages, ILoadingDelays } from './loading';
 export type { INotification, INotificationsState } from './notifications';
 export type { IGlobalState } from './store';

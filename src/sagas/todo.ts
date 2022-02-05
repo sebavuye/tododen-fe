@@ -1,7 +1,7 @@
 import { call, put, SagaReturnType, takeLatest } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react';
-import { deleteToDoItem, getToDoItem, getToDoList, patchToDoItem, postToDoItem } from '../api/services';
+import { deleteToDoItem, getToDoList, patchToDoItem, postToDoItem } from '../api/services';
 import * as ACTIONS from '../store/actions';
 import { ENotificationIds, EToDoListLoadingKeys, IInitializationState, IToDoItem } from '../types';
 import { ERROR_NOTIFICATIONS, SUCCESS_NOTIFICATIONS } from '../constants';
@@ -135,38 +135,9 @@ function* fetchToDoList({ payload }: PayloadAction<IInitializationState>) {
   }
 }
 
-type GetToDoItem = SagaReturnType<typeof getToDoItem>;
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function* fetchToDoItem({ payload }: PayloadAction<IToDoItem['id']>) {
-  try {
-    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.GET_TODO_ITEM, loading: true }));
-
-    const response: GetToDoItem = yield call(getToDoItem, payload);
-    const toDoItem = response.data;
-
-    yield put(ACTIONS.setActiveToDoItem(toDoItem));
-
-    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.GET_TODO_ITEM, loading: false }));
-  } catch (error) {
-    yield put(ACTIONS.setLoading({ key: EToDoListLoadingKeys.GET_TODO_ITEM, loading: false }));
-
-    Sentry.captureException(error);
-
-    yield put(
-      ACTIONS.showError({
-        title: ERROR_NOTIFICATIONS.getToDoItemErrorTitle,
-        message: ERROR_NOTIFICATIONS.defaultErrorMessage,
-        id: ENotificationIds.TO_DO_GET_ITEM_ERROR
-      })
-    );
-  }
-}
-
 export function* toDoListSagas() {
   yield takeLatest(ACTIONS.createToDoItem, createToDoItem);
   yield takeLatest(ACTIONS.removeToDoItem, removeToDoItem);
   yield takeLatest(ACTIONS.updateToDoItem, updateToDoItem);
   yield takeLatest(ACTIONS.fetchToDoList, fetchToDoList);
-  // yield takeLatest(ACTIONS.fetchToDoItem, fetchToDoItem);
 }

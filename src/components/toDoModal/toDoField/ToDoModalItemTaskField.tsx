@@ -4,7 +4,7 @@ import { Button, ButtonGroup, Flex, Input, Text } from '@chakra-ui/react';
 import ToDoStatusButton from '../../toDoList/toDoListItem/toDoStatusButton/ToDoStatusButton';
 import * as ACTIONS from '../../../store/actions';
 import { activeToDoItemSelector } from '../../../store/selectors';
-import { IToDoItem, IToDoModalItemTaskFieldProps } from '../../../types';
+import { IActiveToDoItem, IToDoModalItemTaskFieldProps } from '../../../types';
 import { renderStatusElement } from '../../../utils';
 
 const ToDoModalItemTaskField = ({ onSave }: IToDoModalItemTaskFieldProps): JSX.Element => {
@@ -23,25 +23,30 @@ const ToDoModalItemTaskField = ({ onSave }: IToDoModalItemTaskFieldProps): JSX.E
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value);
 
   const handleSave = () => {
-    const updatedToDoItem: IToDoItem = { ...activeToDoItem, task: inputValue, readOnly: true };
+    const updatedActiveToDoItem: IActiveToDoItem = { ...activeToDoItem, task: inputValue };
+    const { readOnly, ...updatedToDoItem } = updatedActiveToDoItem;
     dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
     onSave();
   };
 
   const handleCancel = () => {
-    const initialToDoItem: IToDoItem = { ...activeToDoItem, task: activeToDoItem.task, readOnly: true };
+    const initialToDoItem: IActiveToDoItem = { ...activeToDoItem, task: activeToDoItem.task, readOnly: true };
     setInputValue(activeToDoItem.task);
     dispatch(ACTIONS.setActiveToDoItem(initialToDoItem));
   };
 
   const handleStatus = () => {
-    const updatedToDoItem: IToDoItem = { ...activeToDoItem, completed: !activeToDoItem.completed };
+    const updatedToDoItem: IActiveToDoItem = { ...activeToDoItem, completed: !activeToDoItem.completed };
     dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
     dispatch(ACTIONS.setActiveToDoItem(updatedToDoItem));
   };
 
   const handleInlineEdit = () => {
-    const updatedToDoItem: IToDoItem = { ...activeToDoItem, readOnly: !activeToDoItem.readOnly, task: inputValue };
+    const updatedToDoItem: IActiveToDoItem = {
+      ...activeToDoItem,
+      readOnly: !activeToDoItem.readOnly,
+      task: inputValue
+    };
     dispatch(ACTIONS.setActiveToDoItem(updatedToDoItem));
   };
 

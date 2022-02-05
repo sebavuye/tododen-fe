@@ -5,7 +5,7 @@ import ToDoStatusButton from '../toDoStatusButton/ToDoStatusButton';
 import ToDoActionsMenu from '../toDoActionsMenu/ToDoActionsMenu';
 import ToDoEditModal from '../../../toDoModal/ToDoEditModal';
 import * as ACTIONS from '../../../../store/actions';
-import { IToDoItem, IToDoListItemTaskFieldProps } from '../../../../types';
+import { IActiveToDoItem, IToDoItem, IToDoListItemTaskFieldProps } from '../../../../types';
 import { renderStatusElement } from '../../../../utils';
 
 const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItemTaskFieldProps): JSX.Element => {
@@ -21,7 +21,8 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value);
 
   const handleEdit = () => {
-    dispatch(ACTIONS.setActiveToDoItem(toDoItem));
+    const activeToDoItem: IActiveToDoItem = { ...toDoItem, readOnly: true };
+    dispatch(ACTIONS.setActiveToDoItem(activeToDoItem));
     onOpen();
   };
 
@@ -76,7 +77,7 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
             </Text>
           </Flex>
           <ToDoActionsMenu
-            readOnly={toDoItem.readOnly}
+            readOnly={readOnly}
             visible={actionMenuVisibility}
             onDeleteClick={handleDelete}
             onEditClick={handleInlineEdit}
