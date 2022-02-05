@@ -5,6 +5,7 @@ import ToDoStatusButton from '../../toDoList/toDoListItem/toDoStatusButton/ToDoS
 import * as ACTIONS from '../../../store/actions';
 import { activeToDoItemSelector } from '../../../store/selectors';
 import { IToDoItem, IToDoModalItemTaskFieldProps } from '../../../types';
+import { renderStatusElement } from '../../../utils';
 
 const ToDoModalItemTaskField = ({ onSave }: IToDoModalItemTaskFieldProps): JSX.Element => {
   const dispatch = useDispatch();
@@ -58,7 +59,7 @@ const ToDoModalItemTaskField = ({ onSave }: IToDoModalItemTaskFieldProps): JSX.E
       <>
         <ToDoStatusButton completed={activeToDoItem.completed} onClick={handleStatus} />
         <Text
-          as={activeToDoItem.completed ? 's' : 'span'}
+          as={renderStatusElement(activeToDoItem.completed)}
           fontSize='xl'
           fontWeight='700'
           ml={2}

@@ -6,6 +6,7 @@ import ToDoActionsMenu from '../toDoActionsMenu/ToDoActionsMenu';
 import ToDoEditModal from '../../../toDoModal/ToDoEditModal';
 import * as ACTIONS from '../../../../store/actions';
 import { IToDoItem, IToDoListItemTaskFieldProps } from '../../../../types';
+import { renderStatusElement } from '../../../../utils';
 
 const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItemTaskFieldProps): JSX.Element => {
   const dispatch = useDispatch();
@@ -16,8 +17,6 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
   React.useEffect(() => {
     setInputValue(toDoItem.task);
   }, [toDoItem]);
-
-  const handleStatusStyling = (completed: IToDoItem['completed']) => (completed ? 's' : 'span');
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value);
 
@@ -72,7 +71,7 @@ const ToDoListItemTaskField = ({ actionMenuVisibility, toDoItem }: IToDoListItem
         <>
           <Flex width='100%'>
             <ToDoStatusButton completed={toDoItem.completed} onClick={handleStatus} />
-            <Text as={handleStatusStyling(toDoItem.completed)} ml={2} onClick={handleEdit}>
+            <Text as={renderStatusElement(toDoItem.completed)} ml={2} onClick={handleEdit}>
               {inputValue}
             </Text>
           </Flex>
