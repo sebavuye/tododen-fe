@@ -24,9 +24,14 @@ const ToDoModalItemTaskField = ({ onSave }: IToDoModalItemTaskFieldProps): JSX.E
 
   const handleSave = () => {
     const updatedActiveToDoItem: IActiveToDoItem = { ...activeToDoItem, task: inputValue };
-    const { readOnly, ...updatedToDoItem } = updatedActiveToDoItem;
+    const { readOnly, ...extractedToDoItem } = updatedActiveToDoItem;
+    const updatedToDoItem = {
+      ...extractedToDoItem,
+      onSuccess: () => {
+        onSave();
+      }
+    };
     dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
-    onSave();
   };
 
   const handleCancel = () => {
@@ -36,9 +41,15 @@ const ToDoModalItemTaskField = ({ onSave }: IToDoModalItemTaskFieldProps): JSX.E
   };
 
   const handleStatus = () => {
-    const updatedToDoItem: IActiveToDoItem = { ...activeToDoItem, completed: !activeToDoItem.completed };
+    const updatedActiveToDoItem: IActiveToDoItem = { ...activeToDoItem, completed: !activeToDoItem.completed };
+    const { readOnly, ...extractedToDoItem } = updatedActiveToDoItem;
+    const updatedToDoItem = {
+      ...extractedToDoItem,
+      onSuccess: () => {
+        dispatch(ACTIONS.setActiveToDoItem(updatedActiveToDoItem));
+      }
+    };
     dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
-    dispatch(ACTIONS.setActiveToDoItem(updatedToDoItem));
   };
 
   const handleInlineEdit = () => {
