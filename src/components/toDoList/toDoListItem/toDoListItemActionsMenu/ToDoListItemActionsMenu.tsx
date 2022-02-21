@@ -4,10 +4,9 @@ import { Flex, Icon } from '@chakra-ui/react';
 import { IoCloseCircleOutline, IoPencilOutline } from 'react-icons/io5';
 import classNames from 'classnames';
 import { toDoListActionsLoadingSelector } from '../../../../store/selectors';
-import { IToDoActionsMenu } from '../../../../types';
+import { IToDoListItemActionsMenuProps } from '../../../../types';
 
-// TODO: rename to OnEdit and On Delete
-const ToDoActionsMenu = ({ onDeleteClick, onEditClick, readOnly, visible }: IToDoActionsMenu) => {
+const ToDoListItemActionsMenu = ({ onDelete, onEdit, readOnly, visible }: IToDoListItemActionsMenuProps) => {
   const isToDoActionLoading = useSelector(toDoListActionsLoadingSelector);
 
   const loadingClasses = classNames({ 'h-pointer-events-none h-touch-events-none': isToDoActionLoading });
@@ -23,7 +22,7 @@ const ToDoActionsMenu = ({ onDeleteClick, onEditClick, readOnly, visible }: IToD
           h={6}
           mx={1}
           w={6}
-          onClick={onEditClick}
+          onClick={onEdit}
         />
         <Icon
           as={IoCloseCircleOutline}
@@ -33,7 +32,7 @@ const ToDoActionsMenu = ({ onDeleteClick, onEditClick, readOnly, visible }: IToD
           h={6}
           ml={1}
           w={6}
-          onClick={onDeleteClick}
+          onClick={onDelete}
         />
       </Flex>
     );
@@ -41,4 +40,4 @@ const ToDoActionsMenu = ({ onDeleteClick, onEditClick, readOnly, visible }: IToD
   return null;
 };
 
-export default ToDoActionsMenu;
+export default ToDoListItemActionsMenu;

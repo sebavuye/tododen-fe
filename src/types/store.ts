@@ -1,10 +1,9 @@
 import { ILoadingState } from './loading';
 import { INotificationsState } from './notifications';
-import { IActiveToDoItem, IToDoItem } from './todo';
+import { IToDoState } from './store/toDo';
 
 export interface IGlobalState {
-  activeToDoItem: IActiveToDoItem;
   loading: ILoadingState;
   notifications: INotificationsState;
-  toDoList: IToDoItem[];
+  toDo: IToDoState;
 }

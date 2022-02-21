@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { IActiveToDoItem, IInitializationState, IToDoItem } from '../../types';
+import { IInitializationState, IToDoItem } from '../../types';
 
 const prefix = 'TODO';
 
@@ -9,5 +9,3 @@ export const createToDoItem = createAction<IToDoItem>(`${prefix}/addToDoItem`);
 export const removeToDoItem = createAction<IToDoItem['id']>(`${prefix}/removeToDoItem`);
 export const updateToDoItem = createAction<IToDoItem>(`${prefix}/updateToDoItem`);
 export const fetchToDoItem = createAction<IToDoItem['id']>(`${prefix}/fetchToDoItem`);
-
-export const setActiveToDoItem = createAction<IActiveToDoItem | null>(`${prefix}/setActiveToDoItem`);

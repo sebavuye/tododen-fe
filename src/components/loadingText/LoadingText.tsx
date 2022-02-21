@@ -4,10 +4,7 @@ import { loadingStateSelector } from '../../store/selectors';
 import { TO_DO_LOADING_MESSAGES } from '../../constants';
 import { EToDoListLoadingKeys, ILoadingTextProps, IToDoListLoadingMessages } from '../../types';
 
-export const LoadingText = ({
-  children = TO_DO_LOADING_MESSAGES.DEFAULT,
-  loadingKeys
-}: ILoadingTextProps): JSX.Element => {
+const LoadingText = ({ children = TO_DO_LOADING_MESSAGES.DEFAULT, loadingKeys }: ILoadingTextProps): JSX.Element => {
   const { components } = useSelector(loadingStateSelector);
 
   const loadingComponents = components.filter(component => component.loading);
@@ -23,3 +20,5 @@ export const LoadingText = ({
   if (loadingComponentsKeys && loadingComponentsKeys.length === 1) return <span>{loadingComponentsKeys[0]}</span>;
   return <span>{children}</span>;
 };
+
+export default LoadingText;

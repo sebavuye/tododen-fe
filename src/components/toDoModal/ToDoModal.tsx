@@ -1,17 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
-import { IToDoEditModalProps } from '../../types';
-import ToDoModalItemTaskField from './toDoField/ToDoModalItemTaskField';
+import ToDoModalListItem from './toDoModalListItem/ToDoModalListItem';
 import ConfirmationModal from '../confirmationModal/ConfirmationModal';
-import { activeToDoItemSelector } from '../../store/selectors';
+import { IToDoModalProps } from '../../types';
 
-const ToDoEditModal = ({ isOpen, onClose }: IToDoEditModalProps): JSX.Element => {
-  const activeToDoItem = useSelector(activeToDoItemSelector);
-  const [confirmationModal, setConfirmationModal] = React.useState<boolean>(false);
+const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element => {
+  const [confirmationModal, setConfirmationModal] = useState<boolean>(false);
+  const [readOnly, setReadOnly] = useState<boolean>(true);
 
   const handleOnClose = () => {
-    if (activeToDoItem.readOnly) {
+    if (readOnly) {
       onClose();
     } else {
       setConfirmationModal(true);
@@ -22,6 +20,7 @@ const ToDoEditModal = ({ isOpen, onClose }: IToDoEditModalProps): JSX.Element =>
 
   const handleConfirmationDiscard = () => {
     setConfirmationModal(false);
+    setReadOnly(true);
     onClose();
   };
 
@@ -34,7 +33,7 @@ const ToDoEditModal = ({ isOpen, onClose }: IToDoEditModalProps): JSX.Element =>
           <ModalCloseButton />
           <ModalBody mb={8}>
             <Flex alignItems='center'>
-              <ToDoModalItemTaskField onSave={onClose} />
+              <ToDoModalListItem readOnly={readOnly} toDoItem={toDoItem} onReadOnly={setReadOnly} onSave={onClose} />
             </Flex>
           </ModalBody>
         </ModalContent>
@@ -46,4 +45,4 @@ const ToDoEditModal = ({ isOpen, onClose }: IToDoEditModalProps): JSX.Element =>
     </>
   );
 };
-export default ToDoEditModal;
+export default ToDoModal;
