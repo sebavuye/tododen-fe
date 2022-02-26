@@ -26,9 +26,9 @@ const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element 
 
   return (
     <>
-      <Modal isOpen={isOpen} size='lg' onClose={handleOnClose}>
+      <Modal isCentered isOpen={isOpen} size='lg' onClose={handleOnClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent width={{ base: '90%', md: '100%' }}>
           <ModalHeader fontSize='sm'>Edit To Do</ModalHeader>
           <ModalCloseButton />
           <ModalBody mb={8}>

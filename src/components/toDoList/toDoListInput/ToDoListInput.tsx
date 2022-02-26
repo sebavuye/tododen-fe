@@ -29,7 +29,7 @@ const ToDoListInput = ({ disabled }: IToDoListInputProps): JSX.Element => {
   };
 
   return (
-    <InputGroup size='lg'>
+    <InputGroup pt={8} size='lg'>
       <Input
         disabled={disabled}
         placeholder='What needs to be done?'

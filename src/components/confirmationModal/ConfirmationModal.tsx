@@ -15,7 +15,7 @@ import { IConfirmationModalProps } from 'src/types';
 const ConfirmationModal = ({ onCancel, onDiscard }: IConfirmationModalProps) => (
   <Modal isCentered isOpen size='lg' onClose={onCancel}>
     <ModalOverlay />
-    <ModalContent>
+    <ModalContent width={{ base: '90%', md: '100%' }}>
       <ModalHeader fontSize='sm'>Discard Changes?</ModalHeader>
       <ModalCloseButton />
       <ModalBody>
