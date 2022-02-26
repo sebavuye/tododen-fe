@@ -1,64 +1,81 @@
-import React from 'react';
-import { Flex, ListItem } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { Button, ButtonGroup, Flex, Input, ListItem, Text, useDisclosure } from '@chakra-ui/react';
+import ToDoListItemStatusButton from './toDoListItemStatusButton/ToDoListItemStatusButton';
+import ToDoListItemActionsMenu from './toDoListItemActionsMenu/ToDoListItemActionsMenu';
+import ToDoModal from '../../toDoModal/ToDoModal';
+import { renderStatusElement } from '../../../utils';
 import { IToDoListItemProps } from '../../../types';
-import { toDoListActionsLoadingSelector } from '../../../store/selectors';
-import ToDoStatusButton from './toDoStatusButton/ToDoStatusButton';
-import ToDoItemField from './toDoItemField/ToDoItemField';
-import ToDoOptionsMenu from './toDoOptionsMenu/ToDoOptionsMenu';
 
 const ToDoListItem = ({
-  children,
-  completed,
-  editMode,
+  onCancel,
   onDelete,
   onEdit,
-  onUpdate
+  onInlineEdit,
+  onKeyboardInput,
+  onSave,
+  onStatusChange,
+  toDoItem
 }: IToDoListItemProps): JSX.Element => {
-  const [showOptions, setShowOptions] = React.useState(false);
-  const inputRef = React.useRef<HTMLInputElement>(null);
-  const isToDoActionLoading = useSelector(toDoListActionsLoadingSelector);
+  const { isOpen, onClose, onOpen } = useDisclosure();
+  const [inputValue, setInputValue] = useState<string>('');
+  const [actionMenuVisibility, setActionMenuVisibility] = useState<boolean>(false);
 
-  React.useEffect(() => {
-    if (!editMode) return;
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [editMode]);
+  const handleInput = (event: ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value);
 
-  const handleInputKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && inputRef.current) {
-      inputRef.current.blur();
-    }
-    if (event.key === 'Escape') {
-      onEdit(children as string);
-    }
+  const handleEdit = () => {
+    onEdit();
+    onOpen();
   };
 
+  useEffect(() => {
+    setInputValue(toDoItem.task);
+  }, [toDoItem]);
+
   return (
-    <ListItem onMouseEnter={() => setShowOptions(true)} onMouseLeave={() => setShowOptions(false)}>
-      <Flex justifyContent='space-between'>
-        <Flex alignItems='center' flex={1}>
-          <ToDoStatusButton completed={completed} onClick={onUpdate} />
-          <ToDoItemField
-            completed={completed}
-            defaultValue={children as string}
-            disabled={isToDoActionLoading}
-            editMode={editMode}
-            inputRef={inputRef}
-            onBlur={event => onEdit(event.target.value)}
-            onClick={() => onEdit(children as string)}
-            onKeyDown={event => handleInputKeyPress(event)}>
-            {children}
-          </ToDoItemField>
+    <ListItem justifyContent='space-between'>
+      {toDoItem.readOnly ? (
+        <Flex
+          justifyContent='space-between'
+          width='100%'
+          onMouseEnter={() => setActionMenuVisibility(true)}
+          onMouseLeave={() => setActionMenuVisibility(false)}>
+          <Flex width='100%'>
+            <ToDoListItemStatusButton completed={toDoItem.completed} onClick={() => onStatusChange(toDoItem)} />
+            <Text as={renderStatusElement(toDoItem.completed)} ml={2} onClick={handleEdit}>
+              {toDoItem.task}
+            </Text>
+          </Flex>
+          <ToDoListItemActionsMenu
+            readOnly={toDoItem.readOnly}
+            visible={actionMenuVisibility}
+            onDelete={() => onDelete(toDoItem.id)}
+            onEdit={() => onInlineEdit(toDoItem.id)}
+          />
         </Flex>
-        <ToDoOptionsMenu
-          editMode={editMode}
-          visible={showOptions}
-          onDeleteClick={onDelete}
-          onEditClick={() => onEdit(children as string)}
-        />
-      </Flex>
+      ) : (
+        <Flex flexDirection='column' width='100%'>
+          <Input
+            autoFocus
+            size='sm'
+            value={inputValue}
+            onBlur={() => setActionMenuVisibility(false)}
+            onChange={handleInput}
+            onKeyDown={event => {
+              onKeyboardInput(event, toDoItem, inputValue);
+              setActionMenuVisibility(false);
+            }}
+          />
+          <ButtonGroup my={2} size='sm'>
+            <Button colorScheme='teal' onClick={() => onSave(toDoItem, inputValue)}>
+              Save
+            </Button>
+            <Button variant='outline' onClick={() => onCancel(toDoItem.id)}>
+              Cancel
+            </Button>
+          </ButtonGroup>
+        </Flex>
+      )}
+      <ToDoModal isOpen={isOpen} toDoItem={toDoItem} onClose={onClose} />
     </ListItem>
   );
 };

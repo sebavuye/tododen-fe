@@ -1,1 +1,1 @@
-export { deleteToDoItem, getToDoList, patchToDoItem, postToDoItem } from './todo';
+export { deleteToDoItem, getToDoList, patchToDoItem, postToDoItem, getToDoItem } from './todo';

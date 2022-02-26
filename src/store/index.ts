@@ -10,7 +10,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 export const store = createStore(
   combineReducers({
-    toDoList: toDoListReducer,
+    toDo: toDoListReducer,
     loading: loadingReducer,
     notifications: notificationsReducer
   }),

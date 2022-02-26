@@ -2,11 +2,11 @@ import React from 'react';
 import { Button, Input, InputGroup } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
-import * as ACTIONS from '../../store/actions';
-import { ERROR_NOTIFICATIONS } from '../../constants';
-import { ENotificationIds, IToDoListInput } from '../../types';
+import * as ACTIONS from '../../../store/actions';
+import { ERROR_NOTIFICATIONS } from '../../../constants';
+import { ENotificationIds, IToDoItem, IToDoListInputProps } from '../../../types';
 
-const ToDoListInput = ({ disabled }: IToDoListInput): JSX.Element => {
+const ToDoListInput = ({ disabled }: IToDoListInputProps): JSX.Element => {
   const [userInput, setUserInput] = React.useState<string>('');
   const dispatch = useDispatch();
 
@@ -22,7 +22,8 @@ const ToDoListInput = ({ disabled }: IToDoListInput): JSX.Element => {
         })
       );
     } else {
-      dispatch(ACTIONS.createToDoItem({ id: nanoid(), editMode: false, todo: userInput, completed: false }));
+      const toDoItem: IToDoItem = { id: nanoid(), task: userInput, completed: false };
+      dispatch(ACTIONS.createToDoItem(toDoItem));
       setUserInput('');
     }
   };

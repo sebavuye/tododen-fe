@@ -35,7 +35,7 @@
     "@typescript-eslint/no-use-before-define": ["error"],
     "@typescript-eslint/no-shadow": ["error"],
     "@typescript-eslint/no-explicit-any": "error",
-    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-unused-vars": ["warn", { "ignoreRestSiblings": true }],
     "typescript-sort-keys/interface": ["error", "asc", { "caseSensitive": false, "natural": true, "requiredFirst": false }]
   },
   "settings": {
