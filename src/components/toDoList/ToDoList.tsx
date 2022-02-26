@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { KeyboardEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Flex, Grid, GridItem, List } from '@chakra-ui/react';
 import * as ACTIONS from '../../store/actions';
@@ -53,6 +53,20 @@ const ToDoList = (): JSX.Element => {
     dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
   };
 
+  const handleKeyboardInput = (event: KeyboardEvent<HTMLInputElement>, toDoItem: IToDoItem, inputValue: string) => {
+    if (event.key === 'Enter') {
+      handleSave(toDoItem, inputValue);
+    }
+    if (event.key === 'Escape') {
+      handleCancel(toDoItem.id);
+    }
+  };
+
+  const handleToDoListStateReset = () => {
+    const toDoListReadOnly = localToDoList.map(toDoItem => ({ ...toDoItem, readOnly: true }));
+    setLocalToDoList(toDoListReadOnly);
+  };
+
   useEffect(() => {
     const localToDoListClone: IToDoItem[] = globalToDoList.map(toDoItem => ({ ...toDoItem, readOnly: true }));
     setLocalToDoList(localToDoListClone);
@@ -89,7 +103,9 @@ const ToDoList = (): JSX.Element => {
                   toDoItem={toDoListItem}
                   onCancel={handleCancel}
                   onDelete={handleDelete}
+                  onEdit={handleToDoListStateReset}
                   onInlineEdit={handleInlineEdit}
+                  onKeyboardInput={handleKeyboardInput}
                   onSave={handleSave}
                   onStatusChange={handleStatus}
                 />

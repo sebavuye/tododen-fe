@@ -1,4 +1,4 @@
-import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Button, ButtonGroup, Flex, Input, ListItem, Text, useDisclosure } from '@chakra-ui/react';
 import ToDoListItemStatusButton from './toDoListItemStatusButton/ToDoListItemStatusButton';
 import ToDoListItemActionsMenu from './toDoListItemActionsMenu/ToDoListItemActionsMenu';
@@ -9,7 +9,9 @@ import { IToDoListItemProps } from '../../../types';
 const ToDoListItem = ({
   onCancel,
   onDelete,
+  onEdit,
   onInlineEdit,
+  onKeyboardInput,
   onSave,
   onStatusChange,
   toDoItem
@@ -21,16 +23,8 @@ const ToDoListItem = ({
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value);
 
   const handleEdit = () => {
+    onEdit();
     onOpen();
-  };
-
-  const handleKeyboardInput = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      onSave(toDoItem, inputValue);
-    }
-    if (event.key === 'Escape') {
-      onCancel(toDoItem.id);
-    }
   };
 
   useEffect(() => {
@@ -60,7 +54,17 @@ const ToDoListItem = ({
         </Flex>
       ) : (
         <Flex flexDirection='column' width='100%'>
-          <Input autoFocus size='sm' value={inputValue} onChange={handleInput} onKeyDown={handleKeyboardInput} />
+          <Input
+            autoFocus
+            size='sm'
+            value={inputValue}
+            onBlur={() => setActionMenuVisibility(false)}
+            onChange={handleInput}
+            onKeyDown={event => {
+              onKeyboardInput(event, toDoItem, inputValue);
+              setActionMenuVisibility(false);
+            }}
+          />
           <ButtonGroup my={2} size='sm'>
             <Button colorScheme='teal' onClick={() => onSave(toDoItem, inputValue)}>
               Save
