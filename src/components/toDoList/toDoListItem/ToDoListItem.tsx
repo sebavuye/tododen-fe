@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { Button, ButtonGroup, Flex, Input, ListItem, Text, useDisclosure } from '@chakra-ui/react';
+import { Button, ButtonGroup, Flex, HStack, Input, ListItem, Tag, Text, useDisclosure } from '@chakra-ui/react';
 import ToDoListItemStatusButton from './toDoListItemStatusButton/ToDoListItemStatusButton';
 import ToDoListItemActionsMenu from './toDoListItemActionsMenu/ToDoListItemActionsMenu';
 import ToDoModal from '../../toDoModal/ToDoModal';
@@ -39,11 +39,22 @@ const ToDoListItem = ({
           width='100%'
           onMouseEnter={() => setActionMenuVisibility(true)}
           onMouseLeave={() => setActionMenuVisibility(false)}>
-          <Flex width='100%'>
-            <ToDoListItemStatusButton completed={toDoItem.completed} onClick={() => onStatusChange(toDoItem)} />
-            <Text as={renderStatusElement(toDoItem.completed)} ml={2} onClick={handleEdit}>
-              {toDoItem.task}
-            </Text>
+          <Flex>
+            <Flex width='100%'>
+              <ToDoListItemStatusButton completed={toDoItem.completed} onClick={() => onStatusChange(toDoItem)} />
+              <Flex flexDirection='column'>
+                <Text as={renderStatusElement(toDoItem.completed)} ml={2} onClick={handleEdit}>
+                  {toDoItem.task}
+                </Text>
+                <Flex p={1}>
+                  <HStack spacing={2}>
+                    <Tag size='sm'>label 01</Tag>
+                    <Tag size='sm'>label 02</Tag>
+                    <Tag size='sm'>label 03</Tag>
+                  </HStack>
+                </Flex>
+              </Flex>
+            </Flex>
           </Flex>
           <ToDoListItemActionsMenu
             readOnly={toDoItem.readOnly}
