@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react';
+import { CreatableSelect } from 'chakra-react-select';
+import { IoPricetag } from 'react-icons/io5';
+import { toDoLabelsStateSelector } from '../../store/selectors/toDoLabels';
 import ToDoModalListItem from './toDoModalListItem/ToDoModalListItem';
 import ConfirmationModal from '../confirmationModal/ConfirmationModal';
 import { IToDoModalProps } from '../../types';
 
 const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element => {
+  const toDoLabels = useSelector(toDoLabelsStateSelector);
   const [confirmationModal, setConfirmationModal] = useState<boolean>(false);
   const [readOnly, setReadOnly] = useState<boolean>(true);
+  const [labelMenuVisibility, setLabelMenuVisibility] = useState(false);
 
   const handleOnClose = () => {
     if (readOnly) {
@@ -24,6 +30,10 @@ const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element 
     onClose();
   };
 
+  const handleLabelsMenu = () => {
+    setLabelMenuVisibility(prevState => !prevState);
+  };
+
   return (
     <>
       <Modal isCentered isOpen={isOpen} size='lg' onClose={handleOnClose}>
@@ -35,6 +45,10 @@ const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element 
             <Flex alignItems='center'>
               <ToDoModalListItem readOnly={readOnly} toDoItem={toDoItem} onReadOnly={setReadOnly} onSave={onClose} />
             </Flex>
+            <Flex justifyContent='flex-end'>
+              <IoPricetag cursor='pointer' onClick={handleLabelsMenu} />
+            </Flex>
+            {labelMenuVisibility && <CreatableSelect options={toDoLabels} size='sm' />}
           </ModalBody>
         </ModalContent>
       </Modal>
