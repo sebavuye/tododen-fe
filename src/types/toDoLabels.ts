@@ -1,5 +1,5 @@
 export interface IToDoLabel {
-  id: string;
+  id: number;
   label: string;
   value: string;
 }
