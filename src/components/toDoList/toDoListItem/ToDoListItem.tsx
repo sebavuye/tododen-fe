@@ -48,9 +48,12 @@ const ToDoListItem = ({
                 </Text>
                 <Flex p={1}>
                   <HStack spacing={2}>
-                    <Tag size='sm'>label 01</Tag>
-                    <Tag size='sm'>label 02</Tag>
-                    <Tag size='sm'>label 03</Tag>
+                    {toDoItem.labels?.map(label => (
+                      <Tag key={label.id} size='sm'>
+                        {/* TODO: change label.label to appropriate name */}
+                        {label.label}
+                      </Tag>
+                    ))}
                   </HStack>
                 </Flex>
               </Flex>
