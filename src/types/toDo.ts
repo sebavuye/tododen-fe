@@ -1,7 +1,7 @@
 import { MultiValue } from 'chakra-react-select';
 import { IToDoLabel } from './toDoLabels';
 
-interface IToDoActionCallbackProps {
+export interface IToDoActionCallbackProps {
   onError?: () => void;
   onSuccess?: () => void;
 }

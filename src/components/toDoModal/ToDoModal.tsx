@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react';
 import { CreatableSelect, MultiValue } from 'chakra-react-select';
 import { IoPricetag } from 'react-icons/io5';
+import { nanoid } from 'nanoid';
 import { toDoLabelsStateSelector } from '../../store/selectors/toDoLabels';
 import ToDoModalListItem from './toDoModalListItem/ToDoModalListItem';
 import ConfirmationModal from '../confirmationModal/ConfirmationModal';
@@ -33,14 +34,32 @@ const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element 
     onClose();
   };
 
-  const handleLabelsMenu = () => {
+  const handleLabelsMenuVisibility = () => {
     setLabelMenuVisibility(prevState => !prevState);
+  };
+
+  const handleSelectLabel = (newValue?: MultiValue<IToDoLabel>) => {
+    setLabels(newValue);
   };
 
   const handleUpdateLabels = () => {
     const updatedToDoItem: IToDoItem = { ...toDoItem, labels };
     delete updatedToDoItem.readOnly;
     dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
+  };
+
+  const handleCreateNewLabel = (label: string) => {
+    const newLabel: IToDoLabel = {
+      id: nanoid(),
+      label,
+      value: label,
+      onSuccess: () => {
+        const currentLabelsArray = labels as IToDoLabel[];
+        const updatedLabels = [...currentLabelsArray, newLabel] as MultiValue<IToDoLabel>;
+        setLabels(updatedLabels);
+      }
+    };
+    dispatch(ACTIONS.createToDoLabel(newLabel));
   };
 
   return (
@@ -55,7 +74,7 @@ const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element 
               <ToDoModalListItem readOnly={readOnly} toDoItem={toDoItem} onReadOnly={setReadOnly} onSave={onClose} />
             </Flex>
             <Flex justifyContent='flex-end'>
-              <IoPricetag cursor='pointer' onClick={handleLabelsMenu} />
+              <IoPricetag cursor='pointer' onClick={handleLabelsMenuVisibility} />
             </Flex>
             {labelMenuVisibility && (
               <CreatableSelect
@@ -66,7 +85,8 @@ const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element 
                 selectedOptionStyle='check'
                 size='sm'
                 value={labels}
-                onChange={newValue => setLabels(newValue)}
+                onChange={newValue => handleSelectLabel(newValue)}
+                onCreateOption={handleCreateNewLabel}
                 onMenuClose={handleUpdateLabels}
               />
             )}
