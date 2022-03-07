@@ -9,6 +9,7 @@ import ToDoModalListItem from './toDoModalListItem/ToDoModalListItem';
 import ConfirmationModal from '../confirmationModal/ConfirmationModal';
 import { IToDoItem, IToDoLabel, IToDoModalProps } from '../../types';
 import * as ACTIONS from '../../store/actions';
+import { selectStyles } from './styles';
 
 const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element => {
   const dispatch = useDispatch();
@@ -69,7 +70,7 @@ const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element 
         <ModalContent width={{ base: '90%', md: '100%' }}>
           <ModalHeader fontSize='sm'>Edit To Do</ModalHeader>
           <ModalCloseButton />
-          <ModalBody mb={8}>
+          <ModalBody mb={2} position='relative'>
             <Flex alignItems='center'>
               <ToDoModalListItem readOnly={readOnly} toDoItem={toDoItem} onReadOnly={setReadOnly} onSave={onClose} />
             </Flex>
@@ -78,13 +79,20 @@ const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element 
             </Flex>
             {labelMenuVisibility && (
               <CreatableSelect
+                autoFocus
+                defaultMenuIsOpen
                 isMulti
+                chakraStyles={selectStyles}
                 closeMenuOnSelect={false}
+                components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
                 hideSelectedOptions={false}
+                noOptionsMessage={() => null}
                 options={toDoLabels}
+                placeholder={labels?.length ? 'Select or type a label' : 'Type a label'}
                 selectedOptionStyle='check'
                 size='sm'
                 value={labels}
+                onBlur={() => setLabelMenuVisibility(false)}
                 onChange={newValue => handleSelectLabel(newValue)}
                 onCreateOption={handleCreateNewLabel}
                 onMenuClose={handleUpdateLabels}
