@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { Button, ButtonGroup, Flex, HStack, Input, ListItem, Tag, Text, useDisclosure } from '@chakra-ui/react';
+import { Button, ButtonGroup, Flex, Input, ListItem, Tag, Text, useDisclosure } from '@chakra-ui/react';
 import ToDoListItemStatusButton from './toDoListItemStatusButton/ToDoListItemStatusButton';
 import ToDoListItemActionsMenu from './toDoListItemActionsMenu/ToDoListItemActionsMenu';
 import ToDoModal from '../../toDoModal/ToDoModal';
@@ -35,36 +35,35 @@ const ToDoListItem = ({
     <ListItem justifyContent='space-between'>
       {toDoItem.readOnly ? (
         <Flex
+          alignItems='flex-start'
           justifyContent='space-between'
           width='100%'
           onMouseEnter={() => setActionMenuVisibility(true)}
           onMouseLeave={() => setActionMenuVisibility(false)}>
-          <Flex>
-            <Flex width='100%'>
-              <ToDoListItemStatusButton completed={toDoItem.completed} onClick={() => onStatusChange(toDoItem)} />
-              <Flex flexDirection='column'>
-                <Text as={renderStatusElement(toDoItem.completed)} ml={2} onClick={handleEdit}>
-                  {toDoItem.task}
-                </Text>
-                <Flex p={1}>
-                  <HStack spacing={2}>
-                    {toDoItem.labels?.map(label => (
-                      <Tag key={label.id} size='sm'>
-                        {/* TODO: change label.label to appropriate name */}
-                        {label.label}
-                      </Tag>
-                    ))}
-                  </HStack>
-                </Flex>
+          <Flex flex={3}>
+            <ToDoListItemStatusButton completed={toDoItem.completed} onClick={() => onStatusChange(toDoItem)} />
+            <Flex flexDirection='column'>
+              <Text as={renderStatusElement(toDoItem.completed)} ml={2} onClick={handleEdit}>
+                {toDoItem.task}
+              </Text>
+              <Flex flexWrap='wrap' p={1}>
+                {toDoItem.labels?.map(label => (
+                  <Tag key={label.id} marginRight={2} marginY={1} size='sm'>
+                    {/* TODO: change label.label to appropriate name */}
+                    {label.label}
+                  </Tag>
+                ))}
               </Flex>
             </Flex>
           </Flex>
-          <ToDoListItemActionsMenu
-            readOnly={toDoItem.readOnly}
-            visible={actionMenuVisibility}
-            onDelete={() => onDelete(toDoItem.id)}
-            onEdit={() => onInlineEdit(toDoItem.id)}
-          />
+          <Flex flex={1} justifyContent='flex-end'>
+            <ToDoListItemActionsMenu
+              readOnly={toDoItem.readOnly}
+              visible={actionMenuVisibility}
+              onDelete={() => onDelete(toDoItem.id)}
+              onEdit={() => onInlineEdit(toDoItem.id)}
+            />
+          </Flex>
         </Flex>
       ) : (
         <Flex flexDirection='column' width='100%'>

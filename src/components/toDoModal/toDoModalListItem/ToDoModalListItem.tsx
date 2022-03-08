@@ -1,6 +1,6 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, ButtonGroup, Flex, Input, Text } from '@chakra-ui/react';
+import { Button, ButtonGroup, Flex, Input, Tag, Text } from '@chakra-ui/react';
 import ToDoListItemStatusButton from '../../toDoList/toDoListItem/toDoListItemStatusButton/ToDoListItemStatusButton';
 import * as ACTIONS from '../../../store/actions';
 import { renderStatusElement } from '../../../utils';
@@ -51,17 +51,29 @@ const ToDoModalListItem = ({ onReadOnly, onSave, readOnly, toDoItem }: IToDoModa
 
   if (readOnly)
     return (
-      <>
-        <ToDoListItemStatusButton completed={toDoItem.completed} onClick={handleStatus} />
-        <Text
-          as={renderStatusElement(toDoItem.completed)}
-          fontSize='xl'
-          fontWeight='700'
-          ml={2}
-          onClick={handleInlineEdit}>
-          {toDoItem.task}
-        </Text>
-      </>
+      <Flex>
+        <Flex mt={1}>
+          <ToDoListItemStatusButton completed={toDoItem.completed} onClick={handleStatus} />
+        </Flex>
+        <Flex flexDirection='column' justifyContent='flex-start'>
+          <Text
+            as={renderStatusElement(toDoItem.completed)}
+            fontSize='xl'
+            fontWeight='700'
+            ml={2}
+            onClick={handleInlineEdit}>
+            {toDoItem.task}
+          </Text>
+          <Flex justify='flex-start' wrap='wrap'>
+            {toDoItem.labels?.map(label => (
+              <Tag key={label.id} marginRight={2} marginY={1} size='md'>
+                {/* TODO: change label.label to appropriate name */}
+                {label.label}
+              </Tag>
+            ))}
+          </Flex>
+        </Flex>
+      </Flex>
     );
 
   return (
