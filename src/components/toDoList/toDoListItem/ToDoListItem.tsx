@@ -1,11 +1,14 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Button, ButtonGroup, Flex, Icon, Input, ListItem, Tag, Text, useDisclosure } from '@chakra-ui/react';
 import { FaTag } from 'react-icons/fa';
+import classNames from 'classnames';
+
 import ToDoListItemStatusButton from './toDoListItemStatusButton/ToDoListItemStatusButton';
 import ToDoListItemActionsMenu from './toDoListItemActionsMenu/ToDoListItemActionsMenu';
 import ToDoModal from '../../toDoModal/ToDoModal';
 import { renderStatusElement } from '../../../utils';
 import { IToDoListItemProps } from '../../../types';
+import LabelSelect from '../../labelSelect/LabelSelect';
 
 const ToDoListItem = ({
   onCancel,
@@ -20,12 +23,17 @@ const ToDoListItem = ({
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [inputValue, setInputValue] = useState<string>('');
   const [actionMenuVisibility, setActionMenuVisibility] = useState<boolean>(false);
+  const [labelMenuVisibility, setLabelMenuVisibility] = useState(false);
 
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value);
 
   const handleEdit = () => {
     onEdit();
     onOpen();
+  };
+
+  const handleLabelsMenuVisibility = () => {
+    setLabelMenuVisibility(prevState => !prevState);
   };
 
   useEffect(() => {
@@ -81,22 +89,31 @@ const ToDoListItem = ({
           />
 
           <Flex alignItems='center' justifyContent='space-between'>
-            <ButtonGroup my={2} size='sm'>
-              <Button colorScheme='teal' onClick={() => onSave(toDoItem, inputValue)}>
-                Save
-              </Button>
-              <Button variant='outline' onClick={() => onCancel(toDoItem.id)}>
-                Cancel
-              </Button>
-            </ButtonGroup>
             <Flex>
+              <ButtonGroup my={2} size='sm'>
+                <Button colorScheme='teal' onClick={() => onSave(toDoItem, inputValue)}>
+                  Save
+                </Button>
+                <Button variant='outline' onClick={() => onCancel(toDoItem.id)}>
+                  Cancel
+                </Button>
+              </ButtonGroup>
+            </Flex>
+            <Flex justifyContent='flex-end' position='relative' width='50%'>
               <Button
-                // className={classNames({ 'h-pointer-events-none h-touch-events-none': labelMenuVisibility })}
+                className={classNames({ 'h-pointer-events-none h-touch-events-none': labelMenuVisibility })}
                 size='sm'
-                // onClick={handleLabelsMenuVisibility}
-              >
+                onClick={handleLabelsMenuVisibility}>
                 <Icon as={FaTag} boxSize='.9em' color='gray.700' />
               </Button>
+              <LabelSelect
+                dropdownVisibility={labelMenuVisibility}
+                selectStyles={{
+                  container: { top: '35px' }
+                }}
+                toDoItem={toDoItem}
+                onBlur={() => setLabelMenuVisibility(false)}
+              />
             </Flex>
           </Flex>
         </Flex>

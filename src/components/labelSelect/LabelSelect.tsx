@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CreatableSelect, MultiValue } from 'chakra-react-select';
 import { nanoid } from 'nanoid';
+import { CSSObject } from '@emotion/react';
 
-import { selectStyles } from './styles';
+import { ISelectStylesProps, renderSelectStyles } from './styles';
 import { IToDoItem, IToDoLabel } from '../../types';
 import * as ACTIONS from '../../store/actions';
 import { toDoLabelsStateSelector } from '../../store/selectors/toDoLabels';
@@ -11,10 +12,11 @@ import { toDoLabelsStateSelector } from '../../store/selectors/toDoLabels';
 interface ILabelSelectProps {
   dropdownVisibility: boolean;
   onBlur: () => void;
+  selectStyles?: ISelectStylesProps<CSSObject>;
   toDoItem: IToDoItem;
 }
 
-const LabelSelect = ({ dropdownVisibility, onBlur, toDoItem }: ILabelSelectProps): JSX.Element | null => {
+const LabelSelect = ({ dropdownVisibility, onBlur, selectStyles, toDoItem }: ILabelSelectProps): JSX.Element | null => {
   const dispatch = useDispatch();
   const toDoLabels = useSelector(toDoLabelsStateSelector);
   const [labels, setLabels] = useState<MultiValue<IToDoLabel> | undefined>(toDoItem.labels);
@@ -49,7 +51,7 @@ const LabelSelect = ({ dropdownVisibility, onBlur, toDoItem }: ILabelSelectProps
       autoFocus
       defaultMenuIsOpen
       isMulti
-      chakraStyles={selectStyles} // should be imported from somewhere else
+      chakraStyles={renderSelectStyles(selectStyles)}
       closeMenuOnSelect={false}
       components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }}
       hideSelectedOptions={false}
