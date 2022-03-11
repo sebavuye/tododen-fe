@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { Button, ButtonGroup, Flex, Input, ListItem, Tag, Text, useDisclosure } from '@chakra-ui/react';
+import { Button, ButtonGroup, Flex, Icon, Input, ListItem, Tag, Text, useDisclosure } from '@chakra-ui/react';
+import { FaTag } from 'react-icons/fa';
 import ToDoListItemStatusButton from './toDoListItemStatusButton/ToDoListItemStatusButton';
 import ToDoListItemActionsMenu from './toDoListItemActionsMenu/ToDoListItemActionsMenu';
 import ToDoModal from '../../toDoModal/ToDoModal';
@@ -78,14 +79,26 @@ const ToDoListItem = ({
               setActionMenuVisibility(false);
             }}
           />
-          <ButtonGroup my={2} size='sm'>
-            <Button colorScheme='teal' onClick={() => onSave(toDoItem, inputValue)}>
-              Save
-            </Button>
-            <Button variant='outline' onClick={() => onCancel(toDoItem.id)}>
-              Cancel
-            </Button>
-          </ButtonGroup>
+
+          <Flex alignItems='center' justifyContent='space-between'>
+            <ButtonGroup my={2} size='sm'>
+              <Button colorScheme='teal' onClick={() => onSave(toDoItem, inputValue)}>
+                Save
+              </Button>
+              <Button variant='outline' onClick={() => onCancel(toDoItem.id)}>
+                Cancel
+              </Button>
+            </ButtonGroup>
+            <Flex>
+              <Button
+                // className={classNames({ 'h-pointer-events-none h-touch-events-none': labelMenuVisibility })}
+                size='sm'
+                // onClick={handleLabelsMenuVisibility}
+              >
+                <Icon as={FaTag} boxSize='.9em' color='gray.700' />
+              </Button>
+            </Flex>
+          </Flex>
         </Flex>
       )}
       <ToDoModal isOpen={isOpen} toDoItem={toDoItem} onClose={onClose} />
