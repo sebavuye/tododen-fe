@@ -48,7 +48,7 @@ const ToDoListItem = ({
               </Text>
               <Flex flexWrap='wrap' p={1}>
                 {toDoItem.labels?.map(label => (
-                  <Tag key={label.id} marginRight={2} marginY={1} size='sm'>
+                  <Tag key={label.id} colorScheme='gray' marginRight={2} marginY={1} size='sm'>
                     {/* TODO: change label.label to appropriate name */}
                     {label.label}
                   </Tag>

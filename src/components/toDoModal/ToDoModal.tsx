@@ -1,9 +1,21 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react';
+import {
+  Button,
+  Flex,
+  Icon,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay
+} from '@chakra-ui/react';
 import { CreatableSelect, MultiValue } from 'chakra-react-select';
-import { IoPricetag } from 'react-icons/io5';
+import { FaTag } from 'react-icons/fa';
 import { nanoid } from 'nanoid';
+import classNames from 'classnames';
+
 import { toDoLabelsStateSelector } from '../../store/selectors/toDoLabels';
 import ToDoModalListItem from './toDoModalListItem/ToDoModalListItem';
 import ConfirmationModal from '../confirmationModal/ConfirmationModal';
@@ -75,7 +87,12 @@ const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element 
               <ToDoModalListItem readOnly={readOnly} toDoItem={toDoItem} onReadOnly={setReadOnly} onSave={onClose} />
             </Flex>
             <Flex justifyContent='flex-end'>
-              <IoPricetag cursor='pointer' onClick={handleLabelsMenuVisibility} />
+              <Button
+                className={classNames({ 'h-pointer-events-none h-touch-events-none': labelMenuVisibility })}
+                size='sm'
+                onClick={handleLabelsMenuVisibility}>
+                <Icon as={FaTag} boxSize='.9em' color='gray.700' />
+              </Button>
             </Flex>
             {labelMenuVisibility && (
               <CreatableSelect
@@ -92,7 +109,9 @@ const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element 
                 selectedOptionStyle='check'
                 size='sm'
                 value={labels}
-                onBlur={() => setLabelMenuVisibility(false)}
+                onBlur={() => {
+                  setLabelMenuVisibility(false);
+                }}
                 onChange={newValue => handleSelectLabel(newValue)}
                 onCreateOption={handleCreateNewLabel}
                 onMenuClose={handleUpdateLabels}
