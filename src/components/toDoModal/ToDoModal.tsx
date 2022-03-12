@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   Button,
   Flex,
@@ -10,15 +11,17 @@ import {
   ModalHeader,
   ModalOverlay
 } from '@chakra-ui/react';
-import { FaTag } from 'react-icons/fa';
 import classNames from 'classnames';
+import { FaTag } from 'react-icons/fa';
 
+import * as ACTIONS from '../../store/actions';
 import ToDoModalListItem from './toDoModalListItem/ToDoModalListItem';
 import ConfirmationModal from '../confirmationModal/ConfirmationModal';
-import { IToDoModalProps } from '../../types';
 import LabelSelect from '../labelSelect/LabelSelect';
+import { IToDoItem, IToDoModalProps } from '../../types';
 
-const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element => {
+const ToDoModal = ({ isOpen, labels, onClose, onSetLabels, toDoItem }: IToDoModalProps): JSX.Element => {
+  const dispatch = useDispatch();
   const [confirmationModal, setConfirmationModal] = useState<boolean>(false);
   const [readOnly, setReadOnly] = useState<boolean>(true);
   const [labelMenuVisibility, setLabelMenuVisibility] = useState(false);
@@ -26,6 +29,13 @@ const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element 
   const handleOnClose = () => {
     if (readOnly) {
       onClose();
+      const updatedToDoItem: IToDoItem = {
+        ...toDoItem,
+        labels
+      };
+      delete updatedToDoItem.readOnly;
+
+      dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
     } else {
       setConfirmationModal(true);
     }
@@ -37,6 +47,7 @@ const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element 
     setConfirmationModal(false);
     setReadOnly(true);
     onClose();
+    onSetLabels(toDoItem.labels);
   };
 
   const handleLabelsMenuVisibility = () => {
@@ -52,7 +63,13 @@ const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element 
           <ModalCloseButton />
           <ModalBody mb={2} position='relative'>
             <Flex alignItems='center'>
-              <ToDoModalListItem readOnly={readOnly} toDoItem={toDoItem} onReadOnly={setReadOnly} onSave={onClose} />
+              <ToDoModalListItem
+                labels={labels}
+                readOnly={readOnly}
+                toDoItem={toDoItem}
+                onReadOnly={setReadOnly}
+                onSave={onClose}
+              />
             </Flex>
             <Flex justifyContent='flex-end'>
               <Button
@@ -62,13 +79,13 @@ const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element 
                 <Icon as={FaTag} boxSize='.9em' color='gray.700' />
               </Button>
             </Flex>
-            {/*
             <LabelSelect
               dropdownVisibility={labelMenuVisibility}
+              labels={labels}
               toDoItem={toDoItem}
               onBlur={() => setLabelMenuVisibility(false)}
+              onSetLabels={onSetLabels}
             />
-*/}
           </ModalBody>
         </ModalContent>
       </Modal>

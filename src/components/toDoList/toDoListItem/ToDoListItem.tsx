@@ -1,14 +1,15 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Button, ButtonGroup, Flex, Icon, Input, ListItem, Tag, Text, useDisclosure } from '@chakra-ui/react';
-import { FaTag } from 'react-icons/fa';
-import classNames from 'classnames';
 import { MultiValue } from 'chakra-react-select';
+import classNames from 'classnames';
+import { FaTag } from 'react-icons/fa';
+
 import ToDoListItemStatusButton from './toDoListItemStatusButton/ToDoListItemStatusButton';
 import ToDoListItemActionsMenu from './toDoListItemActionsMenu/ToDoListItemActionsMenu';
 import ToDoModal from '../../toDoModal/ToDoModal';
-import { renderStatusElement } from '../../../utils';
-import { IToDoLabel, IToDoListItemProps } from '../../../types';
 import LabelSelect from '../../labelSelect/LabelSelect';
+import { IToDoLabel, IToDoListItemProps } from '../../../types';
+import { renderStatusElement } from '../../../utils';
 
 const ToDoListItem = ({
   onCancel,
@@ -136,7 +137,7 @@ const ToDoListItem = ({
           </Flex>
         </Flex>
       )}
-      <ToDoModal isOpen={isOpen} toDoItem={toDoItem} onClose={onClose} />
+      <ToDoModal isOpen={isOpen} labels={labels} toDoItem={toDoItem} onClose={onClose} onSetLabels={setLabels} />
     </ListItem>
   );
 };

@@ -6,7 +6,13 @@ import * as ACTIONS from '../../../store/actions';
 import { renderStatusElement } from '../../../utils';
 import { IToDoItem, IToDoModalListItemProps } from '../../../types';
 
-const ToDoModalListItem = ({ onReadOnly, onSave, readOnly, toDoItem }: IToDoModalListItemProps): JSX.Element => {
+const ToDoModalListItem = ({
+  labels,
+  onReadOnly,
+  onSave,
+  readOnly,
+  toDoItem
+}: IToDoModalListItemProps): JSX.Element => {
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState<string>(toDoItem.task);
 
@@ -16,6 +22,7 @@ const ToDoModalListItem = ({ onReadOnly, onSave, readOnly, toDoItem }: IToDoModa
     const updatedToDoItem: IToDoItem = {
       ...toDoItem,
       task: inputValue,
+      labels,
       onSuccess: () => {
         onSave();
         onReadOnly(true);
@@ -65,7 +72,7 @@ const ToDoModalListItem = ({ onReadOnly, onSave, readOnly, toDoItem }: IToDoModa
             {toDoItem.task}
           </Text>
           <Flex justify='flex-start' wrap='wrap'>
-            {toDoItem.labels?.map(label => (
+            {labels?.map(label => (
               <Tag key={label.id} marginRight={2} marginY={1} size='md'>
                 {/* TODO: change label.label to appropriate name */}
                 {label.label}
