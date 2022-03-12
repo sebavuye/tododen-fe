@@ -62,11 +62,13 @@ const ToDoModal = ({ isOpen, onClose, toDoItem }: IToDoModalProps): JSX.Element 
                 <Icon as={FaTag} boxSize='.9em' color='gray.700' />
               </Button>
             </Flex>
+            {/*
             <LabelSelect
               dropdownVisibility={labelMenuVisibility}
               toDoItem={toDoItem}
               onBlur={() => setLabelMenuVisibility(false)}
             />
+*/}
           </ModalBody>
         </ModalContent>
       </Modal>

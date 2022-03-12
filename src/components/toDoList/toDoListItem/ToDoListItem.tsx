@@ -2,12 +2,12 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Button, ButtonGroup, Flex, Icon, Input, ListItem, Tag, Text, useDisclosure } from '@chakra-ui/react';
 import { FaTag } from 'react-icons/fa';
 import classNames from 'classnames';
-
+import { MultiValue } from 'chakra-react-select';
 import ToDoListItemStatusButton from './toDoListItemStatusButton/ToDoListItemStatusButton';
 import ToDoListItemActionsMenu from './toDoListItemActionsMenu/ToDoListItemActionsMenu';
 import ToDoModal from '../../toDoModal/ToDoModal';
 import { renderStatusElement } from '../../../utils';
-import { IToDoListItemProps } from '../../../types';
+import { IToDoLabel, IToDoListItemProps } from '../../../types';
 import LabelSelect from '../../labelSelect/LabelSelect';
 
 const ToDoListItem = ({
@@ -24,6 +24,7 @@ const ToDoListItem = ({
   const [inputValue, setInputValue] = useState<string>('');
   const [actionMenuVisibility, setActionMenuVisibility] = useState<boolean>(false);
   const [labelMenuVisibility, setLabelMenuVisibility] = useState(false);
+  const [labels, setLabels] = useState<MultiValue<IToDoLabel> | undefined>(toDoItem.labels);
 
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value);
 
@@ -88,13 +89,28 @@ const ToDoListItem = ({
             }}
           />
 
+          {/* TODO: create seperate component (label list) */}
+          <Flex flexWrap='wrap' p={1}>
+            {labels?.map(label => (
+              <Tag key={label.id} colorScheme='gray' marginRight={2} marginY={1} size='sm'>
+                {/* TODO: change label.label to appropriate name */}
+                {label.label}
+              </Tag>
+            ))}
+          </Flex>
+
           <Flex alignItems='center' justifyContent='space-between'>
             <Flex>
               <ButtonGroup my={2} size='sm'>
-                <Button colorScheme='teal' onClick={() => onSave(toDoItem, inputValue)}>
+                <Button colorScheme='teal' onClick={() => onSave(toDoItem, inputValue, labels)}>
                   Save
                 </Button>
-                <Button variant='outline' onClick={() => onCancel(toDoItem.id)}>
+                <Button
+                  variant='outline'
+                  onClick={() => {
+                    onCancel(toDoItem.id);
+                    setLabels(toDoItem.labels);
+                  }}>
                   Cancel
                 </Button>
               </ButtonGroup>
@@ -108,11 +124,13 @@ const ToDoListItem = ({
               </Button>
               <LabelSelect
                 dropdownVisibility={labelMenuVisibility}
+                labels={labels}
                 selectStyles={{
                   container: { top: '35px' }
                 }}
                 toDoItem={toDoItem}
                 onBlur={() => setLabelMenuVisibility(false)}
+                onSetLabels={setLabels}
               />
             </Flex>
           </Flex>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CreatableSelect, MultiValue } from 'chakra-react-select';
 import { nanoid } from 'nanoid';
@@ -11,24 +11,26 @@ import { toDoLabelsStateSelector } from '../../store/selectors/toDoLabels';
 
 interface ILabelSelectProps {
   dropdownVisibility: boolean;
+  labels: MultiValue<IToDoLabel> | undefined;
   onBlur: () => void;
+  onSetLabels: (newValue: MultiValue<IToDoLabel> | undefined) => void;
   selectStyles?: ISelectStylesProps<CSSObject>;
   toDoItem: IToDoItem;
 }
 
-const LabelSelect = ({ dropdownVisibility, onBlur, selectStyles, toDoItem }: ILabelSelectProps): JSX.Element | null => {
+const LabelSelect = ({
+  dropdownVisibility,
+  labels,
+  onBlur,
+  onSetLabels,
+  selectStyles,
+  toDoItem
+}: ILabelSelectProps): JSX.Element | null => {
   const dispatch = useDispatch();
   const toDoLabels = useSelector(toDoLabelsStateSelector);
-  const [labels, setLabels] = useState<MultiValue<IToDoLabel> | undefined>(toDoItem.labels);
 
   const handleSelectLabel = (newValue?: MultiValue<IToDoLabel>) => {
-    setLabels(newValue);
-  };
-
-  const handleUpdateLabels = () => {
-    const updatedToDoItem: IToDoItem = { ...toDoItem, labels };
-    delete updatedToDoItem.readOnly;
-    dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
+    onSetLabels(newValue);
   };
 
   const handleCreateNewLabel = (label: string) => {
@@ -38,8 +40,8 @@ const LabelSelect = ({ dropdownVisibility, onBlur, selectStyles, toDoItem }: ILa
       value: label,
       onSuccess: () => {
         const currentLabelsArray = labels as IToDoLabel[];
-        const updatedLabels = [...currentLabelsArray, newLabel] as MultiValue<IToDoLabel>;
-        setLabels(updatedLabels);
+        const updatedLabelList = [...currentLabelsArray, newLabel] as MultiValue<IToDoLabel>;
+        onSetLabels(updatedLabelList);
       }
     };
     dispatch(ACTIONS.createToDoLabel(newLabel));
@@ -64,7 +66,6 @@ const LabelSelect = ({ dropdownVisibility, onBlur, selectStyles, toDoItem }: ILa
       onBlur={onBlur}
       onChange={newValue => handleSelectLabel(newValue)}
       onCreateOption={handleCreateNewLabel}
-      onMenuClose={handleUpdateLabels}
     />
   );
 };
