@@ -119,7 +119,6 @@ const ToDoListItem = ({
                 selectStyles={{
                   container: { top: '35px' }
                 }}
-                toDoItem={toDoItem}
                 onBlur={() => setLabelMenuVisibility(false)}
                 onSetLabels={setLabels}
               />

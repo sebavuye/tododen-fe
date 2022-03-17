@@ -82,7 +82,6 @@ const ToDoModal = ({ isOpen, labels, onClose, onSetLabels, toDoItem }: IToDoModa
             <LabelSelect
               dropdownVisibility={labelMenuVisibility}
               labels={labels}
-              toDoItem={toDoItem}
               onBlur={() => setLabelMenuVisibility(false)}
               onSetLabels={onSetLabels}
             />
