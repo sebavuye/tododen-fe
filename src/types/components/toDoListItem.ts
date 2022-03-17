@@ -8,7 +8,12 @@ export interface IToDoListItemProps {
   onDelete: (uid: TToDoItemId) => void;
   onEdit: () => void;
   onInlineEdit: (uid: TToDoItemId) => void;
-  onKeyboardInput: (event: KeyboardEvent<HTMLInputElement>, toDoItem: IToDoItem, inputValue: string) => void;
+  onKeyboardInput: (
+    event: KeyboardEvent<HTMLInputElement>,
+    toDoItem: IToDoItem,
+    inputValue: string,
+    updatedLabelList?: MultiValue<IToDoLabel>
+  ) => void;
   onSave: (toDoItem: IToDoItem, updatedTaskValue: TToDoItemTask, labels?: MultiValue<IToDoLabel>) => void;
   onStatusChange: (toDoItem: IToDoItem) => void;
   toDoItem: IToDoItem;

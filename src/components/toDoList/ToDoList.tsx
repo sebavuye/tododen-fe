@@ -63,9 +63,14 @@ const ToDoList = (): JSX.Element => {
     dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
   };
 
-  const handleKeyboardInput = (event: KeyboardEvent<HTMLInputElement>, toDoItem: IToDoItem, inputValue: string) => {
+  const handleKeyboardInput = (
+    event: KeyboardEvent<HTMLInputElement>,
+    toDoItem: IToDoItem,
+    inputValue: string,
+    updatedLabelList?: MultiValue<IToDoLabel>
+  ) => {
     if (event.key === 'Enter') {
-      handleSave(toDoItem, inputValue);
+      handleSave(toDoItem, inputValue, updatedLabelList);
     }
     if (event.key === 'Escape') {
       handleCancel(toDoItem.id);

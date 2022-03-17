@@ -85,7 +85,10 @@ const ToDoListItem = ({
             onBlur={() => setActionMenuVisibility(false)}
             onChange={handleInput}
             onKeyDown={event => {
-              onKeyboardInput(event, toDoItem, inputValue);
+              if (event.key === 'Escape') {
+                setLabels(toDoItem.labels);
+              }
+              onKeyboardInput(event, toDoItem, inputValue, labels);
               setActionMenuVisibility(false);
             }}
           />
