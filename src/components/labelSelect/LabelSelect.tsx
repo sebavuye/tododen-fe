@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid';
 import { CSSObject } from '@emotion/react';
 
 import { ISelectStylesProps, renderSelectStyles } from './styles';
-import { IToDoItem, IToDoLabel } from '../../types';
+import { IToDoLabel } from '../../types';
 import * as ACTIONS from '../../store/actions';
 import { toDoLabelsStateSelector } from '../../store/selectors/toDoLabels';
 
@@ -15,7 +15,6 @@ interface ILabelSelectProps {
   onBlur: () => void;
   onSetLabels: (newValue: MultiValue<IToDoLabel> | undefined) => void;
   selectStyles?: ISelectStylesProps<CSSObject>;
-  toDoItem: IToDoItem;
 }
 
 const LabelSelect = ({
@@ -23,8 +22,7 @@ const LabelSelect = ({
   labels,
   onBlur,
   onSetLabels,
-  selectStyles,
-  toDoItem
+  selectStyles
 }: ILabelSelectProps): JSX.Element | null => {
   const dispatch = useDispatch();
   const toDoLabels = useSelector(toDoLabelsStateSelector);
