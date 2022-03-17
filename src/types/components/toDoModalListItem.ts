@@ -1,9 +1,8 @@
-import { MultiValue } from 'chakra-react-select';
 import { IToDoItem } from '../toDo';
-import { IToDoLabel } from '../toDoLabels';
+import { TLabels } from './labelList';
 
 export interface IToDoModalListItemProps {
-  labels: MultiValue<IToDoLabel> | undefined;
+  labels: TLabels;
   onReadOnly: (readOnly: boolean) => void;
   onSave: () => void;
   readOnly: boolean;

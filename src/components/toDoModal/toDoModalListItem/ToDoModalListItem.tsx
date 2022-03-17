@@ -1,7 +1,8 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, ButtonGroup, Flex, Input, Tag, Text } from '@chakra-ui/react';
+import { Button, ButtonGroup, Flex, Input, Text } from '@chakra-ui/react';
 import ToDoListItemStatusButton from '../../toDoList/toDoListItem/toDoListItemStatusButton/ToDoListItemStatusButton';
+import LabelList from '../../labelList/LabelList';
 import * as ACTIONS from '../../../store/actions';
 import { renderStatusElement } from '../../../utils';
 import { IToDoItem, IToDoModalListItemProps } from '../../../types';
@@ -72,12 +73,7 @@ const ToDoModalListItem = ({
             {toDoItem.task}
           </Text>
           <Flex justify='flex-start' wrap='wrap'>
-            {labels?.map(label => (
-              <Tag key={label.id} marginRight={2} marginY={1} size='md'>
-                {/* TODO: change label.label to appropriate name */}
-                {label.label}
-              </Tag>
-            ))}
+            <LabelList labels={labels} size='md' />
           </Flex>
         </Flex>
       </Flex>

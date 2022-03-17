@@ -17,6 +17,7 @@ export type { ILoadingProps } from './components/loading';
 export type { ILoadingTextProps } from './components/loadingText';
 export type { IEmptyState } from './components/emptyState';
 export type { IConfirmationModalProps } from './components/confirmationModal';
+export type { ILabelListProps, TLabels } from './components/labelList';
 
 export { ELoadingDelays, EToDoListLoadingKeys } from './loading';
 export { ENotificationIds } from './notifications';

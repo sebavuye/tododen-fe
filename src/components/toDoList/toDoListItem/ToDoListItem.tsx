@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { Button, ButtonGroup, Flex, Icon, Input, ListItem, Tag, Text, useDisclosure } from '@chakra-ui/react';
-import { MultiValue } from 'chakra-react-select';
+import { Button, ButtonGroup, Flex, Icon, Input, ListItem, Text, useDisclosure } from '@chakra-ui/react';
 import classNames from 'classnames';
 import { FaTag } from 'react-icons/fa';
 
@@ -8,7 +7,8 @@ import ToDoListItemStatusButton from './toDoListItemStatusButton/ToDoListItemSta
 import ToDoListItemActionsMenu from './toDoListItemActionsMenu/ToDoListItemActionsMenu';
 import ToDoModal from '../../toDoModal/ToDoModal';
 import LabelSelect from '../../labelSelect/LabelSelect';
-import { IToDoLabel, IToDoListItemProps } from '../../../types';
+import LabelList from '../../labelList/LabelList';
+import { IToDoListItemProps, TLabels } from '../../../types';
 import { renderStatusElement } from '../../../utils';
 
 const ToDoListItem = ({
@@ -25,7 +25,7 @@ const ToDoListItem = ({
   const [inputValue, setInputValue] = useState<string>('');
   const [actionMenuVisibility, setActionMenuVisibility] = useState<boolean>(false);
   const [labelMenuVisibility, setLabelMenuVisibility] = useState(false);
-  const [labels, setLabels] = useState<MultiValue<IToDoLabel> | undefined>(toDoItem.labels);
+  const [labels, setLabels] = useState<TLabels>(toDoItem.labels);
 
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => setInputValue(event.target.value);
 
@@ -58,12 +58,7 @@ const ToDoListItem = ({
                 {toDoItem.task}
               </Text>
               <Flex flexWrap='wrap' p={1}>
-                {toDoItem.labels?.map(label => (
-                  <Tag key={label.id} colorScheme='gray' marginRight={2} marginY={1} size='sm'>
-                    {/* TODO: change label.label to appropriate name */}
-                    {label.label}
-                  </Tag>
-                ))}
+                <LabelList labels={toDoItem.labels} />
               </Flex>
             </Flex>
           </Flex>
@@ -92,17 +87,9 @@ const ToDoListItem = ({
               setActionMenuVisibility(false);
             }}
           />
-
-          {/* TODO: create seperate component (label list) */}
           <Flex flexWrap='wrap' p={1}>
-            {labels?.map(label => (
-              <Tag key={label.id} colorScheme='gray' marginRight={2} marginY={1} size='sm'>
-                {/* TODO: change label.label to appropriate name */}
-                {label.label}
-              </Tag>
-            ))}
+            <LabelList labels={labels} />
           </Flex>
-
           <Flex alignItems='center' justifyContent='space-between'>
             <Flex>
               <ButtonGroup my={2} size='sm'>
