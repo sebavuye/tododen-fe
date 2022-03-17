@@ -6,7 +6,6 @@ const LabelList = ({ labels, size = 'sm' }: ILabelListProps): JSX.Element => (
   <div>
     {labels?.map(label => (
       <Tag key={label.id} colorScheme='gray' marginRight={2} marginY={1} size={size}>
-        {/* TODO: change label.label to appropriate name */}
         {label.label}
       </Tag>
     ))}
