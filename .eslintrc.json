@@ -36,7 +36,8 @@
     "@typescript-eslint/no-shadow": ["error"],
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-unused-vars": ["warn", { "ignoreRestSiblings": true }],
-    "typescript-sort-keys/interface": ["error", "asc", { "caseSensitive": false, "natural": true, "requiredFirst": false }]
+    "typescript-sort-keys/interface": ["error", "asc", { "caseSensitive": false, "natural": true, "requiredFirst": false }],
+    "@typescript-eslint/ban-ts-comment": "warn"
   },
   "settings": {
     "import/resolver": { "typescript": {} } // adds TypeScript support to eslint-plugin-import.

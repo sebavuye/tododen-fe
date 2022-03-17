@@ -1,4 +1,5 @@
 import { combineReducers, createReducer, PayloadAction } from '@reduxjs/toolkit';
+import { labels } from './toDoLabels';
 import * as ACTIONS from '../actions';
 import { IToDoItem } from '../../types';
 
@@ -7,5 +8,6 @@ const list = createReducer<IToDoItem[]>([], {
 });
 
 export const toDoListReducer = combineReducers({
+  labels,
   list
 });

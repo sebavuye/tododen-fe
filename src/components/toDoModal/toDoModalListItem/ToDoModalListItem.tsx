@@ -2,11 +2,18 @@ import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, ButtonGroup, Flex, Input, Text } from '@chakra-ui/react';
 import ToDoListItemStatusButton from '../../toDoList/toDoListItem/toDoListItemStatusButton/ToDoListItemStatusButton';
+import LabelList from '../../labelList/LabelList';
 import * as ACTIONS from '../../../store/actions';
 import { renderStatusElement } from '../../../utils';
 import { IToDoItem, IToDoModalListItemProps } from '../../../types';
 
-const ToDoModalListItem = ({ onReadOnly, onSave, readOnly, toDoItem }: IToDoModalListItemProps): JSX.Element => {
+const ToDoModalListItem = ({
+  labels,
+  onReadOnly,
+  onSave,
+  readOnly,
+  toDoItem
+}: IToDoModalListItemProps): JSX.Element => {
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState<string>(toDoItem.task);
 
@@ -16,6 +23,7 @@ const ToDoModalListItem = ({ onReadOnly, onSave, readOnly, toDoItem }: IToDoModa
     const updatedToDoItem: IToDoItem = {
       ...toDoItem,
       task: inputValue,
+      labels,
       onSuccess: () => {
         onSave();
         onReadOnly(true);
@@ -51,17 +59,24 @@ const ToDoModalListItem = ({ onReadOnly, onSave, readOnly, toDoItem }: IToDoModa
 
   if (readOnly)
     return (
-      <>
-        <ToDoListItemStatusButton completed={toDoItem.completed} onClick={handleStatus} />
-        <Text
-          as={renderStatusElement(toDoItem.completed)}
-          fontSize='xl'
-          fontWeight='700'
-          ml={2}
-          onClick={handleInlineEdit}>
-          {toDoItem.task}
-        </Text>
-      </>
+      <Flex>
+        <Flex mt={1}>
+          <ToDoListItemStatusButton completed={toDoItem.completed} onClick={handleStatus} />
+        </Flex>
+        <Flex flexDirection='column' justifyContent='flex-start'>
+          <Text
+            as={renderStatusElement(toDoItem.completed)}
+            fontSize='xl'
+            fontWeight='700'
+            ml={2}
+            onClick={handleInlineEdit}>
+            {toDoItem.task}
+          </Text>
+          <Flex justify='flex-start' wrap='wrap'>
+            <LabelList labels={labels} size='md' />
+          </Flex>
+        </Flex>
+      </Flex>
     );
 
   return (

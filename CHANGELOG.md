@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 ### Added
 - Edit to do modal.
+- Create and add labels to do item
 ### Fixed
 - Lay-outing issues on mobile devices.
 

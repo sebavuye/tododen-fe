@@ -9,6 +9,7 @@ function App(): JSX.Element {
 
   React.useEffect(() => {
     dispatch(ACTIONS.fetchToDoList({ initialization: true }));
+    dispatch(ACTIONS.fetchToDoLabels());
   }, [dispatch]);
 
   return (

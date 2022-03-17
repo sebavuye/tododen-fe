@@ -1,6 +1,7 @@
 import React, { KeyboardEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Flex, Grid, GridItem, List } from '@chakra-ui/react';
+import { MultiValue } from 'chakra-react-select';
 import * as ACTIONS from '../../store/actions';
 import { toDoListActionsLoadingSelector, toDoListSelector } from '../../store/selectors';
 import ToDoListStats from './toDoListStats/ToDoListStats';
@@ -12,6 +13,7 @@ import EmptyState from '../emptyState/EmptyState';
 import { ReactComponent as EmptyStateImage } from '../../assets/images/EmptyState.svg';
 import { IToDoItem, TToDoItemId, TToDoItemTask } from '../../types/toDo';
 import { LOADING_DELAYS, TO_DO_LOADING_KEYS } from '../../constants';
+import { IToDoLabel } from '../../types';
 
 const ToDoList = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -20,11 +22,15 @@ const ToDoList = (): JSX.Element => {
   const [localToDoList, setLocalToDoList] = useState<IToDoItem[]>([]);
 
   const handleCancel = (uid: TToDoItemId) => {
-    const initialTaskValue = localToDoList.find(toDoItem => toDoItem.id === uid)?.task;
+    const initialToDoItem = localToDoList.find(toDoItem => toDoItem.id === uid);
+    const initialTaskValue = initialToDoItem?.task;
+    const initialLabelList = initialToDoItem?.labels;
 
     if (initialTaskValue) {
       const localToDoListEditMode: IToDoItem[] = localToDoList.map(toDoItem =>
-        toDoItem.id === uid ? { ...toDoItem, readOnly: true, task: initialTaskValue } : { ...toDoItem, readOnly: true }
+        toDoItem.id === uid
+          ? { ...toDoItem, readOnly: true, task: initialTaskValue, labels: initialLabelList }
+          : { ...toDoItem, readOnly: true }
       );
       setLocalToDoList(localToDoListEditMode);
     }
@@ -41,8 +47,12 @@ const ToDoList = (): JSX.Element => {
     setLocalToDoList(localToDoListEditMode);
   };
 
-  const handleSave = (toDoItem: IToDoItem, updatedTaskValue: TToDoItemTask) => {
-    const updatedToDoItem: IToDoItem = { ...toDoItem, task: updatedTaskValue };
+  const handleSave = (
+    toDoItem: IToDoItem,
+    updatedTaskValue: TToDoItemTask,
+    updatedLabelList?: MultiValue<IToDoLabel>
+  ) => {
+    const updatedToDoItem: IToDoItem = { ...toDoItem, task: updatedTaskValue, labels: updatedLabelList };
     delete updatedToDoItem.readOnly;
     dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
   };
@@ -53,9 +63,14 @@ const ToDoList = (): JSX.Element => {
     dispatch(ACTIONS.updateToDoItem(updatedToDoItem));
   };
 
-  const handleKeyboardInput = (event: KeyboardEvent<HTMLInputElement>, toDoItem: IToDoItem, inputValue: string) => {
+  const handleKeyboardInput = (
+    event: KeyboardEvent<HTMLInputElement>,
+    toDoItem: IToDoItem,
+    inputValue: string,
+    updatedLabelList?: MultiValue<IToDoLabel>
+  ) => {
     if (event.key === 'Enter') {
-      handleSave(toDoItem, inputValue);
+      handleSave(toDoItem, inputValue, updatedLabelList);
     }
     if (event.key === 'Escape') {
       handleCancel(toDoItem.id);
