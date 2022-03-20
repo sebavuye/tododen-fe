@@ -1,6 +1,6 @@
 import React, { KeyboardEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Flex, Grid, GridItem, List } from '@chakra-ui/react';
+import { Flex, Grid, GridItem, Heading, List } from '@chakra-ui/react';
 import { MultiValue } from 'chakra-react-select';
 import * as ACTIONS from '../../store/actions';
 import { toDoListActionsLoadingSelector, toDoListSelector } from '../../store/selectors';
@@ -102,7 +102,12 @@ const ToDoList = (): JSX.Element => {
         </Flex>
       </GridItem>
       <GridItem bg='teal.50' p={6}>
-        <Grid h='100%' mx='auto' templateRows='1fr auto' w={{ base: '100%', md: '75%', xl: '50%' }}>
+        <Grid h='100%' mx='auto' templateRows='auto 1fr auto' w={{ base: '100%', md: '75%', xl: '50%' }}>
+          <GridItem mb={8}>
+            <Heading as='h2' size='lg'>
+              My Tasks
+            </Heading>
+          </GridItem>
           <GridItem>
             {localToDoList.length === 0 && !isToDoActionLoading && (
               <EmptyState
