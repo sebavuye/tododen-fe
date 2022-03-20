@@ -1,7 +1,19 @@
 import React, { KeyboardEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Flex, Grid, GridItem, Heading, List } from '@chakra-ui/react';
+import {
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  IconButton,
+  List,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList
+} from '@chakra-ui/react';
 import { MultiValue } from 'chakra-react-select';
+import { IoEye, IoMenu } from 'react-icons/io5';
 import * as ACTIONS from '../../store/actions';
 import { toDoListActionsLoadingSelector, toDoListSelector } from '../../store/selectors';
 import ToDoListStats from './toDoListStats/ToDoListStats';
@@ -82,6 +94,8 @@ const ToDoList = (): JSX.Element => {
     setLocalToDoList(toDoListReadOnly);
   };
 
+  const handleTaskVisibility = () => console.log('clicked options visibility');
+
   useEffect(() => {
     const localToDoListClone: IToDoItem[] = globalToDoList.map(toDoItem => ({ ...toDoItem, readOnly: true }));
     setLocalToDoList(localToDoListClone);
@@ -104,9 +118,19 @@ const ToDoList = (): JSX.Element => {
       <GridItem bg='teal.50' p={6}>
         <Grid h='100%' mx='auto' templateRows='auto 1fr auto' w={{ base: '100%', md: '75%', xl: '50%' }}>
           <GridItem mb={8}>
-            <Heading as='h2' size='lg'>
-              My Tasks
-            </Heading>
+            <Flex justifyContent='space-between'>
+              <Heading as='h2' size='lg'>
+                My Tasks
+              </Heading>
+              <Menu isLazy placement='bottom-end'>
+                <MenuButton aria-label='To do list options' as={IconButton} icon={<IoMenu />} />
+                <MenuList>
+                  <MenuItem icon={<IoEye size='1.5em' />} onClick={handleTaskVisibility}>
+                    Show completed tasks
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </Flex>
           </GridItem>
           <GridItem>
             {localToDoList.length === 0 && !isToDoActionLoading && (
